@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KruJames Prompt Studio — คลังพรอมต์เพื่อการศึกษา</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#5B2A86">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -11,19 +16,28 @@
   --purple:#5B2A86; --purple-dark:#3E1C5C; --purple-light:#EFE7F7;
   --gold:#C9A227; --gold-light:#F5E9C8;
   --bg:#FAF8FC; --card:#FFFFFF; --text:#2A2333; --muted:#7A7185;
+  --border-color:#E2D8EE; --input-bg:#FDFCFE;
   --radius:14px; --shadow:0 2px 10px rgba(62,28,92,.08);
+  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+body.dark-mode {
+  --bg:#120E1A; --card:#1E1826; --text:#F3EFFA; --muted:#A499B3;
+  --purple-light:#2C1A3F; --gold-light:#3F3214;
+  --border-color:#382C47; --input-bg:#181320;
+  --shadow:0 4px 20px rgba(0,0,0,.4);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.65}
+body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.65;transition:background 0.3s ease, color 0.3s ease}
 h1,h2,h3,.tab-btn{font-family:'Prompt',sans-serif}
 
-header{background:linear-gradient(120deg,var(--purple-dark),var(--purple) 60%,#7C4DA8);color:#fff;padding:28px 20px 22px;text-align:center}
+header{background:linear-gradient(120deg,var(--purple-dark),var(--purple) 60%,#7C4DA8);color:#fff;padding:28px 20px 22px;text-align:center;position:relative}
 header h1{font-size:1.7rem;font-weight:700;letter-spacing:.3px}
 header h1 .gold{color:var(--gold-light)}
 header p{opacity:.92;margin-top:6px;font-size:.95rem}
 
-.tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;background:var(--purple-dark);padding:10px 12px;position:sticky;top:0;z-index:50}
-.tab-btn{border:none;border-radius:999px;padding:9px 20px;font-size:.95rem;font-weight:500;cursor:pointer;background:rgba(255,255,255,.12);color:#fff;transition:.18s}
+.tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;background:rgba(62, 28, 92, 0.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:10px 12px;position:sticky;top:0;z-index:50;border-bottom:1px solid rgba(255,255,255,0.08);transition:background 0.3s ease}
+body.dark-mode .tabs {background:rgba(22, 16, 30, 0.85);border-bottom:1px solid rgba(255,255,255,0.04)}
+.tab-btn{border:none;border-radius:999px;padding:9px 20px;font-size:.95rem;font-weight:500;cursor:pointer;background:rgba(255,255,255,.12);color:#fff;transition:var(--transition)}
 .tab-btn:hover{background:rgba(255,255,255,.25)}
 .tab-btn.active{background:var(--gold);color:var(--purple-dark);font-weight:600}
 
@@ -33,41 +47,44 @@ section.tab.active{display:block}
 
 /* ---------- Library ---------- */
 .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
-.search{flex:1;min-width:240px;display:flex;align-items:center;background:#fff;border:1.5px solid #E2D8EE;border-radius:999px;padding:9px 16px;gap:8px}
-.search input{border:none;outline:none;flex:1;font-family:inherit;font-size:1rem;background:transparent}
+.search{flex:1;min-width:240px;display:flex;align-items:center;background:var(--card);border:1.5px solid var(--border-color);border-radius:999px;padding:9px 16px;gap:8px}
+.search input{border:none;outline:none;flex:1;font-family:inherit;font-size:1rem;background:transparent;color:var(--text)}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
-.chip{border:1.5px solid #E2D8EE;background:#fff;border-radius:999px;padding:6px 14px;font-size:.88rem;cursor:pointer;transition:.15s;color:var(--muted)}
-.chip:hover{border-color:var(--purple)}
+.chip{border:1.5px solid var(--border-color);background:var(--card);border-radius:999px;padding:6px 14px;font-size:.88rem;cursor:pointer;transition:var(--transition);color:var(--muted)}
+.chip:hover{border-color:var(--purple);color:var(--purple)}
 .chip.active{background:var(--purple);border-color:var(--purple);color:#fff}
 .chip.fav.active{background:var(--gold);border-color:var(--gold);color:var(--purple-dark)}
 
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:14px}
-.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 18px 14px;cursor:pointer;border:1.5px solid transparent;transition:.18s;display:flex;flex-direction:column;position:relative}
-.card:hover{border-color:var(--purple);transform:translateY(-2px)}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 18px 14px;cursor:pointer;border:1.5px solid transparent;transition:transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s ease, box-shadow 0.25s ease;display:flex;flex-direction:column;position:relative}
+.card:hover{border-color:var(--purple);transform:translateY(-5px);box-shadow:0 8px 25px rgba(91, 42, 134, 0.15)}
 .card .icon{font-size:1.7rem}
 .card h3{font-size:1.02rem;margin:8px 0 4px;color:var(--purple-dark);font-weight:600;padding-right:26px}
+body.dark-mode .card h3 {color:var(--text)}
 .card p{font-size:.86rem;color:var(--muted);flex:1}
 .card .cat-tag{margin-top:10px;font-size:.75rem;color:var(--purple);background:var(--purple-light);align-self:flex-start;border-radius:6px;padding:2px 8px}
-.star{position:absolute;top:12px;right:12px;font-size:1.15rem;cursor:pointer;color:#D8CFE3;transition:.15s;background:none;border:none}
+.star{position:absolute;top:12px;right:12px;font-size:1.15rem;cursor:pointer;color:#D8CFE3;transition:var(--transition);background:none;border:none}
 .star.on{color:var(--gold)}
 .empty{color:var(--muted);text-align:center;padding:50px 0}
 
 /* ---------- Builder layout ---------- */
 .builder{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
 @media(max-width:880px){.builder{grid-template-columns:1fr}}
-.panel{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+.panel{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--border-color);padding:20px;transition:var(--transition)}
 .panel h2{color:var(--purple-dark);font-size:1.15rem;margin-bottom:4px}
+body.dark-mode .panel h2 {color:var(--text)}
 .panel .hint{font-size:.85rem;color:var(--muted);margin-bottom:14px}
 .field{margin-bottom:12px}
 .field label{display:block;font-size:.88rem;font-weight:600;color:var(--purple-dark);margin-bottom:4px}
-.field input,.field select,.field textarea{width:100%;border:1.5px solid #E2D8EE;border-radius:9px;padding:9px 12px;font-family:inherit;font-size:.95rem;background:#FDFCFE;outline:none;transition:.15s}
+body.dark-mode .field label {color:var(--text)}
+.field input,.field select,.field textarea{width:100%;border:1.5px solid var(--border-color);border-radius:9px;padding:9px 12px;font-family:inherit;font-size:.95rem;background:var(--input-bg);color:var(--text);outline:none;transition:var(--transition)}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--purple)}
 .field textarea{min-height:74px;resize:vertical}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media(max-width:540px){.row2{grid-template-columns:1fr}}
 
 .style-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-bottom:12px}
-.style-opt{border:1.5px solid #E2D8EE;border-radius:10px;padding:9px 10px;cursor:pointer;font-size:.82rem;background:#fff;transition:.15s;text-align:left}
+.style-opt{border:1.5px solid var(--border-color);border-radius:10px;padding:9px 10px;cursor:pointer;font-size:.82rem;background:var(--card);color:var(--text);transition:var(--transition);text-align:left}
 .style-opt:hover{border-color:var(--purple)}
 .style-opt.active{border-color:var(--purple);background:var(--purple-light);font-weight:600}
 .dots{display:flex;gap:4px;margin-bottom:5px}
@@ -77,22 +94,25 @@ section.tab.active{display:block}
 .checks label{font-weight:400;font-size:.92rem;display:flex;align-items:center;gap:6px;cursor:pointer}
 .checks input{width:auto}
 
-.output-box{width:100%;min-height:380px;border:1.5px solid #E2D8EE;border-radius:10px;padding:14px;font-family:'Sarabun',sans-serif;font-size:.9rem;background:#FDFCFE;resize:vertical;white-space:pre-wrap}
+.output-box{width:100%;min-height:380px;border:1.5px solid var(--border-color);border-radius:10px;padding:14px;font-family:'Sarabun',sans-serif;font-size:.9rem;background:var(--input-bg);color:var(--text);resize:vertical;white-space:pre-wrap}
 .btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.btn{border:none;border-radius:9px;padding:10px 16px;font-family:'Prompt',sans-serif;font-size:.9rem;font-weight:500;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:6px}
+.btn{border:none;border-radius:9px;padding:10px 16px;font-family:'Prompt',sans-serif;font-size:.9rem;font-weight:500;cursor:pointer;transition:var(--transition);display:inline-flex;align-items:center;gap:6px}
+.btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.15)}
+.btn:active{transform:translateY(1px)}
 .btn-main{background:var(--purple);color:#fff}
 .btn-main:hover{background:var(--purple-dark)}
 .btn-gold{background:var(--gold);color:var(--purple-dark)}
 .btn-gold:hover{filter:brightness(1.08)}
-.btn-line{background:#fff;border:1.5px solid #E2D8EE;color:var(--text)}
+.btn-line{background:var(--card);border:1.5px solid var(--border-color);color:var(--text)}
 .btn-line:hover{border-color:var(--purple);color:var(--purple)}
 
 /* ---------- Modal ---------- */
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(40,20,60,.55);z-index:100;padding:20px;overflow-y:auto}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(20,10,30,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:100;padding:20px;overflow-y:auto}
 .modal-bg.open{display:flex;align-items:flex-start;justify-content:center}
-.modal{background:#fff;border-radius:16px;max-width:1050px;width:100%;margin:20px auto;padding:24px;position:relative}
+.modal{background:var(--card);color:var(--text);border-radius:16px;max-width:1050px;width:100%;margin:20px auto;padding:24px;position:relative;border:1px solid var(--border-color)}
 .modal .close{position:absolute;top:14px;right:16px;border:none;background:none;font-size:1.5rem;cursor:pointer;color:var(--muted)}
 .modal h2{color:var(--purple-dark);padding-right:36px}
+body.dark-mode .modal h2 {color:var(--text)}
 .modal .desc{color:var(--muted);font-size:.9rem;margin:4px 0 16px}
 .modal .builder{margin-top:6px}
 
@@ -103,27 +123,106 @@ footer{background:var(--purple-dark);color:#cdbfe0;text-align:center;padding:18p
 
 /* ---------- Help / วิธีใช้ ---------- */
 .help-wrap{max-width:920px;margin:0 auto}
-.help-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 24px;margin-bottom:18px}
+.help-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 24px;margin-bottom:18px;border:1px solid var(--border-color)}
 .help-card h2{color:var(--purple-dark);font-size:1.2rem;margin-bottom:12px}
+body.dark-mode .help-card h2 {color:var(--text)}
 .help-card h3{color:var(--purple);font-size:1rem;margin:14px 0 6px}
+body.dark-mode .help-card h3 {color:var(--gold)}
 .steps{counter-reset:s;list-style:none;padding:0}
-.steps li{position:relative;padding:10px 0 10px 46px;border-bottom:1px dashed #E2D8EE}
+.steps li{position:relative;padding:10px 0 10px 46px;border-bottom:1px dashed var(--border-color)}
 .steps li:last-child{border-bottom:none}
 .steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:9px;width:30px;height:30px;border-radius:50%;background:var(--purple);color:#fff;font-family:'Prompt',sans-serif;font-weight:600;display:flex;align-items:center;justify-content:center}
 .steps b{color:var(--purple-dark)}
+body.dark-mode .steps b {color:var(--text)}
 .ex-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:760px){.ex-grid{grid-template-columns:1fr}}
-.ex{border:1.5px solid #E2D8EE;border-radius:10px;overflow:hidden}
+.ex{border:1.5px solid var(--border-color);border-radius:10px;overflow:hidden}
 .ex-h{background:var(--purple-light);padding:8px 12px;font-weight:600;color:var(--purple-dark);font-size:.9rem}
+body.dark-mode .ex-h {color:var(--text)}
 .ex-b{padding:12px;font-size:.85rem;white-space:pre-wrap;color:var(--text);max-height:320px;overflow:auto}
 .ai-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-.ai-row a{flex:1;min-width:120px;text-align:center;text-decoration:none;border-radius:9px;padding:10px;font-family:'Prompt',sans-serif;font-size:.9rem;border:1.5px solid #E2D8EE;color:var(--purple-dark);background:#fff}
-.ai-row a:hover{border-color:var(--purple);background:var(--purple-light)}
+.ai-row a{flex:1;min-width:120px;text-align:center;text-decoration:none;border-radius:999px;padding:10px;font-family:'Prompt',sans-serif;font-size:.9rem;border:1.5px solid var(--border-color);color:var(--text);background:var(--card);transition:var(--transition)}
+.ai-row a:hover{border-color:var(--purple);background:var(--purple-light);color:var(--purple-dark)}
 .faq{margin-top:8px}
-.faq details{border:1.5px solid #E2D8EE;border-radius:9px;margin-bottom:8px;padding:4px 12px}
+.faq details{border:1.5px solid var(--border-color);border-radius:9px;margin-bottom:8px;padding:4px 12px}
 .faq summary{cursor:pointer;font-weight:600;color:var(--purple-dark);padding:8px 0}
+body.dark-mode .faq summary {color:var(--text)}
 .faq p{font-size:.9rem;color:var(--text);padding:0 0 10px}
-.tip{background:var(--gold-light);border-left:4px solid var(--gold);border-radius:8px;padding:10px 14px;font-size:.9rem;margin-top:10px}
+.tip{background:var(--gold-light);border-left:4px solid var(--gold);border-radius:8px;padding:10px 14px;font-size:.9rem;margin-top:10px;color:var(--text)}
+
+/* ---------- Sub-Tabs & Simulated Mockups ---------- */
+.sub-tabs{display:flex;gap:6px}
+.sub-tab-btn{border:1px solid var(--border-color);background:var(--card);color:var(--text);border-radius:6px;padding:4px 10px;font-size:0.82rem;font-family:'Prompt',sans-serif;cursor:pointer;transition:var(--transition)}
+.sub-tab-btn:hover{border-color:var(--purple)}
+.sub-tab-btn.active{background:var(--purple);border-color:var(--purple);color:#fff}
+
+.preview-container{width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 0}
+
+/* FB Mockup */
+.fb-post-mockup{background:var(--card);border:1px solid var(--border-color);border-radius:12px;padding:16px;font-family:system-ui, -apple-system, sans-serif;color:var(--text);width:100%;max-width:440px;margin:10px auto;box-shadow:var(--shadow)}
+.fb-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.fb-avatar{width:40px;height:40px;border-radius:50%;background:var(--purple-light);color:var(--purple-dark);display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+body.dark-mode .fb-avatar{color:var(--text)}
+.fb-name-meta{display:flex;flex-direction:column}
+.fb-name{font-weight:bold;color:var(--purple-dark);font-size:0.95rem}
+body.dark-mode .fb-name{color:var(--text)}
+.fb-meta{font-size:0.75rem;color:var(--muted)}
+.fb-content{font-size:0.9rem;line-height:1.5;white-space:pre-wrap;margin-bottom:12px;text-align:left}
+.fb-image-placeholder{width:100%;height:220px;border-radius:8px;background:linear-gradient(135deg, var(--purple-light), var(--gold-light));display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--text);font-size:0.85rem;font-weight:500;border:1px dashed var(--border-color);margin-bottom:12px}
+.fb-actions{display:flex;border-top:1px solid var(--border-color);padding-top:8px;justify-content:space-around;font-size:0.85rem;color:var(--muted);font-weight:600}
+.fb-action-item{display:flex;align-items:center;gap:6px;cursor:pointer}
+
+/* LINE Mockup */
+.line-chat-mockup{background:#7494C4;border-radius:12px;padding:16px;width:100%;max-width:440px;margin:10px auto;height:380px;overflow-y:auto;box-shadow:var(--shadow)}
+body.dark-mode .line-chat-mockup{background:#2A3644}
+.line-message{display:flex;gap:8px;margin-bottom:12px;align-items:flex-start;text-align:left}
+.line-avatar{width:36px;height:36px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:1.1rem;box-shadow:0 2px 5px rgba(0,0,0,0.1)}
+.line-msg-bubble-wrap{display:flex;flex-direction:column;max-width:75%}
+.line-username{font-size:0.75rem;color:#fff;margin-bottom:3px;font-weight:500}
+.line-msg-bubble{background:#85e354;color:#111;border-radius:12px;padding:8px 12px;font-size:0.88rem;line-height:1.4;white-space:pre-wrap;position:relative;box-shadow:0 1px 3px rgba(0,0,0,0.1)}
+.line-msg-bubble::before{content:'';position:absolute;left:-6px;top:10px;border-right:6px solid #85e354;border-top:6px solid transparent;border-bottom:6px solid transparent}
+.line-time{font-size:0.68rem;color:rgba(255,255,255,0.8);align-self:flex-end;margin-left:4px;margin-bottom:2px}
+
+/* Poster Preview Mockup */
+.poster-preview-card{width:100%;max-width:280px;aspect-ratio:1 / 1.414;margin:10px auto;border-radius:12px;box-shadow:var(--shadow);border:1px solid var(--border-color);overflow:hidden;display:flex;flex-direction:column;position:relative;color:#fff;text-align:center;background:#3E1C5C;transition:var(--transition)}
+.poster-pre-header{font-size:0.6rem;font-weight:600;padding:6px;background:rgba(0,0,0,0.25);text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.poster-pre-body{flex:1;padding:12px 10px;display:flex;flex-direction:column;justify-content:space-between;align-items:center}
+.poster-pre-title{font-family:'Prompt',sans-serif;font-size:1.05rem;font-weight:700;line-height:1.3;margin-top:4px;text-shadow:0 2px 4px rgba(0,0,0,0.5)}
+.poster-pre-tagline{font-size:0.62rem;opacity:0.95;margin:3px 0;max-height:28px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.poster-pre-collage{width:100%;display:grid;gap:3px;margin:6px 0;background:rgba(255,255,255,0.08);padding:3px;border-radius:4px}
+.poster-pre-collage-cell{background:rgba(255,255,255,0.22);border-radius:2px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;font-size:0.6rem}
+.poster-pre-info{font-size:0.6rem;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:4px;padding:3px 6px;width:100%;margin-top:auto}
+.poster-pre-footer{font-size:0.52rem;padding:6px;background:rgba(0,0,0,0.3);opacity:0.95;display:flex;justify-content:space-around;align-items:center}
+
+/* Creative Mockup */
+.creative-preview-box{width:100%;min-height:320px;border:1px solid var(--border-color);background:var(--input-bg);border-radius:10px;padding:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+.character-sheet-grid{display:grid;grid-template-columns:repeat(3, 1fr);gap:6px;width:100%}
+.char-sheet-cell{background:var(--card);border:1px solid var(--border-color);border-radius:6px;padding:8px 4px;text-align:center;font-size:0.7rem;font-weight:600;color:var(--text)}
+.char-avatar{font-size:1.5rem;margin-bottom:4px}
+.vocab-card-mockup{width:100%;max-width:240px;border:4px solid var(--purple);border-radius:16px;background:var(--card);padding:20px;text-align:center;box-shadow:var(--shadow)}
+.vocab-word{font-family:'Prompt',sans-serif;font-size:1.8rem;font-weight:700;color:var(--purple-dark)}
+body.dark-mode .vocab-word{color:var(--text)}
+.vocab-ipa{font-size:0.85rem;color:var(--muted);margin-bottom:12px}
+.vocab-meaning{background:var(--purple-light);color:var(--purple-dark);padding:4px 10px;border-radius:8px;font-size:0.9rem;font-weight:600;display:inline-block}
+body.dark-mode .vocab-meaning{background:var(--purple-light);color:#f3effa}
+.sticker-mockup{width:120px;height:120px;border-radius:50%;background:#fff;border:4px solid #fff;outline:2px solid #ddd;box-shadow:0 8px 16px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center;font-size:3.8rem;position:relative;animation:stickerBob 3s ease-in-out infinite}
+@keyframes stickerBob{0%, 100% {transform:translateY(0) rotate(0)} 50% {transform:translateY(-8px) rotate(3deg)}}
+.storyboard-mockup{display:grid;grid-template-columns:repeat(2, 1fr);gap:8px;width:100%}
+.storyboard-panel{border:1px solid var(--border-color);background:var(--card);border-radius:6px;overflow:hidden}
+.storyboard-img{height:65px;background:var(--purple-light);display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+.storyboard-caption{padding:4px 6px;font-size:0.65rem;color:var(--text);text-overflow:ellipsis;white-space:nowrap;overflow:hidden;text-align:left}
+
+.preview-toggle-btn{border:1px solid var(--border-color);background:var(--card);color:var(--text);border-radius:6px;padding:4px 12px;font-size:0.82rem;font-family:'Prompt',sans-serif;cursor:pointer;transition:var(--transition)}
+.preview-toggle-btn.active{background:var(--purple);border-color:var(--purple);color:#fff}
+
+/* Animations for Modal scale in */
+@keyframes modalScaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.modal-bg.open .modal {
+  animation: modalScaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
 </style>
 </head>
 <body>
@@ -139,6 +238,7 @@ footer{background:var(--purple-dark);color:#cdbfe0;text-align:center;padding:18p
   <button class="tab-btn" data-tab="creative" onclick="switchTab('creative')">🎨 ภาพสร้างสรรค์</button>
   <button class="tab-btn" data-tab="caption" onclick="switchTab('caption')">✍️ AI คิดคำโพสต์</button>
   <button class="tab-btn" data-tab="help" onclick="switchTab('help')">📖 วิธีใช้ + ตัวอย่าง</button>
+  <button class="theme-toggle-btn" id="themeToggle" onclick="toggleTheme()" style="margin-left:auto; border:none; background:rgba(255,255,255,.12); color:#fff; border-radius:999px; padding:9px 16px; font-size:.95rem; font-family:'Prompt',sans-serif; cursor:pointer; transition:.18s;">🌙 โหมดมืด</button>
 </nav>
 
 <main>
@@ -147,18 +247,46 @@ footer{background:var(--purple-dark);color:#cdbfe0;text-align:center;padding:18p
 <section class="tab active" id="tab-library">
   <div class="toolbar">
     <div class="search">🔍 <input id="searchBox" type="text" placeholder="ค้นหาพรอมต์… เช่น ใบงาน วารสาร ข้อสอบ โปสเตอร์" oninput="renderLibrary()"></div>
+    <button class="btn btn-main" onclick="openCustomTemplateModal()" style="margin-left: auto; border-radius: 8px; font-size: 0.9rem; padding: 8px 16px;">➕ สร้างเทมเพลตใหม่</button>
   </div>
   <div class="chips" id="catChips"></div>
   <div class="grid" id="libGrid"></div>
   <div class="empty" id="libEmpty" style="display:none">ไม่พบพรอมต์ที่ค้นหา ลองคำอื่นดูครับ</div>
+
+  <div class="history-section" id="historySection" style="margin-top: 40px; border-top: 2px dashed var(--border-color); padding-top: 24px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+      <h2 style="color:var(--purple-dark); font-size:1.25rem; margin-bottom:0;">📜 ประวัติการสร้างและคัดลอกพรอมต์ล่าสุด</h2>
+      <button class="btn btn-line" onclick="clearHistory()" style="padding: 6px 12px; font-size: 0.8rem; border-radius: 6px;">ล้างประวัติ</button>
+    </div>
+    <div id="historyList" class="grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px;"></div>
+    <div id="historyEmpty" class="empty" style="padding: 20px 0; font-size: 0.9rem;">ยังไม่มีประวัติการคัดลอก เมื่อคุณกดคัดลอกหรือส่งไป AI พรอมต์จะแสดงที่นี่เพื่อเรียกใช้ซ้ำ</div>
+  </div>
 </section>
 
 <!-- ================= TAB 2 : POSTER BUILDER ================= -->
 <section class="tab" id="tab-poster">
   <div class="builder">
     <div class="panel">
-      <h2>🖼️ ตัวสร้างพรอมต์ภาพโปสเตอร์ประชาสัมพันธ์</h2>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <h2 style="margin-bottom:0;">🖼️ ตัวสร้างพรอมต์ภาพโปสเตอร์ประชาสัมพันธ์</h2>
+        <button class="btn btn-line" onclick="generateShareLink()" style="padding: 6px 12px; font-size: 0.8rem; border-radius: 6px;">🔗 แชร์หน้านี้</button>
+      </div>
       <p class="hint">เลือกประเภทงาน สไตล์ และขนาดภาพ แล้วกรอกข้อมูลโรงเรียน ระบบจะประกอบพรอมต์ภาพสำหรับ AI สร้างภาพ (Gemini / Nano Banana, ChatGPT / DALL·E, Canva ฯลฯ) ให้อัตโนมัติ</p>
+
+      <!-- School Profile Manager -->
+      <div class="profile-manager" style="background: var(--purple-light, rgba(91, 42, 134, 0.05)); border: 1.5px solid var(--border-color); border-radius: var(--radius); padding: 12px; margin-bottom: 16px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 8px; flex: 1; min-width: 240px;">
+          <span style="font-size: 1.1rem; color: var(--purple);">🏢</span>
+          <label style="font-weight: 600; font-size: 0.88rem; color: var(--text); margin: 0; white-space: nowrap;">โปรไฟล์โรงเรียน:</label>
+          <select id="p_profile_select" style="flex: 1; border: 1.5px solid var(--border-color); border-radius: 8px; padding: 6px 10px; font-family: inherit; font-size: 0.9rem; background: var(--input-bg); color: var(--text); outline: none; transition: var(--transition);" onchange="changeProfile(this.value)">
+            <option value="">-- เลือกหรือสร้างโปรไฟล์ใหม่ --</option>
+          </select>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-line" onclick="saveCurrentProfile()" style="padding: 6px 12px; font-size: 0.85rem; border-radius: 8px;">💾 บันทึกโปรไฟล์นี้</button>
+          <button class="btn btn-line" onclick="deleteCurrentProfile()" style="padding: 6px 12px; font-size: 0.85rem; border-radius: 8px; color: #f87171; border-color: rgba(248,113,113,0.3);" id="btn-delete-profile">🗑️ ลบ</button>
+        </div>
+      </div>
 
       <div class="field">
         <label>ประเภทโปสเตอร์ / กิจกรรม (เลือกจากรายการ หรือพิมพ์ชื่อกิจกรรมเองก็ได้)</label>
@@ -167,6 +295,44 @@ footer{background:var(--purple-dark);color:#cdbfe0;text-align:center;padding:18p
 
       <div class="field"><label>สไตล์ / โทนสีของโปสเตอร์</label></div>
       <div class="style-grid" id="styleGrid"></div>
+
+      <!-- Visual Prompt Refiners -->
+      <div style="background: var(--input-bg); border: 1.5px solid var(--border-color); border-radius: var(--radius); padding: 12px; margin-bottom: 12px;">
+        <label style="font-weight: 600; font-size: 0.88rem; color: var(--text); margin-bottom: 8px; display: block; display: flex; align-items: center; gap: 6px;">
+          <span>🪄 ปรับแต่งสไตล์รูปภาพเพิ่มเติม (Visual Refiners)</span>
+        </label>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px;">
+          <div class="field" style="margin-bottom: 0;">
+            <label style="font-size: 0.8rem; font-weight: normal; margin-bottom: 2px;">💡 การจัดแสง (Lighting)</label>
+            <select id="p_refiner_lighting" style="padding: 4px 8px; font-size: 0.85rem;" onchange="buildPoster()">
+              <option value="">-- ไม่ระบุ --</option>
+              <option value="studio lighting">Studio Light</option>
+              <option value="cinematic lighting">Cinematic</option>
+              <option value="dramatic contrast lighting">Dramatic Contrast</option>
+              <option value="sun rays lighting">Sun Rays</option>
+            </select>
+          </div>
+          <div class="field" style="margin-bottom: 0;">
+            <label style="font-size: 0.8rem; font-weight: normal; margin-bottom: 2px;">📷 กล้อง/เลนส์ (Camera)</label>
+            <select id="p_refiner_camera" style="padding: 4px 8px; font-size: 0.85rem;" onchange="buildPoster()">
+              <option value="">-- ไม่ระบุ --</option>
+              <option value="85mm lens portrait photo">85mm Portrait</option>
+              <option value="35mm wide angle photo">35mm Wide Angle</option>
+              <option value="macro close-up photo">Macro Close-up</option>
+              <option value="aerial POV drone shot">Aerial POV</option>
+            </select>
+          </div>
+          <div class="field" style="margin-bottom: 0;">
+            <label style="font-size: 0.8rem; font-weight: normal; margin-bottom: 2px;">✨ เอฟเฟกต์ (Effects)</label>
+            <select id="p_refiner_effects" style="padding: 4px 8px; font-size: 0.85rem;" onchange="buildPoster()">
+              <option value="">-- ไม่ระบุ --</option>
+              <option value="deep bokeh blur">Deep Bokeh</option>
+              <option value="volumetric fog atmosphere">Volumetric Fog</option>
+              <option value="sharp detailed textures">Sharp Detail</option>
+            </select>
+          </div>
+        </div>
+      </div>
 
       <div class="field">
         <label>ขนาดภาพ</label>
@@ -213,14 +379,33 @@ footer{background:var(--purple-dark);color:#cdbfe0;text-align:center;padding:18p
     </div>
 
     <div class="panel">
-      <h2>ผลลัพธ์พรอมต์ภาพ</h2>
-      <p class="hint">คัดลอกไปวางใน AI สร้างภาพ พร้อมแนบไฟล์โลโก้โรงเรียน ภาพผู้บริหาร และภาพกิจกรรมตามที่พรอมต์ระบุ</p>
-      <textarea class="output-box" id="posterOut" readonly></textarea>
-      <div class="btns">
-        <button class="btn btn-main" onclick="copyOut('posterOut')">📋 คัดลอกพรอมต์</button>
-        <button class="btn btn-gold" onclick="openAI('gemini','posterOut')">✨ Gemini</button>
-        <button class="btn btn-line" onclick="openAI('chatgpt','posterOut')">ChatGPT</button>
-        <button class="btn btn-line" onclick="openAI('claude','posterOut')">Claude</button>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1.5px solid var(--border-color); padding-bottom:8px;">
+        <h2 style="margin-bottom:0; font-size: 1.15rem;">ผลลัพธ์พรอมต์ภาพ</h2>
+        <div class="sub-tabs">
+          <button class="sub-tab-btn active" onclick="switchSubTab(this, 'prompt', 'poster')">📝 พรอมต์คำสั่ง</button>
+          <button class="sub-tab-btn" onclick="switchSubTab(this, 'preview', 'poster')">🖼️ โปสเตอร์ตัวอย่าง</button>
+        </div>
+      </div>
+      
+      <div class="sub-tab-content poster-prompt-content">
+        <p class="hint">คัดลอกไปวางใน AI สร้างภาพ พร้อมแนบไฟล์โลโก้โรงเรียน ภาพผู้บริหาร และภาพกิจกรรมตามที่พรอมต์ระบุ</p>
+        <textarea class="output-box" id="posterOut" readonly></textarea>
+        <div class="btns">
+          <button class="btn btn-main" onclick="copyOut('posterOut')">📋 คัดลอกพรอมต์</button>
+          <button class="btn btn-gold" onclick="downloadPrompt('posterOut', 'poster')">📥 ดาวน์โหลด (.txt)</button>
+          <button class="btn btn-line" onclick="openAI('gemini','posterOut')">✨ Gemini</button>
+          <button class="btn btn-line" onclick="openAI('chatgpt','posterOut')">ChatGPT</button>
+          <button class="btn btn-line" onclick="openAI('claude','posterOut')">Claude</button>
+        </div>
+      </div>
+      
+      <div class="sub-tab-content poster-preview-content" style="display:none;">
+        <p class="hint">จำลองการจัดวางองค์ประกอบภาพ (Layout) ตามที่คุณเลือก</p>
+        <div class="preview-container">
+          <div id="posterPreviewCard" class="poster-preview-card">
+            <!-- Dynamic JS output -->
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -230,7 +415,10 @@ footer{background:var(--purple-dark);color:#cdbfe0;text-align:center;padding:18p
 <section class="tab" id="tab-creative">
   <div class="builder">
     <div class="panel">
-      <h2>🎨 ตัวสร้างพรอมต์ภาพสร้างสรรค์</h2>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <h2 style="margin-bottom:0;">🎨 ตัวสร้างพรอมต์ภาพสร้างสรรค์</h2>
+        <button class="btn btn-line" onclick="generateShareLink()" style="padding: 6px 12px; font-size: 0.8rem; border-radius: 6px;">🔗 แชร์หน้านี้</button>
+      </div>
       <p class="hint">สร้างตัวละคร มาสคอต สติกเกอร์ ภาพประกอบสื่อ Character Sheet และสตอรี่บอร์ด — เลือกสไตล์ หน้าตา อารมณ์ ท่าทาง และมุมกล้องได้อิสระ</p>
 
       <div class="field">
@@ -255,6 +443,44 @@ footer{background:var(--purple-dark);color:#cdbfe0;text-align:center;padding:18p
 
       <div class="field"><label>สไตล์ภาพ (แนวศิลปะ)</label></div>
       <div class="style-grid" id="artGrid"></div>
+
+      <!-- Visual Prompt Refiners -->
+      <div style="background: var(--input-bg); border: 1.5px solid var(--border-color); border-radius: var(--radius); padding: 12px; margin-bottom: 12px;">
+        <label style="font-weight: 600; font-size: 0.88rem; color: var(--text); margin-bottom: 8px; display: block; display: flex; align-items: center; gap: 6px;">
+          <span>🪄 ปรับแต่งสไตล์รูปภาพเพิ่มเติม (Visual Refiners)</span>
+        </label>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px;">
+          <div class="field" style="margin-bottom: 0;">
+            <label style="font-size: 0.8rem; font-weight: normal; margin-bottom: 2px;">💡 การจัดแสง (Lighting)</label>
+            <select id="g_refiner_lighting" style="padding: 4px 8px; font-size: 0.85rem;" onchange="buildCreative()">
+              <option value="">-- ไม่ระบุ --</option>
+              <option value="studio lighting">Studio Light</option>
+              <option value="cinematic lighting">Cinematic</option>
+              <option value="dramatic contrast lighting">Dramatic Contrast</option>
+              <option value="sun rays lighting">Sun Rays</option>
+            </select>
+          </div>
+          <div class="field" style="margin-bottom: 0;">
+            <label style="font-size: 0.8rem; font-weight: normal; margin-bottom: 2px;">📷 กล้อง/เลนส์ (Camera)</label>
+            <select id="g_refiner_camera" style="padding: 4px 8px; font-size: 0.85rem;" onchange="buildCreative()">
+              <option value="">-- ไม่ระบุ --</option>
+              <option value="85mm lens portrait photo">85mm Portrait</option>
+              <option value="35mm wide angle photo">35mm Wide Angle</option>
+              <option value="macro close-up photo">Macro Close-up</option>
+              <option value="aerial POV drone shot">Aerial POV</option>
+            </select>
+          </div>
+          <div class="field" style="margin-bottom: 0;">
+            <label style="font-size: 0.8rem; font-weight: normal; margin-bottom: 2px;">✨ เอฟเฟกต์ (Effects)</label>
+            <select id="g_refiner_effects" style="padding: 4px 8px; font-size: 0.85rem;" onchange="buildCreative()">
+              <option value="">-- ไม่ระบุ --</option>
+              <option value="deep bokeh blur">Deep Bokeh</option>
+              <option value="volumetric fog atmosphere">Volumetric Fog</option>
+              <option value="sharp detailed textures">Sharp Detail</option>
+            </select>
+          </div>
+        </div>
+      </div>
 
       <div class="row2">
         <div class="field"><label>ตัวละครหลัก</label><select id="g_role" onchange="buildCreative()"></select></div>
@@ -281,14 +507,33 @@ footer{background:var(--purple-dark);color:#cdbfe0;text-align:center;padding:18p
     </div>
 
     <div class="panel">
-      <h2>ผลลัพธ์พรอมต์ภาพ</h2>
-      <p class="hint">คัดลอกไปวางใน AI สร้างภาพ (Gemini / Nano Banana, ChatGPT / DALL·E, Canva, Midjourney ฯลฯ)</p>
-      <textarea class="output-box" id="creativeOut" readonly></textarea>
-      <div class="btns">
-        <button class="btn btn-main" onclick="copyOut('creativeOut')">📋 คัดลอกพรอมต์</button>
-        <button class="btn btn-gold" onclick="openAI('gemini','creativeOut')">✨ Gemini</button>
-        <button class="btn btn-line" onclick="openAI('chatgpt','creativeOut')">ChatGPT</button>
-        <button class="btn btn-line" onclick="openAI('claude','creativeOut')">Claude</button>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1.5px solid var(--border-color); padding-bottom:8px;">
+        <h2 style="margin-bottom:0; font-size: 1.15rem;">ผลลัพธ์พรอมต์ภาพ</h2>
+        <div class="sub-tabs">
+          <button class="sub-tab-btn active" onclick="switchSubTab(this, 'prompt', 'creative')">📝 พรอมต์คำสั่ง</button>
+          <button class="sub-tab-btn" onclick="switchSubTab(this, 'preview', 'creative')">🎨 ตัวอย่างจำลอง</button>
+        </div>
+      </div>
+      
+      <div class="sub-tab-content creative-prompt-content">
+        <p class="hint">คัดลอกไปวางใน AI สร้างภาพ (Gemini / Nano Banana, ChatGPT / DALL·E, Canva, Midjourney ฯลฯ)</p>
+        <textarea class="output-box" id="creativeOut" readonly></textarea>
+        <div class="btns">
+          <button class="btn btn-main" onclick="copyOut('creativeOut')">📋 คัดลอกพรอมต์</button>
+          <button class="btn btn-gold" onclick="downloadPrompt('creativeOut', 'creative')">📥 ดาวน์โหลด (.txt)</button>
+          <button class="btn btn-line" onclick="openAI('gemini','creativeOut')">✨ Gemini</button>
+          <button class="btn btn-line" onclick="openAI('chatgpt','creativeOut')">ChatGPT</button>
+          <button class="btn btn-line" onclick="openAI('claude','creativeOut')">Claude</button>
+        </div>
+      </div>
+      
+      <div class="sub-tab-content creative-preview-content" style="display:none;">
+        <p class="hint">จำลองภาพตัวอย่างผลลัพธ์ตามประเภทงานที่เลือก</p>
+        <div class="preview-container">
+          <div id="creativePreviewCard" class="creative-preview-box">
+            <!-- Dynamic JS output -->
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -298,8 +543,26 @@ footer{background:var(--purple-dark);color:#cdbfe0;text-align:center;padding:18p
 <section class="tab" id="tab-caption">
   <div class="builder">
     <div class="panel">
-      <h2>✍️ AI คิดคำโพสต์ประชาสัมพันธ์</h2>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <h2 style="margin-bottom:0;">✍️ AI คิดคำโพสต์ประชาสัมพันธ์</h2>
+        <button class="btn btn-line" onclick="generateShareLink()" style="padding: 6px 12px; font-size: 0.8rem; border-radius: 6px;">🔗 แชร์หน้านี้</button>
+      </div>
       <p class="hint">กรอกข้อมูลกิจกรรม เลือกช่องทาง ระบบจะสร้างพรอมต์ให้ AI เขียนคำโพสต์ครบทุกช่องทางในครั้งเดียว</p>
+
+      <!-- School Profile Manager -->
+      <div class="profile-manager" style="background: var(--purple-light, rgba(91, 42, 134, 0.05)); border: 1.5px solid var(--border-color); border-radius: var(--radius); padding: 12px; margin-bottom: 16px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 8px; flex: 1; min-width: 240px;">
+          <span style="font-size: 1.1rem; color: var(--purple);">🏢</span>
+          <label style="font-weight: 600; font-size: 0.88rem; color: var(--text); margin: 0; white-space: nowrap;">โปรไฟล์โรงเรียน:</label>
+          <select id="c_profile_select" style="flex: 1; border: 1.5px solid var(--border-color); border-radius: 8px; padding: 6px 10px; font-family: inherit; font-size: 0.9rem; background: var(--input-bg); color: var(--text); outline: none; transition: var(--transition);" onchange="changeProfile(this.value)">
+            <option value="">-- เลือกหรือสร้างโปรไฟล์ใหม่ --</option>
+          </select>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-line" onclick="saveCurrentProfile()" style="padding: 6px 12px; font-size: 0.85rem; border-radius: 8px;">💾 บันทึกโปรไฟล์นี้</button>
+          <button class="btn btn-line" onclick="deleteCurrentProfile()" style="padding: 6px 12px; font-size: 0.85rem; border-radius: 8px; color: #f87171; border-color: rgba(248,113,113,0.3);" id="btn-delete-profile-c">🗑️ ลบ</button>
+        </div>
+      </div>
 
       <div class="field"><label>เขียนคำโพสต์สำหรับช่องทาง</label>
         <div class="checks">
@@ -341,14 +604,39 @@ footer{background:var(--purple-dark);color:#cdbfe0;text-align:center;padding:18p
     </div>
 
     <div class="panel">
-      <h2>ผลลัพธ์พรอมต์</h2>
-      <p class="hint">คัดลอกไปวางใน ChatGPT / Gemini / Claude เพื่อให้ AI เขียนคำโพสต์ให้ทุกช่องทาง</p>
-      <textarea class="output-box" id="captionOut" readonly></textarea>
-      <div class="btns">
-        <button class="btn btn-main" onclick="copyOut('captionOut')">📋 คัดลอกพรอมต์</button>
-        <button class="btn btn-gold" onclick="openAI('chatgpt','captionOut')">✨ ChatGPT</button>
-        <button class="btn btn-line" onclick="openAI('gemini','captionOut')">Gemini</button>
-        <button class="btn btn-line" onclick="openAI('claude','captionOut')">Claude</button>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1.5px solid var(--border-color); padding-bottom:8px;">
+        <h2 style="margin-bottom:0; font-size: 1.15rem;">ผลลัพธ์พรอมต์</h2>
+        <div class="sub-tabs">
+          <button class="sub-tab-btn active" onclick="switchSubTab(this, 'prompt', 'caption')">📝 พรอมต์คำสั่ง</button>
+          <button class="sub-tab-btn" onclick="switchSubTab(this, 'preview', 'caption')">📱 ตัวอย่างจำลอง</button>
+        </div>
+      </div>
+      
+      <div class="sub-tab-content caption-prompt-content">
+        <p class="hint">คัดลอกไปวางใน ChatGPT / Gemini / Claude เพื่อให้ AI เขียนคำโพสต์ให้ทุกช่องทาง</p>
+        <textarea class="output-box" id="captionOut" readonly></textarea>
+        <div class="btns">
+          <button class="btn btn-main" onclick="copyOut('captionOut')">📋 คัดลอกพรอมต์</button>
+          <button class="btn btn-gold" onclick="downloadPrompt('captionOut', 'caption')">📥 ดาวน์โหลด (.txt)</button>
+          <button class="btn btn-line" onclick="openAI('chatgpt','captionOut')">✨ ChatGPT</button>
+          <button class="btn btn-line" onclick="openAI('gemini','captionOut')">Gemini</button>
+          <button class="btn btn-line" onclick="openAI('claude','captionOut')">Claude</button>
+        </div>
+      </div>
+      
+      <div class="sub-tab-content caption-preview-content" style="display:none;">
+        <div style="display:flex; gap:6px; margin-bottom:12px; justify-content:center;">
+          <button class="preview-toggle-btn active" onclick="switchPreviewPlatform(this, 'fb')">👥 Facebook</button>
+          <button class="preview-toggle-btn" onclick="switchPreviewPlatform(this, 'line')">💬 LINE</button>
+        </div>
+        
+        <div id="captionPreviewFB" class="platform-preview">
+          <!-- FB Post Mockup -->
+        </div>
+        
+        <div id="captionPreviewLine" class="platform-preview" style="display:none;">
+          <!-- LINE chat message mockup -->
+        </div>
       </div>
     </div>
   </div>
@@ -447,12 +735,75 @@ Style: luxury Thai school poster, purple gold, 8K
 
 </main>
 
+<!-- ================= CUSTOM TEMPLATE MODAL ================= -->
+<div class="modal-bg" id="customTemplateModalBg" onclick="if(event.target===this)closeCustomTemplateModal()">
+  <div class="modal" style="max-width: 650px;">
+    <button class="close" onclick="closeCustomTemplateModal()">✕</button>
+    <h2 id="customTemplateModalTitle" style="margin:0 0 4px;">➕ สร้างเทมเพลตของคุณเอง</h2>
+    <p class="desc" style="margin-top:2px;">ระบุฟิลด์ตัวแปรที่คุณต้องการกรอก โดยใช้รูปแบบ <code>{{ชื่อตัวแปร}}</code> ในพรอมต์คำสั่ง</p>
+    
+    <input type="hidden" id="customTemplateId" value="">
+    
+    <div style="display:flex; flex-direction:column; gap:12px; margin-top:16px;">
+      <div class="row2">
+        <div class="field">
+          <label>หัวข้อเทมเพลต</label>
+          <input id="tplTitle" placeholder="เช่น ตัวสร้างข้อสอบปรนัย 4 ตัวเลือก">
+        </div>
+        <div class="row2" style="gap:6px;">
+          <div class="field">
+            <label>อีโมจิไอคอน</label>
+            <input id="tplEmoji" placeholder="เช่น 📝" value="📝">
+          </div>
+          <div class="field">
+            <label>หมวดหมู่</label>
+            <select id="tplCategory">
+              <option value="teach">📖 ช่วยสอน/ใบงาน</option>
+              <option value="assess">🎯 วัดผล/ข้อสอบ</option>
+              <option value="pr">📢 ประชาสัมพันธ์</option>
+              <option value="admin">💼 งานบริหาร/ธุรการ</option>
+              <option value="doc">📝 เอกสาร/ID Plan</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      
+      <div class="field">
+        <label>คำอธิบายสั้นๆ</label>
+        <input id="tplDesc" placeholder="อธิบายหน้าที่ของเทมเพลตนี้สั้นๆ เพื่อแสดงบนบัตรคลังพรอมต์">
+      </div>
+      
+      <div class="field">
+        <label>ตัวแปรอินพุต (แยกด้วยเครื่องหมายจุลภาค , )</label>
+        <input id="tplFields" placeholder="เช่น วิชา,เรื่อง,ระดับชั้น,จำนวนข้อ" oninput="updateTplFieldsHint()">
+        <p class="hint" id="tplFieldsHint" style="margin-top:4px; font-size:0.78rem; color:var(--muted);">
+          ตัวแปรที่ใช้งานได้: <code>{{วิชา}}</code>, <code>{{เรื่อง}}</code> ฯลฯ
+        </p>
+      </div>
+      
+      <div class="field">
+        <label>พรอมต์คำสั่ง (พิมพ์ <code>{{ตัวแปร}}</code> เพื่อดึงค่าจากอินพุตมาประกอบ)</label>
+        <textarea id="tplPrompt" style="min-height:180px;" placeholder="ตัวอย่าง:
+คุณคือครูผู้เชี่ยวชาญด้าน {{วิชา}} กรุณาออกข้อสอบย่อย เรื่อง {{เรื่อง}} สำหรับนักเรียนชั้น {{ระดับชั้น}} จำนวน {{จำนวนข้อ}} ข้อ โดยมีคำเฉลยอย่างละเอียด..."></textarea>
+      </div>
+      
+      <div class="btns" style="justify-content: flex-end; margin-top: 8px;">
+        <button class="btn btn-line" onclick="closeCustomTemplateModal()">ยกเลิก</button>
+        <button class="btn btn-main" onclick="saveCustomTemplate()">💾 บันทึกเทมเพลต</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ================= MODAL ================= -->
 <div class="modal-bg" id="modalBg" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <button class="close" onclick="closeModal()">✕</button>
-    <h2 id="mTitle"></h2>
-    <p class="desc" id="mDesc"></p>
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:4px; flex-wrap:wrap;">
+      <h2 id="mTitle" style="margin:0;"></h2>
+      <button id="modalShareBtn" class="btn btn-line" onclick="generateShareLink()" style="padding: 4px 10px; font-size: 0.78rem; border-radius: 6px;">🔗 แชร์เทมเพลต</button>
+    </div>
+    <p class="desc" id="mDesc" style="margin-top:2px;"></p>
     <div class="builder">
       <div>
         <div id="mFields"></div>
@@ -460,7 +811,7 @@ Style: luxury Thai school poster, purple gold, 8K
       <div>
         <div class="btns" style="margin:0 0 8px">
           <button class="btn btn-line" onclick="fillExample()">📝 กรอกตัวอย่างให้</button>
-          <select id="mDetail" onchange="buildModal()" style="border:1.5px solid #E2D8EE;border-radius:9px;padding:8px 10px;font-family:inherit;font-size:.88rem">
+          <select id="mDetail" onchange="buildModal()" style="border:1.5px solid var(--border-color);border-radius:9px;padding:8px 10px;font-family:inherit;font-size:.88rem;background:var(--input-bg);color:var(--text);">
             <option value="">ความละเอียด: มาตรฐาน</option>
             <option value="deep">ความละเอียด: ละเอียดมาก</option>
             <option value="brief">ความละเอียด: กระชับ</option>
@@ -470,7 +821,8 @@ Style: luxury Thai school poster, purple gold, 8K
         <textarea class="output-box" id="mOut" readonly style="min-height:300px"></textarea>
         <div class="btns">
           <button class="btn btn-main" onclick="copyOut('mOut')">📋 คัดลอกพรอมต์</button>
-          <button class="btn btn-gold" onclick="openAI('chatgpt','mOut')">✨ ChatGPT</button>
+          <button class="btn btn-gold" onclick="downloadPrompt('mOut', 'library')">📥 ดาวน์โหลด (.txt)</button>
+          <button class="btn btn-line" onclick="openAI('chatgpt','mOut')">✨ ChatGPT</button>
           <button class="btn btn-line" onclick="openAI('gemini','mOut')">Gemini</button>
           <button class="btn btn-line" onclick="openAI('claude','mOut')">Claude</button>
         </div>
@@ -2687,12 +3039,14 @@ function switchTab(t){
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));
   document.getElementById('tab-'+t).classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
+  updatePreviews();
 }
 function showToast(msg){
   const t=document.getElementById('toast');t.textContent=msg||'คัดลอกพรอมต์แล้ว ✓';
   t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800);
 }
 function copyOut(id){
+  logActionFromId(id);
   const el=document.getElementById(id);
   if(id==='posterOut'||id==='captionOut') rememberFields();
   navigator.clipboard.writeText(el.value).then(()=>showToast()).catch(()=>{
@@ -2700,6 +3054,7 @@ function copyOut(id){
   });
 }
 function openAI(which,id){
+  logActionFromId(id);
   const text=document.getElementById(id).value;
   if(id==='posterOut'||id==='captionOut') rememberFields();
   navigator.clipboard.writeText(text).catch(()=>{});
@@ -2744,7 +3099,8 @@ function renderLibrary(){
   const grid=document.getElementById('libGrid');
   grid.innerHTML='';
   let shown=0;
-  TEMPLATES.forEach(t=>{
+  const allTemplates = [...TEMPLATES, ...customTemplates];
+  allTemplates.forEach(t=>{
     if(favOnly&&!favs.has(t.id))return;
     if(!favOnly&&activeCat!=='all'&&t.cat!==activeCat)return;
     const hay=(t.title+' '+t.desc+' '+(t.tags||'')+' '+CATNAME[t.cat]).toLowerCase();
@@ -2758,6 +3114,37 @@ function renderLibrary(){
     star.textContent='★';
     star.onclick=(e)=>{e.stopPropagation();toggleFav(t.id);};
     card.appendChild(star);
+    
+    if (t.isCustom) {
+      const deleteBtn = document.createElement('button');
+      deleteBtn.className = 'btn-delete-tpl';
+      deleteBtn.innerHTML = '🗑️';
+      deleteBtn.title = 'ลบเทมเพลตนี้';
+      deleteBtn.style.cssText = 'position: absolute; bottom: 12px; right: 12px; border: none; background: none; font-size: 1rem; cursor: pointer; opacity: 0.6; transition: 0.18s; z-index: 10; padding: 4px;';
+      deleteBtn.onmouseenter = () => { deleteBtn.style.opacity = '1'; };
+      deleteBtn.onmouseleave = () => { deleteBtn.style.opacity = '0.6'; };
+      deleteBtn.onclick = (e) => {
+        e.stopPropagation();
+        if (confirm('คุณต้องการลบเทมเพลต "' + t.title + '" ใช่หรือไม่?')) {
+          deleteCustomTemplate(t.id);
+        }
+      };
+      card.appendChild(deleteBtn);
+      
+      const editBtn = document.createElement('button');
+      editBtn.className = 'btn-edit-tpl';
+      editBtn.innerHTML = '✏️';
+      editBtn.title = 'แก้ไขเทมเพลตนี้';
+      editBtn.style.cssText = 'position: absolute; bottom: 12px; right: 36px; border: none; background: none; font-size: 1rem; cursor: pointer; opacity: 0.6; transition: 0.18s; z-index: 10; padding: 4px;';
+      editBtn.onmouseenter = () => { editBtn.style.opacity = '1'; };
+      editBtn.onmouseleave = () => { editBtn.style.opacity = '0.6'; };
+      editBtn.onclick = (e) => {
+        e.stopPropagation();
+        openCustomTemplateModal(t.id);
+      };
+      card.appendChild(editBtn);
+    }
+    
     card.onclick=()=>openCard(t);
     grid.appendChild(card);
   });
@@ -2769,6 +3156,10 @@ function toggleFav(id){
   renderChips();renderLibrary();
 }
 function openCard(t){
+  if (t.isCustom) {
+    openModal(t);
+    return;
+  }
   if(t.goto){
     if(t.goto==='caption'){switchTab('caption');return;}
     if(t.goto==='creative'){switchTab('creative');return;}
@@ -2839,6 +3230,28 @@ const CS_INDICATORS={
  {c:'ว 4.2 ม.3/2',t:'รวบรวมข้อมูล ประมวลผล ประเมินผล นำเสนอข้อมูลและสารสนเทศตามวัตถุประสงค์ โดยใช้ซอฟต์แวร์หรือบริการบนอินเทอร์เน็ตที่หลากหลาย'},
  {c:'ว 4.2 ม.3/3',t:'ประเมินความน่าเชื่อถือของข้อมูล วิเคราะห์สื่อและผลกระทบจากการให้ข่าวสารที่ผิด เพื่อการใช้งานอย่างรู้เท่าทัน'},
  {c:'ว 4.2 ม.3/4',t:'ใช้เทคโนโลยีสารสนเทศอย่างปลอดภัยและมีความรับผิดชอบต่อสังคม ปฏิบัติตามกฎหมายเกี่ยวกับคอมพิวเตอร์ ใช้ลิขสิทธิ์ของผู้อื่นโดยชอบธรรม'}],
+};
+
+/* ตัวชี้วัด ว 4.1 การออกแบบและเทคโนโลยี (ม.1-ม.3) — หลักสูตรแกนกลาง 2551 (ปรับปรุง 2560) */
+const DT_INDICATORS={
+'ม.1':[
+ {c:'ว 4.1 ม.1/1',t:'อธิบายแนวคิดหลักของเทคโนโลยีในชีวิตประจำวันและวิเคราะห์สาเหตุหรือปัจจัยที่ส่งผลต่อการเปลี่ยนแปลงของเทคโนโลยี'},
+ {c:'ว 4.1 ม.1/2',t:'ระบุปัญหาหรือความต้องการในชีวิตประจำวัน รวบรวม วิเคราะห์ข้อมูลและแนวคิดที่เกี่ยวข้องกับปัญหา'},
+ {c:'ว 4.1 ม.1/3',t:'ออกแบบวิธีการแก้ปัญหา โดยวิเคราะห์เปรียบเทียบและตัดสินใจเลือกข้อมูลที่จำเป็น นำเสนอแนวทางการแก้ปัญหาให้ผู้อื่นเข้าใจ วางแผนและดำเนินการแก้ปัญหา'},
+ {c:'ว 4.1 ม.1/4',t:'ทดสอบ ประเมินผล และระบุข้อบกพร่องที่เกิดขึ้น พร้อมทั้งหาแนวทางการปรับปรุงแก้ไข และนำเสนอผลการแก้ปัญหา'},
+ {c:'ว 4.1 ม.1/5',t:'ใช้ความรู้และทักษะเกี่ยวกับวัสดุ อุปกรณ์ เครื่องมือ กลไก ไฟฟ้า หรืออิเล็กทรอนิกส์เพื่อแก้ปัญหาได้อย่างถูกต้อง เหมาะสมและปลอดภัย'}],
+'ม.2':[
+ {c:'ว 4.1 ม.2/1',t:'คาดการณ์แนวโน้มเทคโนโลยีที่จะเกิดขึ้น โดยพิจารณาจากสาเหตุหรือปัจจัยที่ส่งผลต่อการเปลี่ยนแปลงของเทคโนโลยี และวิเคราะห์ เปรียบเทียบ ตัดสินใจเลือกใช้เทคโนโลยี โดยคำนึงถึงผลกระทบต่อชีวิต สังคม และสิ่งแวดล้อม'},
+ {c:'ว 4.1 ม.2/2',t:'ระบุปัญหาหรือความต้องการในชุมชนหรือท้องถิ่น สรุปกรอบของปัญหา รวบรวม วิเคราะห์ข้อมูลและแนวคิดที่เกี่ยวข้องกับปัญหา'},
+ {c:'ว 4.1 ม.2/3',t:'ออกแบบวิธีการแก้ปัญหา โดยวิเคราะห์เปรียบเทียบและตัดสินใจเลือกข้อมูลที่จำเป็นภายใต้เงื่อนไขและทรัพยากรที่มีอยู่ นำเสนอแนวทางการแก้ปัญหา วางแผนขั้นตอนการทำงานและดำเนินการแก้ปัญหาอย่างเป็นขั้นตอน'},
+ {c:'ว 4.1 ม.2/4',t:'ทดสอบ ประเมินผล และอธิบายปัญหาหรือข้อบกพร่องที่เกิดขึ้นภายใต้กรอบเงื่อนไข พร้อมทั้งหาแนวทางการปรับปรุงแก้ไข และนำเสนอผลการแก้ปัญหา'},
+ {c:'ว 4.1 ม.2/5',t:'ใช้ความรู้และทักษะเกี่ยวกับวัสดุ อุปกรณ์ เครื่องมือ กลไก ไฟฟ้า และอิเล็กทรอนิกส์เพื่อแก้ปัญหาหรือพัฒนางานได้อย่างถูกต้อง เหมาะสม และปลอดภัย'}],
+'ม.3':[
+ {c:'ว 4.1 ม.3/1',t:'วิเคราะห์สาเหตุหรือปัจจัยที่ส่งผลต่อการเปลี่ยนแปลงของเทคโนโลยี และความสัมพันธ์ของเทคโนโลยีกับศาสตร์อื่น โดยเฉพาะวิทยาศาสตร์หรือคณิตศาสตร์ เพื่อเป็นแนวทางการแก้ปัญหาหรือพัฒนางาน'},
+ {c:'ว 4.1 ม.3/2',t:'ระบุปัญหาหรือความต้องการของชุมชนหรือท้องถิ่นเพื่อพัฒนางานอาชีพ สรุปกรอบของปัญหา รวบรวม วิเคราะห์ข้อมูลและแนวคิดที่เกี่ยวข้อง โดยคำนึงถึงความถูกต้องด้านทรัพย์สินทางปัญญา'},
+ {c:'ว 4.1 ม.3/3',t:'ออกแบบวิธีการแก้ปัญหา โดยวิเคราะห์เปรียบเทียบและตัดสินใจเลือกข้อมูลที่จำเป็นภายใต้เงื่อนไขและทรัพยากรที่มีอยู่ นำเสนอแนวทางการแก้ปัญหา วางแผนขั้นตอนการทำงานและดำเนินการแก้ปัญหาอย่างเป็นขั้นตอน'},
+ {c:'ว 4.1 ม.3/4',t:'ทดสอบ ประเมินผล วิเคราะห์และให้เหตุผลของปัญหาหรือข้อบกพร่องที่เกิดขึ้นภายใต้กรอบเงื่อนไข พร้อมทั้งหาแนวทางการปรับปรุงแก้ไข และนำเสนอผลการแก้ปัญหา'},
+ {c:'ว 4.1 ม.3/5',t:'ใช้ความรู้และทักษะเกี่ยวกับวัสดุ อุปกรณ์ เครื่องมือ กลไก ไฟฟ้าและอิเล็กทรอนิกส์ให้ถูกต้องกับลักษณะของงาน และปลอดภัย เพื่อแก้ปัญหาหรือพัฒนางาน'}],
 };
 
 /* ============================================================
@@ -2917,6 +3330,12 @@ const CURRICULUM_2568=[
   stmt:'ใช้แนวคิดทางคณิตศาสตร์เพื่อแก้ปัญหาในชีวิตประจำวันและสถานการณ์ใหม่ ๆ ได้ด้วยตนเอง พร้อมอธิบายเหตุผลและสื่อสารด้วยภาษาและสัญลักษณ์ทางคณิตศาสตร์อย่างสมเหตุสมผล'},
  {label:'วิทยาศาสตร์ สิ่งแวดล้อมและเทคโนโลยี',s:'วิทยาศาสตร์ สิ่งแวดล้อมและเทคโนโลยี',area:'ด้านวิทยาศาสตร์ สิ่งแวดล้อมและเทคโนโลยี',
   stmt:'เข้าใจแนวคิดพื้นฐานของปรากฏการณ์ทางธรรมชาติ สิ่งแวดล้อม และนำเทคโนโลยีไปใช้ในชีวิตประจำวันด้วยความรับผิดชอบ'},
+ {label:'เทคโนโลยี',s:'เทคโนโลยี',area:'ด้านเทคโนโลยี',
+  stmt:'เข้าใจและใช้เทคโนโลยีในการแก้ปัญหาในชีวิตจริงอย่างเป็นขั้นตอนและสร้างสรรค์ ทั้งด้านวิทยาการคำนวณและการออกแบบและเทคโนโลยี พร้อมใช้เทคโนโลยีสารสนเทศอย่างปลอดภัยและมีจริยธรรม'},
+ {label:'วิทยาการคำนวณ',s:'วิทยาการคำนวณ',area:'ด้านวิทยาการคำนวณ',
+  stmt:'ใช้แนวคิดเชิงคำนวณในการแก้ปัญหาอย่างเป็นขั้นตอนและเป็นระบบ ออกแบบและเขียนโปรแกรม รวบรวมและประมวลผลข้อมูล และใช้เทคโนโลยีสารสนเทศและการสื่อสารอย่างปลอดภัย รู้เท่าทัน และมีจริยธรรม'},
+ {label:'การออกแบบและเทคโนโลยี',s:'การออกแบบและเทคโนโลยี',area:'ด้านการออกแบบและเทคโนโลยี',
+  stmt:'เข้าใจแนวคิดหลักของเทคโนโลยี ใช้กระบวนการออกแบบเชิงวิศวกรรมแก้ปัญหา สร้างชิ้นงานหรือวิธีการอย่างสร้างสรรค์ และเลือกใช้วัสดุ อุปกรณ์ และเทคโนโลยีอย่างเหมาะสมและปลอดภัย'},
  {label:'ภาษาอังกฤษ',s:'ภาษาอังกฤษ',area:'ด้านภาษาอังกฤษ',
   stmt:'สามารถใช้ภาษาอังกฤษสื่อสารเรื่องใกล้ตัว เข้าใจคำสั่งง่าย ๆ อ่านออกเสียงและใช้คำศัพท์พื้นฐานเกี่ยวกับตนเอง ครอบครัว และโรงเรียน'},
  {label:'สังคมและความเป็นพลเมือง',s:'สังคมและความเป็นพลเมือง',area:'ด้านสังคมและความเป็นพลเมือง',
@@ -3031,6 +3450,16 @@ function openModal(t){
   curTpl=t;
   document.getElementById('mTitle').textContent=t.icon+' '+t.title;
   document.getElementById('mDesc').textContent=t.desc;
+  
+  // Restore template-only controls
+  const detail = document.getElementById('mDetail');
+  if (detail && detail.parentElement) detail.parentElement.style.display = 'flex';
+  const accurate = document.getElementById('mAccurate');
+  if (accurate && accurate.parentElement) accurate.parentElement.style.display = 'block';
+  const delBtn = document.getElementById('modalDeleteHistoryBtn');
+  if (delBtn) delBtn.style.display = 'none';
+  document.getElementById('modalShareBtn').style.display = 'block';
+
   const wrap=document.getElementById('mFields');
   wrap.innerHTML='';
   /* ตัวเลือกหลักสูตรนำร่อง 2568 — กลุ่มสาระ + ระดับชั้น + ผลลัพธ์การเรียนรู้ (เติมให้ แก้ได้) */
@@ -3088,7 +3517,7 @@ function openModal(t){
       var scopeEl=document.getElementById('f_scope');
       if(scopeEl && (scopeEl.value||'').indexOf(full)===-1) scopeEl.value=(scopeEl.value?scopeEl.value+'\n':'')+full;
       const sg=document.getElementById('f__stdGrade');
-      if(sg){sg.value=gSel.value; sg.onchange();}
+      if(sg){sg.value='cs:'+gSel.value; sg.onchange();}
       buildModal();
     };
     const w1=document.createElement('div');w1.className='field';w1.appendChild(gSel);
@@ -3121,22 +3550,28 @@ function openModal(t){
     const lab=document.createElement('label');lab.textContent='มาตรฐาน/ตัวชี้วัดตามหลักสูตร (เว้นว่างได้)';
     d.appendChild(lab);
     const row=document.createElement('div');row.className='row2';
+    const stdBank=function(v){return v&&v.indexOf('dt:')===0?DT_INDICATORS:CS_INDICATORS;};
+    const stdKey=function(v){return v?v.replace(/^(cs|dt):/,''):'';};
     const gSel=document.createElement('select');gSel.id='f__stdGrade';
-    gSel.innerHTML='<option value="">📚 คลังตัวชี้วัดวิทยาการคำนวณ ว 4.2 — เลือกชั้น</option>';
-    Object.keys(CS_INDICATORS).forEach(g=>{const o=document.createElement('option');o.value=g;o.textContent='วิทยาการคำนวณ ชั้น '+g+' ('+CS_INDICATORS[g].length+' ตัวชี้วัด)';gSel.appendChild(o);});
+    gSel.innerHTML='<option value="">📚 คลังตัวชี้วัดสาระเทคโนโลยี — เลือกมาตรฐาน/ชั้น</option>'
+      +'<optgroup label="ว 4.2 วิทยาการคำนวณ">'
+      +Object.keys(CS_INDICATORS).map(g=>'<option value="cs:'+g+'">วิทยาการคำนวณ ชั้น '+g+' ('+CS_INDICATORS[g].length+' ตัวชี้วัด)</option>').join('')
+      +'</optgroup><optgroup label="ว 4.1 การออกแบบและเทคโนโลยี">'
+      +Object.keys(DT_INDICATORS).map(g=>'<option value="dt:'+g+'">การออกแบบและเทคโนโลยี ชั้น '+g+' ('+DT_INDICATORS[g].length+' ตัวชี้วัด)</option>').join('')
+      +'</optgroup>';
     const iSel=document.createElement('select');iSel.id='f__stdPick';
-    iSel.innerHTML='<option value="">— เลือกชั้นก่อน —</option>';
+    iSel.innerHTML='<option value="">— เลือกมาตรฐาน/ชั้นก่อน —</option>';
     gSel.onchange=function(){
       iSel.innerHTML='<option value="">— เลือกตัวชี้วัด (เลือกซ้ำได้หลายข้อ) —</option>';
-      (CS_INDICATORS[gSel.value]||[]).forEach((x,i)=>{
+      (stdBank(gSel.value)[stdKey(gSel.value)]||[]).forEach((x,i)=>{
         const o=document.createElement('option');o.value=i;
-        o.textContent=x.c+' — '+(x.t.length>55?x.t.slice(0,55)+'…':x.t);
+        o.textContent=x.c+' — '+(x.t.length>50?x.t.slice(0,50)+'…':x.t);
         iSel.appendChild(o);
       });
     };
     iSel.onchange=function(){
       if(iSel.value===''||!gSel.value)return;
-      const x=CS_INDICATORS[gSel.value][+iSel.value];
+      const x=stdBank(gSel.value)[stdKey(gSel.value)][+iSel.value];
       const ta=document.getElementById('f__std');
       const line=x.c+' '+x.t;
       if(ta.value.indexOf(x.c)===-1) ta.value=(ta.value?ta.value+'\n':'')+line;
@@ -3301,6 +3736,15 @@ function buildPoster(){
   const reg=v('p_reg'), fb=v('p_fb')||school, addr=v('p_addr')||'[ที่อยู่โรงเรียน]', pr=v('p_pr')||'[ชื่อผู้รับผิดชอบ]';
   let out='';
 
+  // Visual Prompt Refiners
+  const p_lighting = v('p_refiner_lighting');
+  const p_camera = v('p_refiner_camera');
+  const p_effects = v('p_refiner_effects');
+  let refinerStr = '';
+  if (p_lighting) refinerStr += ', ' + p_lighting;
+  if (p_camera) refinerStr += ', ' + p_camera;
+  if (p_effects) refinerStr += ', ' + p_effects;
+
   if(preset.mourning||activeStyle==='mourning'){
     /* ---- โครงสร้างโปสเตอร์ไว้อาลัย ---- */
     out+='ออกแบบโปสเตอร์ถวายความอาลัยอย่างสมพระเกียรติ '+s.thai+'\n\n';
@@ -3316,7 +3760,7 @@ function buildPoster(){
     out+='แถบสีดำด้านล่างสุด ตัวอักษรสีขาว-ทองชัดเจน:\n';
     if(reg) out+='ทะเบียนคุม '+reg+'\n';
     out+='Facebook: '+fb+'\nที่อยู่: '+addr+'\nฝ่ายประชาสัมพันธ์: '+pr+'\n\n';
-    out+='สไตล์กราฟิก:\n'+s.en+', official memorial layout, balanced symmetrical composition, harmonious color palette, soft professional lighting, crisp clean readable Thai typography, high resolution, ultra detailed, 8K, award-winning graphic design\n\n';
+    out+='สไตล์กราฟิก:\n'+s.en+', official memorial layout, balanced symmetrical composition, harmonious color palette, soft professional lighting' + refinerStr + ', crisp clean readable Thai typography, high resolution, ultra detailed, 8K, award-winning graphic design\n\n';
     out+=size.spec;
   }else{
     /* ---- โครงสร้างโปสเตอร์ PR กิจกรรม ---- */
@@ -3339,10 +3783,11 @@ function buildPoster(){
     out+=(body?'"'+body+'"\n\n':'[ให้ AI เรียบเรียงเนื้อหาบรรยายกิจกรรม "'+activity+'" ของ '+school+' ความยาว 4-6 บรรทัด ภาษาทางการสละสลวย สื่อถึงวัตถุประสงค์และคุณค่าของกิจกรรม]\n\n');
     if(closing) out+='ด้านล่างสุด มีข้อความภาษาไทยตัวเขียนหรูหรา '+s.accent+'เด่นชัด:\n"'+closing+'"\n\n';
     out+='แถบ'+s.footer+'ด้านล่างสุด ตัวอักษรสีขาวชัดเจน เพิ่มไอคอน Facebook เว็บไซต์ ที่อยู่ และผู้รับผิดชอบ:\nFacebook: '+fb+'\nที่อยู่: '+addr+'\nฝ่ายประชาสัมพันธ์: '+pr+'\n\n';
-    out+='สไตล์กราฟิก:\nThai educational PR poster, '+s.en+', elegant Thai typography, official school PR poster, modern infographic layout, balanced eye-catching composition, clear visual hierarchy, harmonious vibrant colors, professional studio lighting, crisp readable Thai text, depth and dimension, high resolution, ultra detailed, 8K, award-winning graphic design\n\n';
+    out+='สไตล์กราฟิก:\nThai educational PR poster, '+s.en+', elegant Thai typography, official school PR poster, modern infographic layout, balanced eye-catching composition, clear visual hierarchy, harmonious vibrant colors, professional studio lighting' + refinerStr + ', crisp readable Thai text, depth and dimension, high resolution, ultra detailed, 8K, award-winning graphic design\n\n';
     out+=size.spec;
   }
   document.getElementById('posterOut').value=out;
+  updatePreviews();
 }
 
 /* ============================================================
@@ -3376,6 +3821,7 @@ function buildCaption(){
   }
   out+='\nสุดท้าย เสนอพาดหัว/ประโยคเปิดให้เลือกเพิ่มอีก 3 แบบ';
   document.getElementById('captionOut').value=out;
+  updatePreviews();
 }
 
 /* ============================================================
@@ -3588,6 +4034,16 @@ function buildCreative(){
   const size=SIZES[+v('g_size')||0];
   const isPhoto=role.t.indexOf('รูปแนบ')>-1;
   const charLine=role.t+(look?' — '+look:'')+(isPhoto?' (ใช้ใบหน้าและรูปลักษณ์ตามรูปภาพที่แนบมาเป๊ะ 100% ห้ามดัดแปลงใบหน้า ทรงผม และสีผิว)':'');
+  
+  // Visual Prompt Refiners
+  const g_lighting = v('g_refiner_lighting');
+  const g_camera = v('g_refiner_camera');
+  const g_effects = v('g_refiner_effects');
+  let refStr = '';
+  if (g_lighting) refStr += ', ' + g_lighting;
+  if (g_camera) refStr += ', ' + g_camera;
+  if (g_effects) refStr += ', ' + g_effects;
+
   let out='';
   if(type==='sheet'){
     out+='สร้าง Character Sheet (ตารางอารมณ์และท่าทาง) ของตัวละคร 1 ตัว สไตล์'+a.thai+'\n\n';
@@ -3595,7 +4051,7 @@ function buildCreative(){
     out+='จัดวางเป็นตาราง 3×3 รวม 9 ช่องในภาพเดียว ทุกช่องต้องเป็นตัวละครตัวเดิม หน้าตา ทรงผม สีผิว และเสื้อผ้าเหมือนกันทุกประการ เปลี่ยนเฉพาะอารมณ์และท่าทางดังนี้:\n';
     SHEET9.forEach((s9,i)=>{out+=(i+1)+') '+s9.t+'\n';});
     out+='\nพื้นหลัง: '+bg.t+'\nจัดองค์ประกอบให้ทุกช่องขนาดเท่ากัน สะอาดตา\n\n';
-    out+='Style keywords (EN):\n'+a.en+', '+role.e+', character expression sheet, 3x3 grid, consistent character design, same outfit and hairstyle in every panel, '+bg.e+', professional lighting, balanced composition, harmonious colors, high resolution, ultra detailed, 8K\n\n';
+    out+='Style keywords (EN):\n'+a.en+', '+role.e+', character expression sheet, 3x3 grid, consistent character design, same outfit and hairstyle in every panel, '+bg.e+', professional lighting' + refStr + ', balanced composition, harmonious colors, high resolution, ultra detailed, 8K\n\n';
     out+='ขนาดภาพ: '+size.spec;
   }else if(type==='storyboard'){
     const frames=v('g_frames')||'6';
@@ -3605,7 +4061,7 @@ function buildCreative(){
     out+='เรื่องราว:\n'+(story||'[เล่าเหตุการณ์เรียงลำดับ เช่น 1) นักเรียนเดินมาโรงเรียน 2) พบขยะหน้าประตู 3) ชวนเพื่อนช่วยกันเก็บ 4) โรงเรียนสะอาดน่าอยู่]')+'\n\n';
     out+='ข้อกำหนดมุมกล้อง: แบ่งเรื่องเป็น '+frames+' ฉากต่อเนื่อง ใช้มุมกล้องหลากหลายแบบงานภาพยนตร์ — เปิดเรื่องด้วยมุมกว้าง (Wide Shot) แนะนำสถานที่, ใช้ระยะครึ่งตัว (Medium Shot) ดำเนินเรื่อง, แทรกโคลสอัพ (Close-up) เน้นอารมณ์ตัวละครในจุดสำคัญ, อาจใช้มุมสูง/มุมต่ำเพิ่มความน่าสนใจ และปิดเรื่องด้วยภาพรวมที่สื่อความหมาย\n\n';
     out+='ใต้แต่ละช่องระบุ: หมายเลขช่อง + ช่วงเวลา (เช่น 00:00–00:01) + คำบรรยายสั้น 1 บรรทัด เพื่อนำภาพแต่ละช่องไปใช้เป็นเฟรมตั้งต้นสร้างวิดีโอด้วย AI (เช่น Dreamina/Seedance, Veo, Kling) ต่อได้ทันที\n\n';
-    out+='Style keywords (EN):\n'+a.en+', film storyboard panels, numbered frames, varied cinematic camera angles, wide shot medium shot close-up, consistent character, clean panel borders, professional lighting, balanced composition, harmonious colors, high resolution, ultra detailed, 8K\n\n';
+    out+='Style keywords (EN):\n'+a.en+', film storyboard panels, numbered frames, varied cinematic camera angles, wide shot medium shot close-up, consistent character, clean panel borders, professional lighting' + refStr + ', balanced composition, harmonious colors, high resolution, ultra detailed, 8K\n\n';
     out+='ขนาดภาพ: '+size.spec;
   }else if(type==='infographic'){
     const topic=v('g_topic');
@@ -3615,7 +4071,7 @@ function buildCreative(){
     out+='โครงสร้างอินโฟกราฟิก:\n- ชื่อเรื่องตัวใหญ่โดดเด่นด้านบน มีกรอบ/ป้ายรองรับ\n- คำอธิบาย/นิยามสั้นใต้ชื่อเรื่อง\n- แบ่งเนื้อหาเป็นกล่องหัวข้อย่อย ใส่หมายเลขและไอคอนประกอบทุกกล่อง\n- แถบสรุป/ประโยชน์/ข้อคิดปิดท้ายด้านล่างสุด\n';
     if(text) out+='- เครดิตผู้จัดทำมุมล่างของภาพ: "'+text+'"\n';
     out+='- ตัวอักษรภาษาไทยคมชัด สะกดถูกต้อง อ่านง่ายทั้งภาพ ไอคอนสไตล์เดียวกันทั้งหมด โทนสีกลมกลืน\n\n';
-    out+='Style keywords (EN):\n'+a.en+', educational infographic poster, clean section layout, numbered content boxes with icons, clear thai typography, professional lighting, balanced composition, harmonious colors, high resolution, ultra detailed, 8K\n\n';
+    out+='Style keywords (EN):\n'+a.en+', educational infographic poster, clean section layout, numbered content boxes with icons, clear thai typography, professional lighting' + refStr + ', balanced composition, harmonious colors, high resolution, ultra detailed, 8K\n\n';
     out+='ขนาดภาพ: '+size.spec;
   }else if(type==='idplan'){
     const theme=IDTHEMES[+v('g_theme')||0];
@@ -3632,7 +4088,7 @@ function buildCreative(){
     out+='6. ล่างสุด: ชื่อโรงเรียน เขตพื้นที่การศึกษา และสังกัด ตัวอักษรขาว/ทองชัดเจน\n\n';
     out+='ข้อมูลที่ต้องใส่ในป้ายชื่อและส่วนล่าง:\n'+(topic||'[พิมพ์ ชื่อครู / ตำแหน่ง วิทยฐานะ / โรงเรียน / สังกัดเขตพื้นที่ ในช่อง "หัวข้อ/เนื้อหา"]')+'\n';
     out+='ตัวอักษรภาษาไทยทุกจุดสะกดถูกต้อง คมชัด อ่านง่าย\n\n';
-    out+='Style keywords (EN):\n'+a.en+', official Thai teacher document cover, Thai teacher in khaki government uniform standing confidently at center, Thai students in uniform doing themed activities around, '+theme.e+', cinematic poster composition, elegant gold 3D thai title typography, ornate name plate banner, ultra detailed, 4K\n\n';
+    out+='Style keywords (EN):\n'+a.en+', official Thai teacher document cover, Thai teacher in khaki government uniform standing confidently at center, Thai students in uniform doing themed activities around, '+theme.e+', cinematic poster composition, elegant gold 3D thai title typography, ornate name plate banner' + refStr + ', ultra detailed, 4K\n\n';
     out+='ขนาดภาพ: '+size.spec;
   }else if(type==='cover'){
     const topic=v('g_topic');
@@ -3642,14 +4098,14 @@ function buildCreative(){
     out+='\nตัวละครบนปก: '+charLine+' อารมณ์'+emo.t+' '+pose.t+' จัดวางเด่นกลางภาพ\n';
     out+='ฉากหลัง: '+bg.t+' ตกแต่งด้วยองค์ประกอบที่เกี่ยวข้องกับเนื้อหากระจายรอบภาพอย่างสมดุล ไม่บังตัวอักษร\n';
     out+='ด้านล่างของปกมีป้าย/กรอบสุภาพสำหรับชื่อผู้จัดทำ ตำแหน่ง และชื่อโรงเรียน ตัวอักษรชัดเจน\n\n';
-    out+='Style keywords (EN):\n'+a.en+', educational document cover design, bold rounded thai title typography, balanced composition, '+role.e+', professional lighting, balanced composition, harmonious colors, high resolution, ultra detailed, 8K\n\n';
+    out+='Style keywords (EN):\n'+a.en+', educational document cover design, bold rounded thai title typography, balanced composition, '+role.e+', professional lighting' + refStr + ', balanced composition, harmonious colors, high resolution, ultra detailed, 8K\n\n';
     out+='ขนาดภาพ: '+size.spec;
   }else if(type==='vocab'){
     const topic=v('g_topic');
     out+='สร้างบัตรคำศัพท์ภาษาอังกฤษสำหรับเด็ก สไตล์'+a.thai+'\n\n';
     out+='คำศัพท์: '+(topic||'[พิมพ์ คำศัพท์ / คำอ่านไทย / คำแปล ในช่อง "หัวข้อ/เนื้อหา" เช่น MORNING / มอร์นิง / ตอนเช้า]')+'\n\n';
     out+='โครงสร้างบัตรคำ:\n- คำศัพท์ภาษาอังกฤษตัวใหญ่หนาเด่นกลางภาพ\n- คำอ่านภาษาไทยในวงเล็บใต้คำศัพท์\n- กรอบคำแปลภาษาไทยด้านล่าง\n- ตัวละครประกอบ: '+charLine+' กำลังทำท่าทางสื่อความหมายของคำศัพท์ อารมณ์'+emo.t+'\n- ไอคอน/ของตกแต่งน่ารักที่สื่อความหมายของคำ กระจายรอบภาพ\n- ใช้โทนสีเดียวกลมกลืนทั้งภาพ (monochromatic) กรอบการ์ดขอบโค้งมน\n- ตัวอักษรทุกส่วนสะกดถูกต้อง คมชัด อ่านง่าย\n\n';
-    out+='Style keywords (EN):\n'+a.en+', english vocabulary flashcard for kids, big bold word typography, cute cohesive single-color pastel theme, rounded card frame, professional lighting, balanced composition, harmonious colors, high resolution, ultra detailed, 8K\n\n';
+    out+='Style keywords (EN):\n'+a.en+', english vocabulary flashcard for kids, big bold word typography, cute cohesive single-color pastel theme, rounded card frame, professional lighting' + refStr + ', balanced composition, harmonious colors, high resolution, ultra detailed, 8K\n\n';
     out+='ขนาดภาพ: '+size.spec;
   }else{
     const typeTh = type==='sticker'?'สติกเกอร์':(type==='illus'?'ภาพประกอบสื่อการสอน':'ตัวละคร/มาสคอต');
@@ -3663,15 +4119,1140 @@ function buildCreative(){
     if(text) out+='ข้อความในภาพ: "'+text+'" สะกดภาษาไทยให้ถูกต้อง ชัดเจน อ่านง่าย\n';
     if(type==='sticker') out+='\nลักษณะสติกเกอร์: พื้นหลังขาวล้วน มีเส้นขอบสีขาวหนารอบตัวละครแบบสติกเกอร์ไดคัท (die-cut) องค์ประกอบกระชับ มองรู้เรื่องแม้ขนาดเล็ก\n';
     if(type==='illus') out+='\nลักษณะภาพประกอบ: องค์ประกอบเรียบง่าย ไม่รกตา สื่อความหมายชัดเจน เหมาะนำไปใส่ในใบงาน สไลด์ หรือสื่อการสอน\n';
-    out+='\nStyle keywords (EN):\n'+a.en+', '+role.e+', '+emo.e+', '+pose.e+', '+shot.e+', '+bg.e+(type==='sticker'?', die-cut sticker design, thick white border, white background':'')+', professional lighting, balanced composition, harmonious colors, clean background, high resolution, ultra detailed, 8K\n\n';
+    out+='\nStyle keywords (EN):\n'+a.en+', '+role.e+', '+emo.e+', '+pose.e+', '+shot.e+', '+bg.e+(type==='sticker'?', die-cut sticker design, thick white border, white background':'')+', professional lighting, balanced composition, harmonious colors, clean background' + refStr + ', high resolution, ultra detailed, 8K\n\n';
     out+='ขนาดภาพ: '+size.spec;
   }
   document.getElementById('creativeOut').value=out;
+  updatePreviews();
+}
+
+/* ============================================================
+   NEW ENHANCED CORE FUNCTIONS (Theme, Previews, History, Share)
+============================================================ */
+
+// ============================================================
+// CUSTOM TEMPLATES AND SCHOOL PROFILES MANAGER (NEW ENHANCEMENTS)
+// ============================================================
+let customTemplates = [];
+function loadCustomTemplates() {
+  try {
+    customTemplates = JSON.parse(localStorage.getItem('kjps-user-templates')) || [];
+  } catch(e) {
+    customTemplates = [];
+  }
+}
+
+function openCustomTemplateModal(id = '') {
+  document.getElementById('customTemplateId').value = id;
+  const titleEl = document.getElementById('customTemplateModalTitle');
+  const titleInput = document.getElementById('tplTitle');
+  const emojiInput = document.getElementById('tplEmoji');
+  const catInput = document.getElementById('tplCategory');
+  const descInput = document.getElementById('tplDesc');
+  const fieldsInput = document.getElementById('tplFields');
+  const promptInput = document.getElementById('tplPrompt');
+  
+  if (id) {
+    titleEl.textContent = '✏️ แก้ไขเทมเพลตของคุณ';
+    const t = customTemplates.find(x => x.id === id);
+    if (t) {
+      titleInput.value = t.title || '';
+      emojiInput.value = t.icon || '📝';
+      catInput.value = t.cat || 'teach';
+      descInput.value = t.desc || '';
+      fieldsInput.value = t.fields.map(f => f.k).join(', ');
+      promptInput.value = t.tpl || '';
+    }
+  } else {
+    titleEl.textContent = '➕ สร้างเทมเพลตของคุณเอง';
+    titleInput.value = '';
+    emojiInput.value = '📝';
+    catInput.value = 'teach';
+    descInput.value = '';
+    fieldsInput.value = '';
+    promptInput.value = '';
+  }
+  
+  updateTplFieldsHint();
+  document.getElementById('customTemplateModalBg').classList.add('open');
+}
+
+function closeCustomTemplateModal() {
+  document.getElementById('customTemplateModalBg').classList.remove('open');
+}
+
+function updateTplFieldsHint() {
+  const val = document.getElementById('tplFields').value || '';
+  const parts = val.split(',').map(x => x.trim()).filter(Boolean);
+  const hintEl = document.getElementById('tplFieldsHint');
+  if (parts.length === 0) {
+    hintEl.innerHTML = 'ระบุตัวแปรที่ใช้ เช่น <code>วิชา, เรื่อง, ระดับชั้น</code>';
+  } else {
+    hintEl.innerHTML = 'ตัวแปรที่ใช้งานได้ในพรอมต์: ' + parts.map(p => `<code>{{${p}}}</code>`).join(', ');
+  }
+}
+
+function saveCustomTemplate() {
+  const id = document.getElementById('customTemplateId').value;
+  const title = (document.getElementById('tplTitle').value || '').trim();
+  const emoji = (document.getElementById('tplEmoji').value || '').trim() || '📝';
+  const cat = document.getElementById('tplCategory').value;
+  const desc = (document.getElementById('tplDesc').value || '').trim();
+  const fieldsRaw = document.getElementById('tplFields').value || '';
+  const prompt = (document.getElementById('tplPrompt').value || '').trim();
+  
+  if (!title) {
+    alert('กรุณากรอกหัวข้อเทมเพลต');
+    return;
+  }
+  if (!prompt) {
+    alert('กรุณากรอกพรอมต์คำสั่ง');
+    return;
+  }
+  
+  const fields = fieldsRaw.split(',').map(x => x.trim()).filter(Boolean).map(name => {
+    return { k: name, l: name, p: 'เช่น ' + (name === 'วิชา' ? 'ภาษาไทย' : (name === 'เรื่อง' ? 'คำประสม' : (name === 'ระดับชั้น' ? 'ประถมศึกษาปีที่ 4' : name))) };
+  });
+  
+  const newTpl = {
+    id: id || 'custom-' + Date.now(),
+    cat: cat,
+    icon: emoji,
+    title: title,
+    desc: desc || ('สร้างพรอมต์สำหรับ ' + title),
+    tags: 'custom user my-templates ' + title + ' ' + desc,
+    fields: fields,
+    tpl: prompt,
+    isCustom: true
+  };
+  
+  if (id) {
+    const idx = customTemplates.findIndex(x => x.id === id);
+    if (idx !== -1) {
+      customTemplates[idx] = newTpl;
+    } else {
+      customTemplates.push(newTpl);
+    }
+  } else {
+    customTemplates.push(newTpl);
+  }
+  
+  localStorage.setItem('kjps-user-templates', JSON.stringify(customTemplates));
+  closeCustomTemplateModal();
+  renderChips();
+  renderLibrary();
+  showToast('บันทึกเทมเพลตสำเร็จแล้ว!');
+}
+
+function deleteCustomTemplate(id) {
+  customTemplates = customTemplates.filter(x => x.id !== id);
+  localStorage.setItem('kjps-user-templates', JSON.stringify(customTemplates));
+  renderChips();
+  renderLibrary();
+  showToast('ลบเทมเพลตเรียบร้อยแล้ว');
+}
+
+let schoolProfiles = {};
+function loadProfilesFromStorage() {
+  try {
+    schoolProfiles = JSON.parse(localStorage.getItem('kjps-profiles')) || {};
+  } catch(e) {
+    schoolProfiles = {};
+  }
+}
+
+function populateProfileSelectors() {
+  const pSelect = document.getElementById('p_profile_select');
+  const cSelect = document.getElementById('c_profile_select');
+  if (!pSelect || !cSelect) return;
+  
+  pSelect.innerHTML = '<option value="">-- เลือกหรือสร้างโปรไฟล์ใหม่ --</option>';
+  cSelect.innerHTML = '<option value="">-- เลือกหรือสร้างโปรไฟล์ใหม่ --</option>';
+  
+  const names = Object.keys(schoolProfiles).sort();
+  names.forEach(name => {
+    const optP = document.createElement('option');
+    optP.value = name;
+    optP.textContent = name;
+    pSelect.appendChild(optP);
+    
+    const optC = document.createElement('option');
+    optC.value = name;
+    optC.textContent = name;
+    cSelect.appendChild(optC);
+  });
+}
+
+function changeProfile(name) {
+  const pSelect = document.getElementById('p_profile_select');
+  const cSelect = document.getElementById('c_profile_select');
+  if (pSelect) pSelect.value = name;
+  if (cSelect) cSelect.value = name;
+  
+  if (!name) {
+    return;
+  }
+  
+  const prof = schoolProfiles[name];
+  if (prof) {
+    if (document.getElementById('p_school')) document.getElementById('p_school').value = prof.p_school || '';
+    if (document.getElementById('p_motto')) document.getElementById('p_motto').value = prof.p_motto || '';
+    if (document.getElementById('p_fb')) document.getElementById('p_fb').value = prof.p_fb || '';
+    if (document.getElementById('p_addr')) document.getElementById('p_addr').value = prof.p_addr || '';
+    if (document.getElementById('p_pr')) document.getElementById('p_pr').value = prof.p_pr || '';
+    
+    if (document.getElementById('c_school')) document.getElementById('c_school').value = prof.p_school || '';
+    
+    buildPoster();
+    buildCaption();
+    showToast('โหลดโปรไฟล์ "' + name + '" สำเร็จ');
+  }
+}
+
+function saveCurrentProfile() {
+  const pSelect = document.getElementById('p_profile_select');
+  const currentSelected = pSelect ? pSelect.value : '';
+  
+  const schoolVal = (document.getElementById('p_school') ? document.getElementById('p_school').value : (document.getElementById('c_school') ? document.getElementById('c_school').value : '')).trim();
+  const defaultSuggest = currentSelected || schoolVal || 'โปรไฟล์โรงเรียน 1';
+  
+  const name = prompt("กรุณาระบุชื่อโปรไฟล์ (เช่น ชื่อโรงเรียน):", defaultSuggest);
+  if (!name || !name.trim()) return;
+  const profileName = name.trim();
+  
+  schoolProfiles[profileName] = {
+    p_school: (document.getElementById('p_school') ? document.getElementById('p_school').value : '').trim(),
+    p_motto: (document.getElementById('p_motto') ? document.getElementById('p_motto').value : '').trim(),
+    p_fb: (document.getElementById('p_fb') ? document.getElementById('p_fb').value : '').trim(),
+    p_addr: (document.getElementById('p_addr') ? document.getElementById('p_addr').value : '').trim(),
+    p_pr: (document.getElementById('p_pr') ? document.getElementById('p_pr').value : '').trim()
+  };
+  
+  localStorage.setItem('kjps-profiles', JSON.stringify(schoolProfiles));
+  populateProfileSelectors();
+  
+  if (pSelect) pSelect.value = profileName;
+  const cSelect = document.getElementById('c_profile_select');
+  if (cSelect) cSelect.value = profileName;
+  
+  showToast('บันทึกโปรไฟล์ "' + profileName + '" เรียบร้อยแล้ว');
+}
+
+function deleteCurrentProfile() {
+  const pSelect = document.getElementById('p_profile_select');
+  const currentSelected = pSelect ? pSelect.value : '';
+  if (!currentSelected) {
+    alert('กรุณาเลือกโปรไฟล์ที่ต้องการลบก่อน');
+    return;
+  }
+  
+  if (confirm('คุณต้องการลบโปรไฟล์ "' + currentSelected + '" ใช่หรือไม่?')) {
+    delete schoolProfiles[currentSelected];
+    localStorage.setItem('kjps-profiles', JSON.stringify(schoolProfiles));
+    populateProfileSelectors();
+    
+    // Clear selections
+    if (pSelect) pSelect.value = '';
+    const cSelect = document.getElementById('c_profile_select');
+    if (cSelect) cSelect.value = '';
+    
+    showToast('ลบโปรไฟล์แล้ว');
+  }
+}
+
+// 1. Theme Management
+function initTheme() {
+  const savedTheme = localStorage.getItem('kjps-theme');
+  const btn = document.getElementById('themeToggle');
+  if (savedTheme === 'dark') {
+    document.body.classList.add('dark-mode');
+    if (btn) btn.textContent = '☀️ โหมดสว่าง';
+  } else {
+    document.body.classList.remove('dark-mode');
+    if (btn) btn.textContent = '🌙 โหมดมืด';
+  }
+}
+
+function toggleTheme() {
+  const btn = document.getElementById('themeToggle');
+  if (document.body.classList.toggle('dark-mode')) {
+    localStorage.setItem('kjps-theme', 'dark');
+    if (btn) btn.textContent = '☀️ โหมดสว่าง';
+  } else {
+    localStorage.setItem('kjps-theme', 'light');
+    if (btn) btn.textContent = '🌙 โหมดมืด';
+  }
+}
+
+// 2. Sub-tab and platform toggling
+function switchSubTab(btn, tabType, builderKey) {
+  const subTabs = btn.parentElement;
+  subTabs.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const panel = subTabs.closest('.panel');
+  if (!panel) return;
+
+  const promptContent = panel.querySelector('.' + builderKey + '-prompt-content');
+  const previewContent = panel.querySelector('.' + builderKey + '-preview-content');
+
+  if (tabType === 'prompt') {
+    if (promptContent) promptContent.style.display = 'block';
+    if (previewContent) previewContent.style.display = 'none';
+  } else {
+    if (promptContent) promptContent.style.display = 'none';
+    if (previewContent) previewContent.style.display = 'block';
+    updatePreviews();
+  }
+}
+
+function switchPreviewPlatform(btn, platform) {
+  const parent = btn.parentElement;
+  parent.querySelectorAll('.preview-toggle-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const fbDiv = document.getElementById('captionPreviewFB');
+  const lineDiv = document.getElementById('captionPreviewLine');
+  if (platform === 'fb') {
+    if (fbDiv) fbDiv.style.display = 'block';
+    if (lineDiv) lineDiv.style.display = 'none';
+  } else {
+    if (fbDiv) fbDiv.style.display = 'none';
+    if (lineDiv) lineDiv.style.display = 'block';
+  }
+  updatePreviews();
+}
+
+// 3. Live Previews
+function updatePreviews() {
+  const activeTab = document.querySelector('section.tab.active');
+  if (!activeTab) return;
+  if (activeTab.id === 'tab-poster') {
+    updatePosterPreview();
+  } else if (activeTab.id === 'tab-creative') {
+    updateCreativePreview();
+  } else if (activeTab.id === 'tab-caption') {
+    updateFBPreview();
+    updateLinePreview();
+  }
+}
+
+function updateFBPreview() {
+  const container = document.getElementById('captionPreviewFB');
+  if (!container) return;
+
+  const school = document.getElementById('c_school').value || 'โรงเรียนของเรา';
+  const activity = document.getElementById('c_activity').value || 'กิจกรรมประชาสัมพันธ์';
+  const date = thaiDate(document.getElementById('c_date').value) || 'เร็ว ๆ นี้';
+  const venue = document.getElementById('c_venue').value || 'ณ โรงเรียน';
+  const hl = document.getElementById('c_highlight').value || 'ข่าวประชาสัมพันธ์';
+
+  const previewText = `📣 ประชาสัมพันธ์กิจกรรม\n` +
+    `โรงเรียน: ${school}\n` +
+    `ขอเชิญร่วมกิจกรรม: ${activity}\n` +
+    `📅 วันที่: ${date}\n` +
+    `📍 สถานที่: ${venue}\n` +
+    `✨ ไฮไลท์: ${hl}\n\n` +
+    `#${school.replace(/\s+/g, '')} #${activity.replace(/\s+/g, '')} #ข่าวโรงเรียน`;
+
+  container.innerHTML = `
+    <div class="fb-post-mockup" style="font-family: 'Prompt', sans-serif;">
+      <div style="display:flex; align-items:center; margin-bottom:12px;">
+        <div style="width:40px; height:40px; border-radius:50%; background:var(--purple); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:1.2rem; margin-right:10px;">🏫</div>
+        <div>
+          <div style="font-weight:bold; color:var(--text); font-size:0.92rem;">${school}</div>
+          <div style="font-size:0.75rem; color:var(--text-muted);">1 นาทีที่แล้ว · 🌎</div>
+        </div>
+      </div>
+      <div style="font-size:0.88rem; color:var(--text); line-height:1.5; white-space:pre-wrap; margin-bottom:12px;">${previewText}</div>
+      <div style="background:var(--input-bg); border:1px solid var(--border-color); border-radius:8px; padding:24px 12px; text-align:center; color:var(--text-muted); font-size:0.9rem; margin-bottom:12px; border-style:dashed;">
+        🖼️ [ ภาพกิจกรรมประชาสัมพันธ์ ]
+      </div>
+      <div style="display:flex; justify-content:space-around; border-top:1px solid var(--border-color); padding-top:8px; color:var(--text-muted); font-size:0.85rem; font-weight:bold;">
+        <span>👍 ถูกใจ</span>
+        <span>💬 แสดงความคิดเห็น</span>
+        <span>↩️ แชร์</span>
+      </div>
+    </div>
+  `;
+}
+
+function updateLinePreview() {
+  const container = document.getElementById('captionPreviewLine');
+  if (!container) return;
+
+  const school = document.getElementById('c_school').value || 'โรงเรียนของเรา';
+  const activity = document.getElementById('c_activity').value || 'กิจกรรมประชาสัมพันธ์';
+  const date = thaiDate(document.getElementById('c_date').value) || 'เร็ว ๆ นี้';
+  const venue = document.getElementById('c_venue').value || 'ณ โรงเรียน';
+
+  const previewText = `📢 ประชาสัมพันธ์โรงเรียน\n\n` +
+    `เรื่อง: ${activity}\n` +
+    `วันเวลา: ${date}\n` +
+    `สถานที่: ${venue}\n\n` +
+    `ยินดีต้อนรับคณะครู นักเรียน และผู้ปกครองทุกท่านค่ะ 🙏`;
+
+  const timeStr = new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) || '12:00';
+
+  container.innerHTML = `
+    <div class="line-chat-mockup" style="font-family: 'Prompt', sans-serif;">
+      <div style="display:flex; align-items:flex-start;">
+        <div style="width:36px; height:36px; border-radius:50%; background:#8EAEBD; display:flex; align-items:center; justify-content:center; color:#fff; font-size:1.1rem; margin-right:8px; flex-shrink:0;">📢</div>
+        <div style="display:flex; align-items:flex-end; max-width:80%;">
+          <div style="background:#fff; border-radius:14px; padding:10px 14px; font-size:0.88rem; color:#222; line-height:1.4; white-space:pre-wrap; box-shadow:0 1px 2px rgba(0,0,0,0.1); position:relative;">
+            ${previewText}
+          </div>
+          <span style="font-size:0.68rem; color:rgba(255,255,255,0.7); margin-left:6px; flex-shrink:0; margin-bottom:2px;">${timeStr}</span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function updatePosterPreview() {
+  const card = document.getElementById('posterPreviewCard');
+  if (!card) return;
+
+  const styleId = activeStyle;
+  const school = document.getElementById('p_school').value || 'โรงเรียนของเรา';
+  const activity = document.getElementById('p_activity').value || 'ชื่อกิจกรรมประชาสัมพันธ์';
+  const date = thaiDateRange(document.getElementById('p_date').value, document.getElementById('p_date2').value) || 'ระบุวันที่';
+  const venue = document.getElementById('p_venue').value || 'สถานที่จัดกิจกรรม';
+  const director = document.getElementById('p_director').value;
+  const collage = parseInt(document.getElementById('p_collage').value) || 0;
+  const tagline = document.getElementById('p_tagline').value;
+
+  let gradient = 'linear-gradient(135deg, #7C4DA8 0%, #E2D8EE 70%, #fff 100%)';
+  let titleColor = '#7C4DA8';
+  let ribbonBg = '#7C4DA8';
+  let ribbonColor = '#fff';
+  let infoBg = 'rgba(255,255,255,0.85)';
+  let infoBorder = '1px solid #7C4DA8';
+  let footerBg = '#3F2263';
+  let accentColor = '#C9A227';
+
+  if (styleId === 'isan') {
+    gradient = 'linear-gradient(135deg, #3D7DC8 0%, #D4E6F1 70%, #FFF8E1 100%)';
+    titleColor = '#1F4E79';
+    ribbonBg = '#3D7DC8';
+    footerBg = '#1A365D';
+    accentColor = '#C9A227';
+  } else if (styleId === 'royal') {
+    gradient = 'linear-gradient(135deg, #F2C94C 0%, #FFF8E1 70%, #B8860B 100%)';
+    titleColor = '#8D6E1A';
+    ribbonBg = '#B8860B';
+    footerBg = '#5C4308';
+    accentColor = '#B8860B';
+  } else if (styleId === 'mourning') {
+    gradient = 'linear-gradient(135deg, #2B2B2B 0%, #E8E8E8 75%, #FFFFFF 100%)';
+    titleColor = '#222';
+    ribbonBg = '#000';
+    footerBg = '#000';
+    accentColor = '#999';
+  } else if (styleId === 'green') {
+    gradient = 'linear-gradient(135deg, #3E8E5A 0%, #E8F5E9 70%, #FFF8E1 100%)';
+    titleColor = '#2E6941';
+    ribbonBg = '#3E8E5A';
+    footerBg = '#1B4D2E';
+    accentColor = '#C9A227';
+  } else if (styleId === 'minimal') {
+    gradient = 'linear-gradient(135deg, #2D5BD1 0%, #E3F2FD 70%, #FFFFFF 100%)';
+    titleColor = '#1B3A8F';
+    ribbonBg = '#2D5BD1';
+    footerBg = '#0D235C';
+    accentColor = '#FF8A3D';
+  } else if (styleId === 'kid') {
+    gradient = 'linear-gradient(135deg, #FFB5C5 0%, #FFF3B0 50%, #AEE3F5 100%)';
+    titleColor = '#D81B60';
+    ribbonBg = '#FFB5C5';
+    footerBg = '#00ACC1';
+    accentColor = '#F50057';
+  } else if (styleId === 'sport') {
+    gradient = 'linear-gradient(135deg, #E53935 0%, #FFF9C4 50%, #1E88E5 100%)';
+    titleColor = '#B71C1C';
+    ribbonBg = '#E53935';
+    footerBg = '#0D47A1';
+    accentColor = '#FFEB3B';
+  } else if (styleId === 'buddhist') {
+    gradient = 'linear-gradient(135deg, #B8860B 0%, #FFF8E1 70%, #8D6E63 100%)';
+    titleColor = '#795548';
+    ribbonBg = '#B8860B';
+    footerBg = '#3E2723';
+    accentColor = '#8D6E63';
+  } else if (styleId === 'tech') {
+    gradient = 'linear-gradient(135deg, #0D1B4C 0%, #001020 60%, #1A237E 100%)';
+    titleColor = '#00E5FF';
+    ribbonBg = '#1E88E5';
+    footerBg = '#000411';
+    accentColor = '#B388FF';
+  } else if (styleId === 'retire') {
+    gradient = 'linear-gradient(135deg, #E8862E 0%, #FFF3E0 70%, #C9A227 100%)';
+    titleColor = '#D84315';
+    ribbonBg = '#E8862E';
+    footerBg = '#4E342E';
+    accentColor = '#C9A227';
+  } else if (styleId === 'pink') {
+    gradient = 'linear-gradient(135deg, #F06292 0%, #FFF1F5 70%, #F8BBD0 100%)';
+    titleColor = '#C2185B';
+    ribbonBg = '#F06292';
+    footerBg = '#880E4F';
+    accentColor = '#F48FB1';
+  } else if (styleId === 'redgold') {
+    gradient = 'linear-gradient(135deg, #C62828 0%, #FFEBEE 70%, #FFF8E1 100%)';
+    titleColor = '#B71C1C';
+    ribbonBg = '#C62828';
+    footerBg = '#5D1919';
+    accentColor = '#C9A227';
+  } else if (styleId === 'loy') {
+    gradient = 'linear-gradient(135deg, #1A237E 0%, #311B92 60%, #4A148C 100%)';
+    titleColor = '#FFD54F';
+    ribbonBg = '#7E57C2';
+    footerBg = '#0B0D38';
+    accentColor = '#FFD54F';
+  } else if (styleId === 'xmas') {
+    gradient = 'linear-gradient(135deg, #1B5E20 0%, #FFEBEE 60%, #C62828 100%)';
+    titleColor = '#C62828';
+    ribbonBg = '#1B5E20';
+    footerBg = '#1C0D02';
+    accentColor = '#C9A227';
+  } else if (styleId === 'cybertech') {
+    gradient = 'linear-gradient(135deg, #2A0845 0%, #6441A5 100%)';
+    titleColor = '#00E5FF';
+    ribbonBg = '#E91E90';
+    footerBg = '#110324';
+    accentColor = '#00E5FF';
+  } else if (styleId === 'aquagold') {
+    gradient = 'linear-gradient(135deg, #1A237E 0%, #E3F2FD 70%, #FFFFFF 100%)';
+    titleColor = '#1A237E';
+    ribbonBg = '#1A237E';
+    footerBg = '#0D1B2A';
+    accentColor = '#C9A227';
+  } else if (styleId === 'cinema') {
+    gradient = 'linear-gradient(135deg, #1C2833 0%, #2C3E50 100%)';
+    titleColor = '#FF8F00';
+    ribbonBg = '#37474F';
+    footerBg = '#0D1B2A';
+    accentColor = '#FF8F00';
+  } else if (styleId === 'promo') {
+    gradient = 'linear-gradient(135deg, #E53935 0%, #FFF59D 50%, #43A047 100%)';
+    titleColor = '#E53935';
+    ribbonBg = '#E53935';
+    footerBg = '#1B5E20';
+    accentColor = '#FFD600';
+  }
+
+  let collageHtml = '';
+  if (collage > 0) {
+    let cols = 1;
+    if (collage === 2) cols = 2;
+    if (collage === 3) cols = 3;
+    if (collage >= 4) cols = 2;
+
+    collageHtml = `
+      <div style="display:grid; grid-template-columns: repeat(${cols}, 1fr); gap:6px; margin:10px 0; width:100%;">
+        ${Array.from({ length: collage }).map((_, i) => `
+          <div style="aspect-ratio:4/3; background:rgba(255,255,255,0.6); border:1px dashed ${titleColor}; border-radius:4px; display:flex; flex-direction:column; align-items:center; justify-content:center; color:${titleColor}; font-size:0.68rem; font-weight:bold;">
+            <span>📸 รูปที่ ${i + 1}</span>
+            <span style="font-size:0.55rem; color:var(--text-muted);">[รูปกิจกรรม]</span>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  let directorHtml = '';
+  if (director) {
+    directorHtml = `
+      <div style="position:absolute; top:12px; right:12px; background:rgba(255,255,255,0.85); border:1px solid ${accentColor}; border-radius:6px; padding:4px 6px; display:flex; align-items:center; gap:4px; box-shadow:0 2px 4px rgba(0,0,0,0.1); width:64px; text-align:center; flex-direction:column;">
+        <div style="width:24px; height:24px; border-radius:50%; background:${accentColor}; color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.7rem;">👤</div>
+        <div style="font-size:0.5rem; font-weight:bold; color:#222; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; width:100%;">${director}</div>
+      </div>
+    `;
+  }
+
+  card.style.background = gradient;
+  card.style.border = `4px double ${accentColor}`;
+  card.style.position = 'relative';
+  card.style.boxSizing = 'border-box';
+  card.style.padding = '12px';
+  card.style.color = '#333';
+  card.style.display = 'flex';
+  card.style.flexDirection = 'column';
+  card.style.justifyContent = 'space-between';
+
+  card.innerHTML = `
+    <div style="display:flex; align-items:center; gap:6px; width:100%; border-bottom:1px solid rgba(0,0,0,0.1); padding-bottom:6px; margin-bottom:8px;">
+      <div style="width:24px; height:24px; border-radius:50%; background:${titleColor}; color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.75rem; flex-shrink:0;">🏫</div>
+      <div style="text-align:left; width:calc(100% - 32px);">
+        <div style="font-size:0.58rem; font-weight:bold; color:${titleColor}; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${school}</div>
+        <span style="font-size:0.48rem; color:var(--text-muted); display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">ข่าวสารประชาสัมพันธ์</span>
+      </div>
+    </div>
+    
+    ${directorHtml}
+
+    <div style="flex-grow:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:4px 0;">
+      <div style="background:${ribbonBg}; color:${ribbonColor}; padding:6px 10px; border-radius:6px; font-weight:bold; font-size:0.85rem; width:95%; box-shadow:0 3px 6px rgba(0,0,0,0.15); margin-bottom:6px; text-shadow:0 1px 2px rgba(0,0,0,0.3);">
+        ${activity}
+      </div>
+      
+      ${tagline ? `<div style="font-size:0.55rem; font-style:italic; color:#444; margin-bottom:4px; max-width:90%;">${tagline}</div>` : ''}
+
+      ${collageHtml}
+
+      <div style="background:${infoBg}; border:${infoBorder}; border-radius:8px; padding:6px 8px; width:95%; font-size:0.6rem; color:#222; text-align:left; box-shadow:0 1px 3px rgba(0,0,0,0.05); margin-top:4px;">
+        <div style="margin-bottom:2px;"><b>📅 วันที่:</b> ${date}</div>
+        <div><b>📍 สถานที่:</b> ${venue}</div>
+      </div>
+    </div>
+
+    <div style="background:${footerBg}; color:#fff; font-size:0.48rem; text-align:center; padding:5px; border-radius:4px; margin-top:8px; display:flex; justify-content:space-around; align-items:center;">
+      <span>👤 โดย ${school}</span>
+      <span>👥 ฝ่ายประชาสัมพันธ์</span>
+    </div>
+  `;
+}
+
+function updateCreativePreview() {
+  const box = document.getElementById('creativePreviewCard');
+  if (!box) return;
+
+  const type = document.getElementById('g_type').value;
+  const roleIdx = parseInt(document.getElementById('g_role').value) || 0;
+  const roleName = ROLES[roleIdx] ? ROLES[roleIdx].t : 'ตัวละคร';
+  const emoIdx = parseInt(document.getElementById('g_emotion').value) || 0;
+  const emoName = EMOTIONS[emoIdx] ? EMOTIONS[emoIdx].t : 'ยิ้มสดใส';
+  const bgIdx = parseInt(document.getElementById('g_bg').value) || 0;
+  const bgName = BGS[bgIdx] ? BGS[bgIdx].t : 'ในห้องเรียน';
+
+  const styleObj = ART_STYLES.find(s => s.id === activeArt) || ART_STYLES[0];
+  const artName = styleObj.name;
+
+  box.innerHTML = '';
+  box.style.padding = '12px';
+  box.style.display = 'flex';
+  box.style.flexDirection = 'column';
+  box.style.justifyContent = 'center';
+  box.style.alignItems = 'center';
+  box.style.background = 'var(--input-bg)';
+  box.style.borderRadius = '8px';
+  box.style.boxSizing = 'border-box';
+
+  if (type === 'sheet') {
+    box.innerHTML = `
+      <h3 style="font-size:0.85rem; margin:0 0 8px; color:var(--purple); text-align:center;">🎨 ตัวอย่าง Character Sheet: 3x3 Grid (สไตล์${artName})</h3>
+      <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:6px; width:100%; max-width:280px; margin:0 auto;">
+        ${SHEET9.map((s, i) => `
+          <div style="aspect-ratio:1/1; background:var(--card); border:1.5px solid var(--border-color); border-radius:6px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:4px; text-align:center; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+            <div style="font-size:1.1rem; margin-bottom:2px;">👤</div>
+            <div style="font-size:0.5rem; font-weight:bold; color:var(--text); line-height:1.2;">${s.t}</div>
+            <div style="font-size:0.4rem; color:var(--text-muted);">${i + 1}/9</div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  } else if (type === 'storyboard') {
+    const framesCount = parseInt(document.getElementById('g_frames').value) || 6;
+    box.innerHTML = `
+      <h3 style="font-size:0.85rem; margin:0 0 8px; color:var(--purple); text-align:center;">🎞️ ตัวอย่างสตอรี่บอร์ด ${framesCount} ช่อง (สไตล์${artName})</h3>
+      <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:6px; width:100%; max-width:320px; overflow-y:auto; max-height:260px; padding-right:4px;">
+        ${Array.from({ length: framesCount }).map((_, i) => `
+          <div style="background:var(--card); border:1.5px solid var(--border-color); border-radius:6px; padding:6px; display:flex; flex-direction:column; justify-content:space-between; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+            <div style="aspect-ratio:16/10; background:rgba(0,0,0,0.05); border-radius:4px; display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:0.6rem; font-weight:bold; border:1px dashed var(--border-color);">
+              🎬 เฟรมที่ ${i + 1}
+            </div>
+            <div style="font-size:0.55rem; color:var(--text); margin-top:4px; font-weight:bold;">ช่องที่ ${i + 1} (${roleName})</div>
+            <div style="font-size:0.48rem; color:var(--text-muted); line-height:1.2; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">ฉาก: ${bgName}</div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  } else if (type === 'sticker') {
+    box.innerHTML = `
+      <h3 style="font-size:0.85rem; margin:0 0 16px; color:var(--purple); text-align:center;">✨ ตัวอย่างสติกเกอร์ Die-Cut (สไตล์${artName})</h3>
+      <div class="sticker-mockup" style="display:flex; flex-direction:column; align-items:center; justify-content:center; background:#fff; border:4px solid #fff; border-radius:50%; width:120px; height:120px; box-shadow:0 4px 12px rgba(0,0,0,0.15), inset 0 0 10px rgba(0,0,0,0.05); position:relative; overflow:hidden;">
+        <div style="text-align:center; color:#222; font-family:'Prompt',sans-serif;">
+          <div style="font-size:2.2rem; margin-bottom:2px;">🐱</div>
+          <div style="font-size:0.6rem; font-weight:bold; color:var(--purple); background:rgba(124,77,168,0.1); padding:1px 6px; border-radius:10px;">${emoName}</div>
+        </div>
+        <div style="position:absolute; bottom:6px; font-size:0.48rem; font-weight:bold; color:#666;">${roleName}</div>
+      </div>
+    `;
+  } else if (type === 'vocab') {
+    const topic = document.getElementById('g_topic').value || 'MORNING / ตอนเช้า';
+    const parts = topic.split('/');
+    const engWord = (parts[0] || 'WORD').trim().toUpperCase();
+    const translation = (parts[1] || 'คำแปล').trim();
+
+    box.innerHTML = `
+      <h3 style="font-size:0.85rem; margin:0 0 12px; color:var(--purple); text-align:center;">📝 ตัวอย่างบัตรคำศัพท์ภาษาอังกฤษ (สไตล์${artName})</h3>
+      <div class="vocab-card-mockup" style="width:100%; max-width:200px; border:3px solid var(--purple); border-radius:14px; background:var(--card); box-sizing:border-box; overflow:hidden; box-shadow:0 4px 10px rgba(0,0,0,0.08); text-align:center; font-family:'Prompt',sans-serif;">
+        <div style="background:var(--purple); color:#fff; font-size:0.6rem; font-weight:bold; padding:4px 0;">VOCABULARY CARD</div>
+        <div style="padding:14px;">
+          <div style="font-size:1.5rem; font-weight:bold; color:var(--purple); margin-bottom:4px; font-family:'Outfit', sans-serif;">${engWord}</div>
+          <div style="aspect-ratio:1.2; background:rgba(0,0,0,0.03); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:1.8rem; margin:6px 0; border:1px dashed var(--border-color);">🎨</div>
+          <div style="font-size:0.75rem; font-weight:bold; color:var(--text);">${translation}</div>
+          <div style="font-size:0.5rem; color:var(--text-muted); margin-top:2px;">[${roleName} ทำท่าประกอบ]</div>
+        </div>
+      </div>
+    `;
+  } else if (type === 'idplan') {
+    const topic = document.getElementById('g_topic').value || 'ข้อมูลชื่อครูและตำแหน่ง';
+    const textVal = document.getElementById('g_text').value || 'แผนพัฒนาตนเองรายบุคคล (ID PLAN)';
+    const themeIdx = parseInt(document.getElementById('g_theme').value) || 0;
+    const themeName = IDTHEMES[themeIdx] ? IDTHEMES[themeIdx].t : 'วิชาการ';
+
+    box.innerHTML = `
+      <h3 style="font-size:0.85rem; margin:0 0 10px; color:var(--purple); text-align:center;">📘 ตัวอย่างปกแฟ้มเอกสาร ID Plan (สไตล์${artName})</h3>
+      <div style="width:100%; max-width:180px; aspect-ratio:1/1.414; background:linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%); border:3px solid #C9A227; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.2); position:relative; box-sizing:border-box; padding:10px; display:flex; flex-direction:column; justify-content:space-between; color:#fff; text-align:center; font-family:'Prompt',sans-serif;">
+        <div style="width:20px; height:20px; border-radius:50%; background:#C9A227; margin:0 auto 4px; display:flex; align-items:center; justify-content:center; font-size:0.6rem;">👑</div>
+        
+        <div style="flex-grow:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+          <div style="font-size:0.55rem; font-weight:bold; color:#C9A227; line-height:1.3; margin-bottom:6px; max-height:40px; overflow:hidden;">${textVal}</div>
+          
+          <div style="width:40px; height:50px; background:rgba(255,255,255,0.15); border:1px solid #C9A227; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; margin-bottom:6px; position:relative;">
+            👤
+          </div>
+          
+          <div style="background:rgba(201,162,39,0.9); color:#111; font-size:0.42rem; font-weight:bold; padding:2px 4px; border-radius:3px; max-width:90%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+            ${topic}
+          </div>
+        </div>
+        
+        <div style="border-top:1px solid rgba(255,255,255,0.2); padding-top:4px; font-size:0.38rem; color:#ccc;">
+          ธีมวิชา: ${themeName}
+        </div>
+      </div>
+    `;
+  } else if (type === 'infographic') {
+    const topic = document.getElementById('g_topic').value || 'หัวข้อย่อย 3 ประเด็น';
+    const listItems = topic.split('\n').filter(l => l.trim().length > 0).slice(0, 4);
+    if (listItems.length === 0) {
+      listItems.push('ประเด็นย่อยที่ 1', 'ประเด็นย่อยที่ 2', 'ประเด็นย่อยที่ 3');
+    }
+
+    box.innerHTML = `
+      <h3 style="font-size:0.85rem; margin:0 0 10px; color:var(--purple); text-align:center;">📊 ตัวอย่างอินโฟกราฟิกความรู้ (สไตล์${artName})</h3>
+      <div style="width:100%; max-width:190px; border:2px solid var(--border-color); border-radius:8px; background:var(--card); padding:8px; box-sizing:border-box; box-shadow:0 3px 8px rgba(0,0,0,0.06); font-family:'Prompt',sans-serif;">
+        <div style="background:var(--purple); color:#fff; font-size:0.58rem; font-weight:bold; text-align:center; padding:4px; border-radius:4px; margin-bottom:8px;">
+          INFOGRAPHIC HEADER
+        </div>
+        
+        <div style="display:flex; align-items:center; gap:4px; margin-bottom:6px; background:rgba(0,0,0,0.02); padding:4px; border-radius:4px;">
+          <div style="font-size:1rem;">👩‍🏫</div>
+          <div style="font-size:0.42rem; color:var(--text-muted);">แนะนำโดย: ${roleName}</div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          ${listItems.map((item, idx) => `
+            <div style="background:var(--input-bg); border-left:3px solid var(--purple); border-radius:3px; padding:4px 6px; display:flex; align-items:center; gap:6px;">
+              <span style="font-size:0.55rem; font-weight:bold; color:var(--purple); width:12px; height:12px; border-radius:50%; background:rgba(124,77,168,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0;">${idx + 1}</span>
+              <span style="font-size:0.48rem; color:var(--text); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; width:calc(100% - 18px);">${item}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  } else if (type === 'cover') {
+    const textVal = document.getElementById('g_text').value || 'ชื่อเรื่องหน้าปกรายงาน';
+    const topic = document.getElementById('g_topic').value || 'ชื่อผู้จัดทำและโรงเรียน';
+    box.innerHTML = `
+      <h3 style="font-size:0.85rem; margin:0 0 10px; color:var(--purple); text-align:center;">📖 ตัวอย่างปกรายงาน/แผนการสอน (สไตล์${artName})</h3>
+      <div style="width:100%; max-width:180px; aspect-ratio:1/1.414; background:linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border:3px solid var(--purple); border-radius:8px; box-shadow:0 4px 10px rgba(0,0,0,0.1); position:relative; box-sizing:border-box; padding:12px; display:flex; flex-direction:column; justify-content:space-between; text-align:center; font-family:'Prompt',sans-serif;">
+        <div style="border:1px solid rgba(124,77,168,0.3); height:100%; width:100%; position:absolute; top:0; left:0; pointer-events:none; box-sizing:border-box; border-radius:5px; margin:0;"></div>
+        
+        <div>
+          <div style="font-size:0.6rem; font-weight:bold; color:var(--purple); line-height:1.2; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; max-height:45px;">
+            ${textVal}
+          </div>
+        </div>
+        
+        <div style="flex-grow:1; display:flex; align-items:center; justify-content:center;">
+          <div style="width:50px; height:50px; border-radius:50%; background:rgba(124,77,168,0.1); display:flex; align-items:center; justify-content:center; border:1px dashed var(--purple); font-size:1.4rem;">
+            🎨
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:0.42rem; color:var(--text-muted); line-height:1.3; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; max-height:24px;">
+            ${topic}
+          </div>
+        </div>
+      </div>
+    `;
+  } else {
+    box.innerHTML = `
+      <h3 style="font-size:0.85rem; margin:0 0 16px; color:var(--purple); text-align:center;">✨ ภาพประกอบ / ตัวละครเดี่ยว (สไตล์${artName})</h3>
+      <div style="background:var(--card); border:2px solid var(--border-color); border-radius:12px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,0.06); text-align:center; width:100%; max-width:220px; font-family:'Prompt',sans-serif;">
+        <div style="width:70px; height:70px; border-radius:50%; background:linear-gradient(135deg, var(--purple-light), var(--purple)); color:#fff; display:flex; align-items:center; justify-content:center; font-size:2.2rem; margin:0 auto 12px; box-shadow:0 3px 6px rgba(124,77,168,0.2);">
+          🎭
+        </div>
+        <div style="font-size:0.8rem; font-weight:bold; color:var(--text);">${roleName}</div>
+        <div style="font-size:0.65rem; color:var(--text-muted); margin-top:2px;">แสดงสีหน้า: ${emoName}</div>
+        <div style="font-size:0.58rem; color:var(--purple); font-weight:bold; margin-top:6px; background:rgba(124,77,168,0.1); padding:2px 8px; border-radius:20px; display:inline-block;">
+          ฉาก: ${bgName}
+        </div>
+      </div>
+    `;
+  }
+}
+
+// 4. History Operations
+function logActionFromId(id) {
+  const el = document.getElementById(id);
+  if (!el || !el.value.trim()) return;
+  let title = '';
+  if (id === 'mOut') {
+    title = curTpl ? curTpl.icon + ' ' + curTpl.title : 'คลังพรอมต์';
+  } else if (id === 'posterOut') {
+    title = '🖼️ โปสเตอร์: ' + (document.getElementById('p_activity').value || 'ไม่มีหัวข้อ');
+  } else if (id === 'creativeOut') {
+    const type = document.getElementById('g_type').value;
+    const typeNames = {
+      sheet: 'Character Sheet 3x3',
+      storyboard: 'สตอรี่บอร์ด',
+      infographic: 'อินโฟกราฟิก',
+      idplan: 'ปก ID Plan',
+      cover: 'ปกรายงาน/สื่อ',
+      vocab: 'บัตรคำศัพท์',
+      sticker: 'สติกเกอร์ไดคัท',
+      illus: 'ภาพประกอบใบงาน'
+    };
+    title = '🎨 ' + (typeNames[type] || 'ภาพสร้างสรรค์');
+  } else if (id === 'captionOut') {
+    title = '✍️ คำโพสต์: ' + (document.getElementById('c_activity').value || 'ไม่มีหัวข้อ');
+  }
+  saveToHistory(title, el.value);
+}
+
+function saveToHistory(title, text) {
+  if (!text || !text.trim()) return;
+  let history = JSON.parse(localStorage.getItem('kjps-history') || '[]');
+  history = history.filter(item => item.text !== text);
+  
+  const timeStr = new Date().toLocaleString('th-TH', { 
+    year: 'numeric', 
+    month: 'short', 
+    day: 'numeric', 
+    hour: '2-digit', 
+    minute: '2-digit' 
+  });
+  
+  history.unshift({ title: title, text: text, time: timeStr });
+  if (history.length > 15) {
+    history = history.slice(0, 15);
+  }
+  localStorage.setItem('kjps-history', JSON.stringify(history));
+  renderHistory();
+}
+
+function renderHistory() {
+  const historyList = document.getElementById('historyList');
+  const historyEmpty = document.getElementById('historyEmpty');
+  if (!historyList || !historyEmpty) return;
+
+  const history = JSON.parse(localStorage.getItem('kjps-history') || '[]');
+  if (history.length === 0) {
+    historyEmpty.style.display = 'block';
+    historyList.style.display = 'none';
+    return;
+  }
+
+  historyEmpty.style.display = 'none';
+  historyList.style.display = 'grid';
+  historyList.innerHTML = '';
+
+  history.forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.style.position = 'relative';
+    card.style.cursor = 'pointer';
+    card.style.border = '1.5px solid var(--border-color)';
+    card.style.background = 'var(--card)';
+    card.style.padding = '14px';
+    card.style.borderRadius = '10px';
+    card.style.transition = 'transform 0.2s, box-shadow 0.2s';
+    
+    card.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
+        <span style="font-size:1.1rem;">📜</span>
+        <span style="font-size:0.68rem; color:var(--text-muted); background:var(--input-bg); padding:2px 6px; border-radius:10px;">${item.time}</span>
+      </div>
+      <h3 style="font-size:0.92rem; margin:0 0 6px; color:var(--purple-dark); font-weight:bold; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; width:100%;">${item.title}</h3>
+      <p style="font-size:0.75rem; color:var(--text-muted); line-height:1.4; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; text-overflow:ellipsis; margin:0;">
+        ${item.text.replace(/[\n\r]+/g, ' ')}
+      </p>
+    `;
+    
+    card.onclick = () => openHistoryModal(idx);
+    historyList.appendChild(card);
+  });
+}
+
+function openHistoryModal(idx) {
+  const history = JSON.parse(localStorage.getItem('kjps-history') || '[]');
+  const item = history[idx];
+  if (!item) return;
+
+  curTpl = null;
+  document.getElementById('mTitle').textContent = '📜 ' + item.title;
+  document.getElementById('mDesc').textContent = 'ประวัติการคัดลอกเมื่อ: ' + (item.time || 'ไม่ระบุเวลา');
+  document.getElementById('mFields').innerHTML = '<p style="color:var(--text-muted); font-size:0.9rem;">ประวัติชุดนี้จัดเก็บในเครื่องของคุณโดยอัตโนมัติเมื่อกดคัดลอกหรือเปิดใช้งาน AI</p>';
+
+  const detail = document.getElementById('mDetail');
+  if (detail && detail.parentElement) detail.parentElement.style.display = 'none';
+  const accurate = document.getElementById('mAccurate');
+  if (accurate && accurate.parentElement) accurate.parentElement.style.display = 'none';
+
+  document.getElementById('mOut').value = item.text;
+
+  let delBtn = document.getElementById('modalDeleteHistoryBtn');
+  if (!delBtn) {
+    delBtn = document.createElement('button');
+    delBtn.id = 'modalDeleteHistoryBtn';
+    delBtn.className = 'btn btn-danger';
+    delBtn.style.background = '#e53935';
+    delBtn.style.color = '#fff';
+    delBtn.style.border = 'none';
+    delBtn.textContent = '🗑️ ลบจากประวัติ';
+    delBtn.onclick = function() {
+      deleteHistoryItem(idx);
+      closeModal();
+    };
+    document.querySelector('#modalBg .btns:last-child').appendChild(delBtn);
+  } else {
+    delBtn.style.display = 'block';
+    delBtn.onclick = function() {
+      deleteHistoryItem(idx);
+      closeModal();
+    };
+  }
+
+  document.getElementById('modalShareBtn').style.display = 'none';
+  document.getElementById('modalBg').classList.add('open');
+}
+
+function deleteHistoryItem(idx) {
+  let history = JSON.parse(localStorage.getItem('kjps-history') || '[]');
+  history.splice(idx, 1);
+  localStorage.setItem('kjps-history', JSON.stringify(history));
+  renderHistory();
+  showToast('ลบรายการประวัติแล้ว');
+}
+
+function clearHistory() {
+  if (confirm('คุณต้องการลบประวัติการคัดลอกทั้งหมดใช่หรือไม่?')) {
+    localStorage.removeItem('kjps-history');
+    renderHistory();
+    showToast('ล้างประวัติเรียบร้อยแล้ว');
+  }
+}
+
+// 5. Download Prompt
+function downloadPrompt(textareaId, tabName) {
+  const el = document.getElementById(textareaId);
+  if (!el || !el.value.trim()) {
+    showToast('ไม่มีข้อความให้ดาวน์โหลด');
+    return;
+  }
+  let rawName = 'prompt';
+  if (tabName === 'poster') {
+    rawName = 'poster-' + (document.getElementById('p_activity').value || 'builder');
+  } else if (tabName === 'creative') {
+    rawName = 'creative-' + (document.getElementById('g_type').value || 'image');
+  } else if (tabName === 'caption') {
+    rawName = 'caption-' + (document.getElementById('c_activity').value || 'ai');
+  } else if (tabName === 'library') {
+    rawName = 'template-' + (curTpl ? curTpl.title : 'library');
+  }
+  const safeName = 'krujames-' + rawName.replace(/[^a-zA-Z0-9\u0E00-\u0E7F._-]/g, '_');
+  const blob = new Blob([el.value], { type: 'text/plain;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = safeName + '.txt';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+  showToast('ดาวน์โหลดไฟล์สำเร็จ 📥');
+}
+
+// 6. URL Template Sharing
+function generateShareLink() {
+  let state = { ctx: '', vals: {}, extra: {} };
+  const modalOpen = document.getElementById('modalBg').classList.contains('open');
+  
+  if (modalOpen && curTpl) {
+    state.ctx = 'library';
+    state.tplId = curTpl.id;
+    const fields = document.getElementById('mFields').querySelectorAll('input, select, textarea');
+    fields.forEach(el => {
+      if (el.id && el.id.startsWith('f_')) {
+        state.vals[el.id] = el.value;
+      }
+    });
+    const stdEl = document.getElementById('f__std');
+    if (stdEl) {
+      state.vals['f__std'] = stdEl.value;
+    }
+    state.extra.mDetail = document.getElementById('mDetail').value;
+    state.extra.mAccurate = document.getElementById('mAccurate').checked;
+  } else {
+    const activeTab = document.querySelector('section.tab.active');
+    if (!activeTab) return;
+
+    if (activeTab.id === 'tab-poster') {
+      state.ctx = 'poster';
+      const inputs = activeTab.querySelectorAll('input, select, textarea');
+      inputs.forEach(el => {
+        if (el.id && el.id.startsWith('p_')) {
+          state.vals[el.id] = el.value;
+        }
+      });
+      state.extra.activeStyle = activeStyle;
+    } else if (activeTab.id === 'tab-creative') {
+      state.ctx = 'creative';
+      const inputs = activeTab.querySelectorAll('input, select, textarea');
+      inputs.forEach(el => {
+        if (el.id && el.id.startsWith('g_')) {
+          state.vals[el.id] = el.value;
+        }
+      });
+      state.extra.activeArt = activeArt;
+    } else if (activeTab.id === 'tab-caption') {
+      state.ctx = 'caption';
+      const inputs = activeTab.querySelectorAll('input, select, textarea');
+      inputs.forEach(el => {
+        if (el.id && el.id.startsWith('c_')) {
+          if (el.type === 'checkbox') {
+            state.vals[el.id] = el.checked;
+          } else {
+            state.vals[el.id] = el.value;
+          }
+        }
+      });
+    } else {
+      showToast('ไม่สามารถสร้างลิงก์แชร์สำหรับหน้านี้ได้');
+      return;
+    }
+  }
+
+  try {
+    const jsonStr = JSON.stringify(state);
+    const utf8Bytes = new TextEncoder().encode(jsonStr);
+    let binStr = "";
+    utf8Bytes.forEach(b => binStr += String.fromCharCode(b));
+    const base64 = btoa(binStr);
+    const shareUrl = window.location.origin + window.location.pathname + "?share=" + encodeURIComponent(base64);
+    
+    navigator.clipboard.writeText(shareUrl).then(() => {
+      showToast('คัดลอกลิงก์แชร์เทมเพลตแล้ว 🔗 ส่งต่อให้ครูท่านอื่นใช้ต่อได้ทันที!');
+    }).catch(() => {
+      const tempInp = document.createElement('input');
+      tempInp.value = shareUrl;
+      document.body.appendChild(tempInp);
+      tempInp.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInp);
+      showToast('คัดลอกลิงก์แชร์เทมเพลตแล้ว 🔗');
+    });
+  } catch (err) {
+    console.error(err);
+    showToast('เกิดข้อผิดพลาดในการสร้างลิงก์แชร์');
+  }
+}
+
+function parseUrlParams() {
+  const params = new URLSearchParams(window.location.search);
+  if (!params.has('share')) return;
+
+  const base64 = params.get('share');
+  try {
+    const binStr = atob(base64);
+    const bytes = new Uint8Array(binStr.length);
+    for (let i = 0; i < binStr.length; i++) {
+      bytes[i] = binStr.charCodeAt(i);
+    }
+    const jsonStr = new TextDecoder().decode(bytes);
+    const state = JSON.parse(jsonStr);
+
+    if (state.ctx === 'poster') {
+      switchTab('poster');
+      for (let id in state.vals) {
+        const el = document.getElementById(id);
+        if (el) el.value = state.vals[id];
+      }
+      if (state.extra && state.extra.activeStyle) {
+        activeStyle = state.extra.activeStyle;
+        renderStyles();
+      }
+      buildPoster();
+      updatePreviews();
+    } else if (state.ctx === 'creative') {
+      switchTab('creative');
+      for (let id in state.vals) {
+        const el = document.getElementById(id);
+        if (el) el.value = state.vals[id];
+      }
+      if (state.extra && state.extra.activeArt) {
+        activeArt = state.extra.activeArt;
+        renderArtStyles();
+      }
+      onCreativeType();
+      buildCreative();
+      updatePreviews();
+    } else if (state.ctx === 'caption') {
+      switchTab('caption');
+      for (let id in state.vals) {
+        const el = document.getElementById(id);
+        if (el) {
+          if (el.type === 'checkbox') {
+            el.checked = state.vals[id];
+          } else {
+            el.value = state.vals[id];
+          }
+        }
+      }
+      buildCaption();
+      updatePreviews();
+    } else if (state.ctx === 'library') {
+      switchTab('library');
+      if (state.tplId) {
+        const t = TEMPLATES.find(x => x.id === state.tplId) || customTemplates.find(x => x.id === state.tplId);
+        if (t) {
+          openCard(t);
+          for (let id in state.vals) {
+            const el = document.getElementById(id);
+            if (el) el.value = state.vals[id];
+          }
+          if (state.extra) {
+            if (state.extra.mDetail) document.getElementById('mDetail').value = state.extra.mDetail;
+            if (state.extra.mAccurate !== undefined) document.getElementById('mAccurate').checked = state.extra.mAccurate;
+          }
+          buildModal();
+        }
+      }
+    }
+    window.history.replaceState({}, document.title, window.location.pathname);
+  } catch (err) {
+    console.error('Failed to parse shared link state:', err);
+    showToast('ลิงก์แชร์ไม่ถูกต้องหรือหมดอายุ');
+  }
 }
 
 /* ============================================================
    INIT
 ============================================================ */
+/* กลุ่มสาระเทคโนโลยี (หลักสูตร 2568) — เทคโนโลยีใช้ผลลัพธ์จากวิทยาศาสตร์ สิ่งแวดล้อมและเทคโนโลยี (ป.1-6);
+   วิทยาการคำนวณใช้ตัวชี้วัด ว 4.2; การออกแบบและเทคโนโลยีใช้ตัวชี้วัด ว 4.1 */
+(function(){
+  var cs={},dt={};
+  Object.keys(CS_INDICATORS).forEach(function(g){cs[g]=CS_INDICATORS[g].map(function(x){return x.c+' '+x.t;});});
+  Object.keys(DT_INDICATORS).forEach(function(g){dt[g]=DT_INDICATORS[g].map(function(x){return x.c+' '+x.t;});});
+  CURR2568_OUTCOMES['วิทยาการคำนวณ']=cs;
+  CURR2568_OUTCOMES['การออกแบบและเทคโนโลยี']=dt;
+  CURR2568_OUTCOMES['เทคโนโลยี']=CURR2568_OUTCOMES['วิทยาศาสตร์ สิ่งแวดล้อมและเทคโนโลยี']||{};
+})();
 renderChips();renderLibrary();
 renderStyles();renderSizes();renderPresets();renderDatalists();
 document.getElementById('p_preset').value=PRESETS[1].name;applyPreset();
@@ -3681,6 +5262,27 @@ fillSelect('g_role',ROLES);fillSelect('g_emotion',EMOTIONS);fillSelect('g_pose',
 SIZES.forEach((s,i)=>{const o=document.createElement('option');o.value=i;o.textContent=s.name;document.getElementById('g_size').appendChild(o);});
 document.getElementById('g_size').value=2;
 buildCreative();
+
+// Register PWA service worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('ServiceWorker registered with scope:', reg.scope))
+      .catch(err => console.error('ServiceWorker registration failed:', err));
+  });
+}
+
+// Load custom templates and profiles
+loadCustomTemplates();
+loadProfilesFromStorage();
+
+// Theme, History and URL parameters initialization
+initTheme();
+renderHistory();
+parseUrlParams();
+
+// Populate school profiles
+populateProfileSelectors();
 </script>
 </body>
 </html>
