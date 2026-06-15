@@ -306,29 +306,43 @@ body.dark-mode .vocab-meaning{background:var(--purple-light);color:#f3effa}
             <label style="font-size: 0.8rem; font-weight: normal; margin-bottom: 2px;">💡 การจัดแสง (Lighting)</label>
             <select id="p_refiner_lighting" style="padding: 4px 8px; font-size: 0.85rem;" onchange="buildPoster()">
               <option value="">-- ไม่ระบุ --</option>
-              <option value="studio lighting">Studio Light</option>
-              <option value="cinematic lighting">Cinematic</option>
-              <option value="dramatic contrast lighting">Dramatic Contrast</option>
-              <option value="sun rays lighting">Sun Rays</option>
+              <option value="soft natural lighting">แสงธรรมชาตินุ่มนวล (Soft Natural)</option>
+              <option value="studio lighting">สตูดิโอ (Studio Light)</option>
+              <option value="cinematic lighting">ภาพยนตร์ (Cinematic)</option>
+              <option value="dramatic contrast lighting">คอนทราสต์ดราม่า (Dramatic)</option>
+              <option value="warm golden hour lighting">แสงทองยามเย็น (Golden Hour)</option>
+              <option value="sun rays lighting">แสงแดดส่องลำ (Sun Rays)</option>
+              <option value="warm candlelight glow">แสงเทียนอบอุ่น (Candlelight)</option>
+              <option value="neon glow lighting">แสงนีออนเรืองแสง (Neon)</option>
+              <option value="bright even flat lighting">แสงสว่างเรียบทั่วภาพ (Flat)</option>
             </select>
           </div>
           <div class="field" style="margin-bottom: 0;">
             <label style="font-size: 0.8rem; font-weight: normal; margin-bottom: 2px;">📷 กล้อง/เลนส์ (Camera)</label>
             <select id="p_refiner_camera" style="padding: 4px 8px; font-size: 0.85rem;" onchange="buildPoster()">
               <option value="">-- ไม่ระบุ --</option>
-              <option value="85mm lens portrait photo">85mm Portrait</option>
-              <option value="35mm wide angle photo">35mm Wide Angle</option>
-              <option value="macro close-up photo">Macro Close-up</option>
-              <option value="aerial POV drone shot">Aerial POV</option>
+              <option value="85mm lens portrait photo">85mm พอร์ตเทรต</option>
+              <option value="50mm lens natural photo">50mm มุมมองธรรมชาติ</option>
+              <option value="35mm wide angle photo">35mm มุมกว้าง</option>
+              <option value="wide angle 24mm photo">24mm มุมกว้างพิเศษ</option>
+              <option value="macro close-up photo">มาโครระยะใกล้</option>
+              <option value="telephoto compressed photo">เทเลโฟโต้ซูมไกล</option>
+              <option value="aerial POV drone shot">มุมโดรนจากบนสูง</option>
+              <option value="tilt-shift miniature photo">ทิลต์-ชิฟต์ (จิ๋ว)</option>
             </select>
           </div>
           <div class="field" style="margin-bottom: 0;">
             <label style="font-size: 0.8rem; font-weight: normal; margin-bottom: 2px;">✨ เอฟเฟกต์ (Effects)</label>
             <select id="p_refiner_effects" style="padding: 4px 8px; font-size: 0.85rem;" onchange="buildPoster()">
               <option value="">-- ไม่ระบุ --</option>
-              <option value="deep bokeh blur">Deep Bokeh</option>
-              <option value="volumetric fog atmosphere">Volumetric Fog</option>
-              <option value="sharp detailed textures">Sharp Detail</option>
+              <option value="deep bokeh blur">โบเก้ละลายฉาก (Bokeh)</option>
+              <option value="volumetric fog atmosphere">หมอกฟุ้ง (Volumetric Fog)</option>
+              <option value="sharp detailed textures">รายละเอียดคมชัด (Sharp)</option>
+              <option value="glowing sparkles and particles">ประกายระยิบระยับ (Sparkles)</option>
+              <option value="floating dust light particles">ละอองแสงลอย (Dust Light)</option>
+              <option value="lens flare effect">แสงแฟลร์เลนส์ (Lens Flare)</option>
+              <option value="soft dreamy glow">ฟุ้งฝันนุ่มนวล (Dreamy Glow)</option>
+              <option value="confetti and celebration particles">คอนเฟตตี/ฉลอง (Confetti)</option>
             </select>
           </div>
         </div>
@@ -454,29 +468,46 @@ body.dark-mode .vocab-meaning{background:var(--purple-light);color:#f3effa}
             <label style="font-size: 0.8rem; font-weight: normal; margin-bottom: 2px;">💡 การจัดแสง (Lighting)</label>
             <select id="g_refiner_lighting" style="padding: 4px 8px; font-size: 0.85rem;" onchange="buildCreative()">
               <option value="">-- ไม่ระบุ --</option>
-              <option value="studio lighting">Studio Light</option>
-              <option value="cinematic lighting">Cinematic</option>
-              <option value="dramatic contrast lighting">Dramatic Contrast</option>
-              <option value="sun rays lighting">Sun Rays</option>
+              <option value="soft natural lighting">แสงธรรมชาตินุ่มนวล (Soft Natural)</option>
+              <option value="studio lighting">สตูดิโอ (Studio Light)</option>
+              <option value="cinematic lighting">ภาพยนตร์ (Cinematic)</option>
+              <option value="dramatic contrast lighting">คอนทราสต์ดราม่า (Dramatic)</option>
+              <option value="warm golden hour lighting">แสงทองยามเย็น (Golden Hour)</option>
+              <option value="sun rays lighting">แสงแดดส่องลำ (Sun Rays)</option>
+              <option value="soft morning light">แสงเช้าอ่อน ๆ (Morning)</option>
+              <option value="warm candlelight glow">แสงเทียนอบอุ่น (Candlelight)</option>
+              <option value="neon glow lighting">แสงนีออนเรืองแสง (Neon)</option>
+              <option value="bright even flat lighting">แสงสว่างเรียบทั่วภาพ (Flat)</option>
             </select>
           </div>
           <div class="field" style="margin-bottom: 0;">
             <label style="font-size: 0.8rem; font-weight: normal; margin-bottom: 2px;">📷 กล้อง/เลนส์ (Camera)</label>
             <select id="g_refiner_camera" style="padding: 4px 8px; font-size: 0.85rem;" onchange="buildCreative()">
               <option value="">-- ไม่ระบุ --</option>
-              <option value="85mm lens portrait photo">85mm Portrait</option>
-              <option value="35mm wide angle photo">35mm Wide Angle</option>
-              <option value="macro close-up photo">Macro Close-up</option>
-              <option value="aerial POV drone shot">Aerial POV</option>
+              <option value="85mm lens portrait photo">85mm พอร์ตเทรต</option>
+              <option value="50mm lens natural photo">50mm มุมมองธรรมชาติ</option>
+              <option value="35mm wide angle photo">35mm มุมกว้าง</option>
+              <option value="wide angle 24mm photo">24mm มุมกว้างพิเศษ</option>
+              <option value="macro close-up photo">มาโครระยะใกล้</option>
+              <option value="telephoto compressed photo">เทเลโฟโต้ซูมไกล</option>
+              <option value="aerial POV drone shot">มุมโดรนจากบนสูง</option>
+              <option value="fisheye lens photo">เลนส์ฟิชอาย</option>
+              <option value="tilt-shift miniature photo">ทิลต์-ชิฟต์ (จิ๋ว)</option>
             </select>
           </div>
           <div class="field" style="margin-bottom: 0;">
             <label style="font-size: 0.8rem; font-weight: normal; margin-bottom: 2px;">✨ เอฟเฟกต์ (Effects)</label>
             <select id="g_refiner_effects" style="padding: 4px 8px; font-size: 0.85rem;" onchange="buildCreative()">
               <option value="">-- ไม่ระบุ --</option>
-              <option value="deep bokeh blur">Deep Bokeh</option>
-              <option value="volumetric fog atmosphere">Volumetric Fog</option>
-              <option value="sharp detailed textures">Sharp Detail</option>
+              <option value="deep bokeh blur">โบเก้ละลายฉาก (Bokeh)</option>
+              <option value="volumetric fog atmosphere">หมอกฟุ้ง (Volumetric Fog)</option>
+              <option value="sharp detailed textures">รายละเอียดคมชัด (Sharp)</option>
+              <option value="glowing sparkles and particles">ประกายระยิบระยับ (Sparkles)</option>
+              <option value="floating dust light particles">ละอองแสงลอย (Dust Light)</option>
+              <option value="lens flare effect">แสงแฟลร์เลนส์ (Lens Flare)</option>
+              <option value="soft dreamy glow">ฟุ้งฝันนุ่มนวล (Dreamy Glow)</option>
+              <option value="motion blur dynamic">เบลอความเคลื่อนไหว (Motion)</option>
+              <option value="confetti and celebration particles">คอนเฟตตี/ฉลอง (Confetti)</option>
             </select>
           </div>
         </div>
@@ -1047,27 +1078,53 @@ const TEMPLATES = [
 4. แยกส่วนเฉลยท้ายชุด พร้อมเหตุผลประกอบทุกข้อ
 5. ปิดท้ายด้วยข้อเสนอแนะการนำผลสอบไปใช้พัฒนาผู้เรียน`},
 
-{id:'rubric',cat:'assess',icon:'📊',title:'เกณฑ์การประเมิน Rubric',
- desc:'ตาราง Rubric เชิงพฤติกรรมที่วัดได้จริง พร้อมวิธีแปลผล',
- tags:'rubric เกณฑ์ประเมิน ประเมินชิ้นงาน',
+{id:'rubric',cat:'assess',icon:'📊',title:'แบบประเมินชิ้นงาน/ใบงาน (Rubric Score) ฉบับเต็ม',
+ desc:'Rubric 4 ระดับครบเอกสาร: เชื่อม KPA ตาราง ช่องคะแนน เกณฑ์ตัดสิน บันทึกรายบุคคล ข้อเสนอแนะ พร้อมลง Word/Canva',
+ tags:'rubric เกณฑ์ประเมิน ประเมินชิ้นงาน ใบงาน kpa วัดผล authentic เอกสารราชการ',
  fields:[
-  {k:'task',l:'ชิ้นงาน/พฤติกรรมที่ประเมิน',p:'เช่น โครงงานวิทยาศาสตร์, การนำเสนอหน้าชั้น'},
+  {k:'subject',l:'รายวิชา',p:'เช่น วิทยาการคำนวณ'},
   {k:'grade',l:'ระดับชั้น',p:''},
-  {k:'levels',l:'จำนวนระดับคุณภาพ',t:'select',o:['4 ระดับ (ดีมาก-ดี-พอใช้-ปรับปรุง)','3 ระดับ (ดี-พอใช้-ปรับปรุง)','5 ระดับ']},
-  {k:'criteria',l:'ประเด็นที่ต้องการประเมิน (เว้นว่าง = ให้ AI เสนอ)',t:'textarea',p:'เช่น เนื้อหา, ความคิดสร้างสรรค์, การทำงานกลุ่ม'}],
+  {k:'unit',l:'หน่วยการเรียนรู้ (เว้นว่างได้)',p:'เช่น หน่วยที่ 1 ขั้นตอนวิธีการแก้ปัญหา'},
+  {k:'task',l:'ชิ้นงาน/ภาระงานที่ประเมิน',p:'เช่น ใบงานเขียนผังงานแก้ปัญหา, โครงงาน, การนำเสนอหน้าชั้น'},
+  {k:'kpa',l:'จุดประสงค์การเรียนรู้ K/P/A (เว้นว่าง = ให้ AI เสนอ)',t:'textarea',p:'K: ...\nP: ...\nA: ...',suggest:['K: อธิบายหลักการของเรื่องนี้ได้ถูกต้อง','P: ปฏิบัติ/สร้างชิ้นงานตามขั้นตอนได้ด้วยตนเอง','A: มีความรับผิดชอบ ส่งงานตรงเวลา และมุ่งมั่นในการทำงาน']},
+  {k:'maxscore',l:'คะแนนเต็ม',t:'select',o:['10 คะแนน','15 คะแนน','20 คะแนน','25 คะแนน','30 คะแนน','100 คะแนน']},
+  {k:'criteria',l:'ประเด็น/ด้านที่ต้องการประเมิน (เว้นว่าง = ให้ AI เสนอ 4-6 ด้าน)',t:'textarea',p:'เช่น ความถูกต้องของเนื้อหา (K), การวิเคราะห์/กระบวนการคิด (P), การนำเสนอ/ความคิดสร้างสรรค์ (P), ความครบถ้วน (P), ความรับผิดชอบ/การส่งงาน (A)'}],
  tpl:`บทบาท (Role):
-คุณคือผู้เชี่ยวชาญด้านการวัดและประเมินผลตามสภาพจริง (Authentic Assessment)
+จงสวมบทบาทเป็นผู้เชี่ยวชาญด้านการวัดและประเมินผลทางการศึกษา ผู้เชี่ยวชาญด้านการสร้าง Rubric Assessment และนักออกแบบเอกสารทางการศึกษามืออาชีพ
 
 งาน (Task):
-สร้างเกณฑ์การประเมินแบบ Rubric สำหรับประเมิน "{{task}}" ระดับชั้น {{grade}} จำนวน {{levels}}
-ประเด็นการประเมิน: {{criteria}}
+ออกแบบ "แบบประเมินชิ้นงาน/ใบงาน (Rubric Score)" ที่มีคุณภาพตามหลักวิชาการ สอดคล้องกับแผนการจัดการเรียนรู้และหลักสูตรแกนกลางการศึกษาขั้นพื้นฐาน และนำไปใช้ประเมินผู้เรียนได้จริง
 
-ข้อกำหนด (Format & Constraints):
-1. นำเสนอเป็นตาราง: แถว = ประเด็นการประเมิน, คอลัมน์ = ระดับคุณภาพ
-2. คำบรรยายแต่ละช่องต้องเป็นพฤติกรรมที่สังเกตและวัดได้จริง แตกต่างกันชัดเจนระหว่างระดับ
-3. กำหนดน้ำหนักคะแนนแต่ละประเด็น และคะแนนรวม
-4. มีเกณฑ์การแปลผลคะแนนรวมเป็นระดับคุณภาพ (เช่น ร้อยละ)
-5. ภาษากระชับ ครูคนอื่นอ่านแล้วประเมินได้ตรงกัน`},
+ข้อมูลพื้นฐาน:
+- รายวิชา: {{subject}}
+- ระดับชั้น: {{grade}}
+- หน่วยการเรียนรู้: {{unit}}
+- ชิ้นงาน/ภาระงาน: {{task}}
+- คะแนนเต็ม: {{maxscore}}
+- จุดประสงค์การเรียนรู้ (KPA): {{kpa}}
+- ด้านที่ต้องการประเมิน: {{criteria}}
+(มาตรฐานการเรียนรู้/ตัวชี้วัด ดูที่ส่วนแนบท้ายพรอมต์นี้)
+
+คำสั่ง:
+1. วิเคราะห์จุดประสงค์การเรียนรู้และลักษณะของชิ้นงานก่อนกำหนดเกณฑ์
+2. กำหนดเกณฑ์การประเมินที่เหมาะสม 4-6 ด้าน โดยเชื่อมโยงกับ K (ความรู้) P (ทักษะ/กระบวนการ) และ A (คุณลักษณะ/เจตคติ) อย่างครบถ้วน กำกับท้ายแต่ละด้านว่าเป็น (K)/(P)/(A)
+3. สร้าง Rubric แบบ 4 ระดับคุณภาพ: ระดับ 4 = ดีเยี่ยม, ระดับ 3 = ดี, ระดับ 2 = พอใช้, ระดับ 1 = ปรับปรุง
+4. เขียนคำอธิบายเชิงพฤติกรรมของแต่ละระดับให้แตกต่างกันอย่างชัดเจน สังเกตและวัดผลได้จริง (ไม่ใช้คำกว้าง ๆ)
+5. กำหนดน้ำหนักคะแนนแต่ละด้านให้รวมเป็นคะแนนเต็มที่กำหนด
+
+รูปแบบผลลัพธ์ที่ต้องการ (จัดเป็น 6 ส่วน):
+ส่วนที่ 1 ข้อมูลทั่วไป: ชื่อผู้เรียน / ชั้น / เลขที่ / รายวิชา / เรื่อง / วันที่ประเมิน (เว้นช่องว่างให้กรอก)
+ส่วนที่ 2 ตาราง Rubric Assessment: ตารางที่มีคอลัมน์ — ด้านที่ประเมิน | ระดับ 4 (ดีเยี่ยม) | ระดับ 3 (ดี) | ระดับ 2 (พอใช้) | ระดับ 1 (ปรับปรุง) | น้ำหนักคะแนน | คะแนนที่ได้ (เว้นช่องให้กรอก) พร้อมคำบรรยายพฤติกรรมครบทุกช่อง
+ส่วนที่ 3 สรุปผลการประเมิน: คะแนนรวม ______ / {{maxscore}} | คิดเป็นร้อยละ ______ % | ระดับคุณภาพ ______
+ส่วนที่ 4 เกณฑ์การตัดสินคุณภาพ: ร้อยละ 85-100 = ดีเยี่ยม, 70-84 = ดี, 60-69 = พอใช้, ต่ำกว่า 60 = ปรับปรุง
+ส่วนที่ 5 แบบบันทึกผลการประเมินรายบุคคล: ตาราง ครั้งที่ประเมิน | วันที่ | คะแนนที่ได้ | ระดับคุณภาพ | ลายมือชื่อผู้ประเมิน
+ส่วนที่ 6 ข้อเสนอแนะของครูผู้ประเมิน: เว้นบรรทัดสำหรับเขียน 3 บรรทัด
+
+เงื่อนไขสำคัญ:
+- ใช้ภาษาทางวิชาการ อ่านง่าย กระชับ ชัดเจน นำไปใช้ประเมินจริงได้
+- สอดคล้องกับตัวชี้วัด จุดประสงค์การเรียนรู้ และภาระงาน รองรับการประเมินตามสภาพจริง (Authentic Assessment)
+- จัดรูปแบบในลักษณะเอกสารราชการ พร้อมคัดลอกลง Word หรือ Canva ได้ทันที
+- หากข้อมูลส่วนใดไม่ครบ ให้เสนอเกณฑ์ประเมินที่เหมาะสมตามหลักวิชาการ และทำเครื่องหมาย [ ] ในจุดที่ครูควรปรับให้ตรงกับบริบทจริง`},
 
 {id:'satisfaction',cat:'assess',icon:'🗳️',title:'แบบประเมินความพึงพอใจ',
  desc:'แบบสอบถามความพึงพอใจกิจกรรม/โครงการ พร้อมวิธีแปลผลค่าเฉลี่ย',
@@ -2459,9 +2516,9 @@ You are an experienced English teacher in a Thai school who designs fun, level-a
   {k:'subject',l:'รายวิชา',p:'เช่น วิทยาการคำนวณ'},
   {k:'grade',l:'ระดับชั้น',p:''},
   {k:'topic',l:'เรื่องที่สอน',p:''},
-  {k:'result',l:'สิ่งที่เกิดขึ้นจริงในห้อง (เล่าคร่าว ๆ)',t:'textarea',p:'เช่น เด็กสนุกกับกิจกรรมกลุ่มมาก ส่วนใหญ่ทำใบงานได้ มี 4 คนยังเรียงลำดับขั้นตอนไม่ได้'},
-  {k:'score',l:'ผลคะแนน/จำนวนผ่านเกณฑ์ (เว้นว่างได้)',p:'เช่น ผ่านเกณฑ์ 26/30 คน คะแนนเฉลี่ย 8.2/10'},
-  {k:'problem',l:'ปัญหา/อุปสรรคที่พบ',t:'textarea',p:'เช่น เวลาไม่พอ อินเทอร์เน็ตหลุดบ่อย เด็กบางคนไม่มีอุปกรณ์'}],
+  {k:'result',l:'สิ่งที่เกิดขึ้นจริงในห้อง (เล่าคร่าว ๆ)',t:'textarea',p:'เช่น เด็กสนุกกับกิจกรรมกลุ่มมาก ส่วนใหญ่ทำใบงานได้ มี 4 คนยังเรียงลำดับขั้นตอนไม่ได้',suggest:['นักเรียนส่วนใหญ่เข้าใจเนื้อหาและทำกิจกรรมได้ตามจุดประสงค์','นักเรียนให้ความร่วมมือและกระตือรือร้นในการทำกิจกรรมกลุ่ม','นักเรียนสนุกกับกิจกรรม บรรยากาศการเรียนรู้เป็นไปด้วยดี','นักเรียนส่วนใหญ่ทำใบงาน/ชิ้นงานได้ มีบางคนต้องการความช่วยเหลือเพิ่มเติม','นักเรียนสามารถสรุปความรู้และนำเสนอผลงานหน้าชั้นได้','นักเรียนกลุ่มเก่งช่วยเหลือเพื่อนที่เรียนช้าได้ดี']},
+  {k:'score',l:'ผลคะแนน/จำนวนผ่านเกณฑ์ (เว้นว่างได้)',p:'เช่น ผ่านเกณฑ์ 26/30 คน คะแนนเฉลี่ย 8.2/10',suggest:['ผ่านเกณฑ์การประเมินทุกคน','ผ่านเกณฑ์ ___/___ คน คิดเป็นร้อยละ ___','คะแนนเฉลี่ย ___/___ คะแนน อยู่ในระดับดี','ผ่านเกณฑ์ระดับดีขึ้นไปเป็นส่วนใหญ่ มีบางคนต้องซ่อมเสริม']},
+  {k:'problem',l:'ปัญหา/อุปสรรคที่พบ',t:'textarea',p:'เช่น เวลาไม่พอ อินเทอร์เน็ตหลุดบ่อย เด็กบางคนไม่มีอุปกรณ์',suggest:['เวลาในการจัดกิจกรรมไม่เพียงพอ','นักเรียนบางคนยังขาดทักษะพื้นฐานในเรื่องนี้','อุปกรณ์/สื่อ/อินเทอร์เน็ตไม่เพียงพอหรือใช้งานติดขัด','นักเรียนบางส่วนขาดเรียน ทำให้เรียนรู้ไม่ต่อเนื่อง','นักเรียนบางคนไม่ตั้งใจหรือรบกวนเพื่อนระหว่างกิจกรรม','ไม่พบปัญหาหรืออุปสรรคที่เป็นอุปสรรคสำคัญ']}],
  tpl:`บทบาท (Role):
 คุณคือครูมืออาชีพที่เขียนบันทึกหลังการสอนเชิงสะท้อนคิด (Reflective Practitioner) ได้กระชับ ตรงประเด็น และใช้เป็นหลักฐาน ว.PA ได้
 
@@ -3542,6 +3599,13 @@ function openModal(t){
     inp.id='f_'+f.k;
     inp.addEventListener('input',buildModal);
     inp.addEventListener('change',buildModal);
+    if(f.suggest&&f.suggest.length){
+      const ss=document.createElement('select');
+      ss.style.cssText='width:100%;margin-bottom:5px;border:1.5px solid #E2D8EE;border-radius:8px;padding:7px 9px;font-family:inherit;font-size:.85rem;background:#FBF8FE;color:var(--purple-dark)';
+      ss.innerHTML='<option value="">💡 เลือกข้อความสำเร็จรูป (เลือกแล้วเติม แก้ไขต่อได้)…</option>'+f.suggest.map(s=>'<option>'+s+'</option>').join('');
+      ss.onchange=function(){ if(!ss.value)return; const cur=(inp.value||'').trim(); inp.value=cur?cur+(f.t==='textarea'?'\n':' ')+ss.value:ss.value; ss.value=''; inp.focus(); buildModal(); };
+      d.appendChild(ss);
+    }
     d.appendChild(inp);wrap.appendChild(d);
   });
   /* หมวดการเรียน/วัดผล: ช่องมาตรฐาน-ตัวชี้วัด + คลังตัวชี้วัดวิทยาการคำนวณ ว 4.2 */
@@ -3550,31 +3614,37 @@ function openModal(t){
     const lab=document.createElement('label');lab.textContent='มาตรฐาน/ตัวชี้วัดตามหลักสูตร (เว้นว่างได้)';
     d.appendChild(lab);
     const row=document.createElement('div');row.className='row2';
-    const stdBank=function(v){return v&&v.indexOf('dt:')===0?DT_INDICATORS:CS_INDICATORS;};
-    const stdKey=function(v){return v?v.replace(/^(cs|dt):/,''):'';};
+    const stdTrunc=function(s){return s.length>50?s.slice(0,50)+'…':s;};
+    const sciTech=(typeof CURR2568_OUTCOMES!=='undefined'?CURR2568_OUTCOMES['วิทยาศาสตร์ สิ่งแวดล้อมและเทคโนโลยี']:{})||{};
+    const stdItems=function(v){
+      if(!v) return [];
+      if(v.indexOf('cs:')===0){const g=v.slice(3);return (CS_INDICATORS[g]||[]).map(x=>({label:x.c+' — '+stdTrunc(x.t),full:x.c+' '+x.t}));}
+      if(v.indexOf('dt:')===0){const g=v.slice(3);return (DT_INDICATORS[g]||[]).map(x=>({label:x.c+' — '+stdTrunc(x.t),full:x.c+' '+x.t}));}
+      if(v.indexOf('c68:')===0){const g=v.slice(4);return (sciTech[g]||[]).map((s,i)=>({label:(i+1)+'. '+stdTrunc(s),full:s}));}
+      return [];
+    };
     const gSel=document.createElement('select');gSel.id='f__stdGrade';
-    gSel.innerHTML='<option value="">📚 คลังตัวชี้วัดสาระเทคโนโลยี — เลือกมาตรฐาน/ชั้น</option>'
-      +'<optgroup label="ว 4.2 วิทยาการคำนวณ">'
+    gSel.innerHTML='<option value="">📚 คลังตัวชี้วัด/ผลลัพธ์สาระเทคโนโลยี — เลือกมาตรฐาน/ชั้น</option>'
+      +'<optgroup label="หลักสูตร 2551 · ว 4.2 วิทยาการคำนวณ">'
       +Object.keys(CS_INDICATORS).map(g=>'<option value="cs:'+g+'">วิทยาการคำนวณ ชั้น '+g+' ('+CS_INDICATORS[g].length+' ตัวชี้วัด)</option>').join('')
-      +'</optgroup><optgroup label="ว 4.1 การออกแบบและเทคโนโลยี">'
+      +'</optgroup><optgroup label="หลักสูตร 2551 · ว 4.1 การออกแบบและเทคโนโลยี">'
       +Object.keys(DT_INDICATORS).map(g=>'<option value="dt:'+g+'">การออกแบบและเทคโนโลยี ชั้น '+g+' ('+DT_INDICATORS[g].length+' ตัวชี้วัด)</option>').join('')
+      +'</optgroup><optgroup label="หลักสูตร 2568 (ฐานสมรรถนะ) · เทคโนโลยี (จากวิทยาศาสตร์ สิ่งแวดล้อมและเทคโนโลยี)">'
+      +Object.keys(sciTech).map(g=>'<option value="c68:'+g+'">เทคโนโลยี (2568) ชั้น '+g+' ('+sciTech[g].length+' ผลลัพธ์)</option>').join('')
       +'</optgroup>';
     const iSel=document.createElement('select');iSel.id='f__stdPick';
     iSel.innerHTML='<option value="">— เลือกมาตรฐาน/ชั้นก่อน —</option>';
     gSel.onchange=function(){
-      iSel.innerHTML='<option value="">— เลือกตัวชี้วัด (เลือกซ้ำได้หลายข้อ) —</option>';
-      (stdBank(gSel.value)[stdKey(gSel.value)]||[]).forEach((x,i)=>{
-        const o=document.createElement('option');o.value=i;
-        o.textContent=x.c+' — '+(x.t.length>50?x.t.slice(0,50)+'…':x.t);
-        iSel.appendChild(o);
+      iSel.innerHTML='<option value="">— เลือกตัวชี้วัด/ผลลัพธ์ (เลือกซ้ำได้หลายข้อ) —</option>';
+      stdItems(gSel.value).forEach((it,i)=>{
+        const o=document.createElement('option');o.value=i;o.textContent=it.label;iSel.appendChild(o);
       });
     };
     iSel.onchange=function(){
       if(iSel.value===''||!gSel.value)return;
-      const x=stdBank(gSel.value)[stdKey(gSel.value)][+iSel.value];
+      const it=stdItems(gSel.value)[+iSel.value];
       const ta=document.getElementById('f__std');
-      const line=x.c+' '+x.t;
-      if(ta.value.indexOf(x.c)===-1) ta.value=(ta.value?ta.value+'\n':'')+line;
+      if(ta.value.indexOf(it.full)===-1) ta.value=(ta.value?ta.value+'\n':'')+it.full;
       iSel.value='';
       buildModal();
     };
@@ -3894,6 +3964,21 @@ const ART_STYLES=[
  {id:'thaicard',name:'การ์ดวรรณคดี/จิตรกรรมไทยวิจิตร',dots:['#C2185B','#C9A227','#FFF8E1'],
   thai:'สไตล์ภาพประกอบไทยวิจิตรงดงาม ตัวละครแต่งชุดไทยประณีตเครื่องประดับทอง ฉากหลังวัดวาอาราม ดอกบัว และสถาปัตยกรรมไทยยามแสงทองอ่อน กรอบลายไทยทองหรูหรา เหมาะทำบัตรความรู้วรรณคดีและวันสำคัญไทย',
   en:'exquisite Thai traditional illustration, character in elegant Thai costume with gold jewelry, temple lotus and Thai architecture background in golden hour light, ornate gold Thai frame, refined painterly detail'},
+ {id:'render3d',name:'3D เรนเดอร์สมจริง (Cinematic 3D)',dots:['#5C6BC0','#FFB74D','#26A69A'],
+  thai:'ภาพ 3D เรนเดอร์คุณภาพสูงแบบภาพยนตร์ มีมิติลึก แสงเงาสมจริง พื้นผิววัสดุละเอียด (Subsurface/Reflection) สะท้อนแสงนุ่มนวล องค์ประกอบมีความลึกหลายชั้น คมชัดทุกรายละเอียด',
+  en:'high quality cinematic 3D render, octane render, ultra detailed textures, realistic soft global illumination, subsurface scattering, depth of field, volumetric light, 8K'},
+ {id:'lowpoly',name:'3D โลว์โพลีน่ารัก (Low Poly)',dots:['#4FC3F7','#FFD54F','#81C784'],
+  thai:'ภาพสามมิติสไตล์โลว์โพลี รูปทรงเหลี่ยมเรียบง่ายน่ารัก สีสันสดใสไล่เฉดนุ่ม แสงนวล จัดวางเป็นฉากเล็กกะทัดรัด ดูทันสมัยสะอาดตา',
+  en:'cute low poly 3D style, faceted geometric shapes, soft gradient colors, gentle studio lighting, clean minimal 3D scene'},
+ {id:'isometric3d',name:'3D ไอโซเมตริก (Isometric)',dots:['#7E57C2','#FF8A65','#4DB6AC'],
+  thai:'ภาพสามมิติมุมไอโซเมตริก มองมุมเฉียง 45 องศา จัดวางฉาก ห้อง หรือสิ่งของเป็นโมเดลจิ๋วลอยตัว รายละเอียดเยอะ สีสันสดใส เงานุ่ม ดูเป็นระเบียบ',
+  en:'isometric 3D illustration, 45 degree angle, detailed miniature room or scene, vibrant colors, soft shadows, clean render'},
+ {id:'papercraft',name:'3D กระดาษพับ/ตัดซ้อนชั้น (Paper Craft)',dots:['#F48FB1','#80DEEA','#FFF176'],
+  thai:'ภาพสไตล์งานกระดาษตัดซ้อนหลายชั้น (Layered Paper Cut) มีมิติความลึกจากเงาระหว่างชั้น พื้นผิวกระดาษนุ่ม สีพาสเทลอบอุ่น น่ารักทำมือ',
+  en:'layered paper cut craft style, 3D papercraft, soft paper texture, depth from layered shadows, warm pastel colors, handmade look'},
+ {id:'claydough',name:'3D ดินปั้นนุ่มนิ่ม (Soft Clay)',dots:['#FF8A65','#A1887F','#FFE0B2'],
+  thai:'ภาพสามมิติสไตล์ดินปั้นนุ่มนิ่ม พื้นผิวดินเหนียวมันวาวจับต้องได้ ตัวละครป้อมกลมน่ารัก แสงสตูดิโอนุ่ม สีพาสเทลอบอุ่น',
+  en:'soft clay 3D render, plasticine claymation style, glossy clay texture, chubby cute characters, soft studio light, warm pastel palette'},
 ];
 const ROLES=[
  {t:'ครูหญิงไทย',e:'kind Thai female teacher'},
@@ -3906,6 +3991,16 @@ const ROLES=[
  {t:'ผู้อำนวยการ (สูทสุภาพ)',e:'Thai school director in formal suit'},
  {t:'กลุ่มนักเรียนหลายคน',e:'group of cheerful Thai students'},
  {t:'มาสคอตสัตว์น่ารัก (ระบุชนิดในช่องลักษณะ)',e:'cute animal mascot character'},
+ {t:'มาสคอตหุ่นยนต์ AI น่ารัก',e:'cute friendly AI robot mascot'},
+ {t:'ผู้อำนวยการหญิง (ชุดข้าราชการ)',e:'Thai female school director in khaki government uniform'},
+ {t:'ครูชุดข้าราชการสีกากี (หญิง)',e:'Thai female teacher in khaki government uniform'},
+ {t:'ครูชุดข้าราชการสีกากี (ชาย)',e:'Thai male teacher in khaki government uniform'},
+ {t:'นักการภารโรง/ลุงนักการ',e:'friendly Thai school janitor'},
+ {t:'ผู้ปกครอง (พ่อแม่นักเรียน)',e:'Thai parent'},
+ {t:'พระสงฆ์ (สำหรับวันสำคัญทางพุทธ)',e:'Thai Buddhist monk'},
+ {t:'นักกีฬานักเรียน (ชุดกีฬา)',e:'Thai student athlete in sportswear'},
+ {t:'ลูกเสือ/เนตรนารี',e:'Thai scout student in scout uniform'},
+ {t:'วิทยากร/พิธีกร',e:'Thai speaker presenter on stage'},
  {t:'กำหนดเอง (อธิบายในช่องลักษณะ)',e:'custom character'},
  {t:'บุคคลตามรูปแนบ (หน้าตาเหมือนจริง 100%)',e:'the exact person from the attached reference photo, 100% identical face'},
 ];
@@ -3922,6 +4017,14 @@ const EMOTIONS=[
  {t:'เขินอาย แก้มแดง',e:'shy blushing expression'},
  {t:'เหนื่อย ง่วงนอน',e:'tired sleepy expression'},
  {t:'อบอุ่น ให้กำลังใจ',e:'warm encouraging look'},
+ {t:'อ่อนโยน ใจดี',e:'gentle kind expression'},
+ {t:'จริงจัง น่าเชื่อถือ',e:'serious trustworthy expression'},
+ {t:'ขี้เล่น ซน',e:'playful mischievous expression'},
+ {t:'ตื่นเต้นดีใจสุด ๆ',e:'excited thrilled expression'},
+ {t:'สงบ มีสมาธิ',e:'calm focused peaceful expression'},
+ {t:'มั่นใจ ยิ้มมุมปาก',e:'confident smirk'},
+ {t:'ซาบซึ้ง น้ำตาคลอด้วยความสุข',e:'touched happy teary eyes'},
+ {t:'กตัญญู นอบน้อม',e:'respectful grateful expression'},
 ];
 const POSES=[
  {t:'ยืนยิ้มหันหน้าเข้ากล้อง',e:'standing facing camera'},
@@ -3936,6 +4039,17 @@ const POSES=[
  {t:'กระโดดดีใจ',e:'jumping with joy'},
  {t:'ใช้คอมพิวเตอร์/แท็บเล็ต',e:'using a computer or tablet'},
  {t:'ถือป้ายว่างสำหรับใส่ข้อความ',e:'holding a blank sign board'},
+ {t:'นั่งขัดสมาธิอ่านหนังสือ',e:'sitting cross-legged reading'},
+ {t:'โบกมือทักทาย',e:'waving hello'},
+ {t:'ชี้ขึ้นด้านบน (ชวนดูหัวข้อ)',e:'pointing upward'},
+ {t:'ถือไมโครโฟนพูด/นำเสนอ',e:'holding microphone presenting'},
+ {t:'ทำท่าครุ่นคิด มือเท้าคาง',e:'thinking pose hand on chin'},
+ {t:'เดินถือกระเป๋านักเรียน',e:'walking with a school bag'},
+ {t:'นำเสนอหน้าจอ/กระดาน',e:'presenting at a screen or board'},
+ {t:'ปรบมือ',e:'clapping hands'},
+ {t:'ทำความเคารพ/ไหว้',e:'paying respect, Thai wai'},
+ {t:'นั่งทำงานกลุ่มกับเพื่อน',e:'sitting doing group work with friends'},
+ {t:'ทดลองวิทยาศาสตร์',e:'doing a science experiment'},
 ];
 const BGS=[
  {t:'ในห้องเรียน',e:'classroom interior background'},
@@ -3947,6 +4061,35 @@ const BGS=[
  {t:'สวน/ธรรมชาติ',e:'garden nature background'},
  {t:'พื้นหลังสีพาสเทลเรียบ',e:'plain pastel color background'},
  {t:'พื้นหลังขาวล้วน (สำหรับไดคัท)',e:'pure white background'},
+ {t:'หอประชุมโรงเรียน',e:'school auditorium hall background'},
+ {t:'โรงอาหาร',e:'school canteen background'},
+ {t:'สนามฟุตบอล/สนามกีฬา',e:'school football field background'},
+ {t:'ห้องคอมพิวเตอร์',e:'computer lab background'},
+ {t:'หน้าอาคารโรงเรียน',e:'in front of Thai school building'},
+ {t:'ชุมชน/ตลาดท้องถิ่น',e:'local Thai community market background'},
+ {t:'วัด/ศาสนสถาน',e:'Thai temple background'},
+ {t:'พื้นหลังไล่เฉดสีทองหรูหรา',e:'elegant gold gradient background'},
+ {t:'พื้นหลังโบเก้ละลายฉาก',e:'soft bokeh blurred background'},
+ {t:'อวกาศ/กาแล็กซี',e:'outer space galaxy background'},
+ {t:'พื้นหลังไซเบอร์เรืองแสง',e:'glowing cyber tech background'},
+ {t:'ลายไทยกนกสีทอง',e:'ornate Thai kanok gold pattern background, 3D embossed'},
+ {t:'จิตรกรรมฝาผนังวัดไทย',e:'traditional Thai temple mural wall background'},
+ {t:'ลายไทยทองบนพื้นแดงชาด',e:'Thai gold pattern on vermilion red lacquer background'},
+ {t:'พื้นหลังวัดทองยามเย็น',e:'golden Thai temple at warm sunset background, depth of field'},
+ {t:'ลายไม้สีน้ำตาลอบอุ่น',e:'warm brown wood grain texture background, realistic 3D'},
+ {t:'ลายไม้สักแกะสลักฉลุ',e:'carved teak wood fretwork pattern background'},
+ {t:'บอร์ดไม้ติดประกาศ',e:'rustic wooden notice board background'},
+ {t:'ลายผ้าไหมไทย',e:'elegant Thai silk fabric pattern background'},
+ {t:'ลายผ้าขาวม้าไทย',e:'Thai checkered pakama cloth pattern background'},
+ {t:'หินอ่อนหรูหรา',e:'luxury white marble texture background'},
+ {t:'พื้นทองเหลืองอร่าม',e:'shiny gold metallic gradient background'},
+ {t:'ลายดอกไม้ไทยวินเทจ',e:'vintage Thai floral pattern background'},
+ {t:'ลายกระดาษสา/กระดาษเก่า',e:'mulberry sa paper / old parchment texture background'},
+ {t:'ใบตอง/ธรรมชาติไทย',e:'fresh banana leaf natural Thai background'},
+ {t:'กระเบื้องเคลือบลายไทย',e:'Thai glazed ceramic tile pattern background'},
+ {t:'ลายเมฆลายน้ำไทยทอง',e:'Thai cloud and water gold line pattern background'},
+ {t:'พื้นกระดานดำมีกรอบไม้',e:'green chalkboard with wooden frame background'},
+ {t:'พื้นพาสเทลลายจุด/ลายทาง',e:'cute pastel polka dot or striped background'},
  {t:'ให้ AI เลือกฉากที่เหมาะสม',e:'suitable simple background'},
 ];
 const SHOTS=[
@@ -3959,6 +4102,13 @@ const SHOTS=[
  {t:'มุมสายตานก (Bird’s Eye)',e:'bird’s eye top-down view'},
  {t:'มุมแทนสายตา (POV)',e:'first person POV shot'},
  {t:'ถ่ายข้ามไหล่ (Over-the-Shoulder)',e:'over the shoulder shot'},
+ {t:'ระยะอก (Bust Shot)',e:'bust shot, chest up'},
+ {t:'โคลสอัพสุด ๆ เน้นดวงตา (Extreme Close-up)',e:'extreme close-up shot'},
+ {t:'ภาพคู่ (Two-Shot)',e:'two shot of two characters'},
+ {t:'ภาพหมู่ (Group Shot)',e:'group shot of many characters'},
+ {t:'มุมเอียง (Dutch Angle)',e:'dutch angle tilted shot'},
+ {t:'มุมต่ำติดพื้น (Worm’s Eye)',e:'worm’s eye extreme low angle'},
+ {t:'ภาพเต็มฉากกว้างพิเศษ (Extreme Wide)',e:'extreme wide establishing shot'},
 ];
 const SHEET9=[
  {t:'ยิ้มสดใส โบกมือทักทาย',e:'smiling and waving'},
@@ -4006,8 +4156,11 @@ function renderArtStyles(){
 }
 function fillSelect(id,arr){
   const s=document.getElementById(id);
+  const none=document.createElement('option');none.value='none';none.textContent='— ไม่ระบุ (ไม่ใส่ในพรอมต์) —';s.appendChild(none);
   arr.forEach((o,i)=>{const op=document.createElement('option');op.value=i;op.textContent=o.t;s.appendChild(op);});
+  s.value='0'; /* ค่าเริ่มต้น = ตัวเลือกแรก (ไม่ใช่ "ไม่ระบุ") */
 }
+function pickCreative(arr,id){const val=v(id);return (val==='none'||val==='')?{t:'',e:''}:(arr[+val]||arr[0]);}
 function onCreativeType(){
   const t=document.getElementById('g_type').value;
   const sb=(t==='storyboard');
@@ -4028,12 +4181,14 @@ function onCreativeType(){
 function buildCreative(){
   const a=ART_STYLES.find(x=>x.id===activeArt);
   const type=document.getElementById('g_type').value;
-  const role=ROLES[+v('g_role')||0], emo=EMOTIONS[+v('g_emotion')||0], pose=POSES[+v('g_pose')||0];
-  const bg=BGS[+v('g_bg')||0], shot=SHOTS[+v('g_shot')||0];
+  const role=pickCreative(ROLES,'g_role'), emo=pickCreative(EMOTIONS,'g_emotion'), pose=pickCreative(POSES,'g_pose');
+  const bg=pickCreative(BGS,'g_bg'), shot=pickCreative(SHOTS,'g_shot');
   const look=v('g_look'), action=v('g_action'), text=v('g_text');
   const size=SIZES[+v('g_size')||0];
   const isPhoto=role.t.indexOf('รูปแนบ')>-1;
-  const charLine=role.t+(look?' — '+look:'')+(isPhoto?' (ใช้ใบหน้าและรูปลักษณ์ตามรูปภาพที่แนบมาเป๊ะ 100% ห้ามดัดแปลงใบหน้า ทรงผม และสีผิว)':'');
+  let charLine=role.t+(look?(role.t?' — ':'')+look:'')+(isPhoto?' (ใช้ใบหน้าและรูปลักษณ์ตามรูปภาพที่แนบมาเป๊ะ 100% ห้ามดัดแปลงใบหน้า ทรงผม และสีผิว)':'');
+  if(!charLine.trim()) charLine='[ระบุตัวละครในช่องลักษณะ]';
+  const enJoin=function(parts){return parts.filter(Boolean).join(', ');};
   
   // Visual Prompt Refiners
   const g_lighting = v('g_refiner_lighting');
@@ -4050,8 +4205,8 @@ function buildCreative(){
     out+='ตัวละคร: '+charLine+'\n\n';
     out+='จัดวางเป็นตาราง 3×3 รวม 9 ช่องในภาพเดียว ทุกช่องต้องเป็นตัวละครตัวเดิม หน้าตา ทรงผม สีผิว และเสื้อผ้าเหมือนกันทุกประการ เปลี่ยนเฉพาะอารมณ์และท่าทางดังนี้:\n';
     SHEET9.forEach((s9,i)=>{out+=(i+1)+') '+s9.t+'\n';});
-    out+='\nพื้นหลัง: '+bg.t+'\nจัดองค์ประกอบให้ทุกช่องขนาดเท่ากัน สะอาดตา\n\n';
-    out+='Style keywords (EN):\n'+a.en+', '+role.e+', character expression sheet, 3x3 grid, consistent character design, same outfit and hairstyle in every panel, '+bg.e+', professional lighting' + refStr + ', balanced composition, harmonious colors, high resolution, ultra detailed, 8K\n\n';
+    out+='\nพื้นหลัง: '+(bg.t||'พื้นหลังเรียบสะอาด')+'\nจัดองค์ประกอบให้ทุกช่องขนาดเท่ากัน สะอาดตา\n\n';
+    out+='Style keywords (EN):\n'+enJoin([a.en,role.e,'character expression sheet, 3x3 grid, consistent character design, same outfit and hairstyle in every panel',bg.e,'professional lighting'])+refStr+', balanced composition, harmonious colors, high resolution, ultra detailed, 8K\n\n';
     out+='ขนาดภาพ: '+size.spec;
   }else if(type==='storyboard'){
     const frames=v('g_frames')||'6';
@@ -4067,7 +4222,7 @@ function buildCreative(){
     const topic=v('g_topic');
     out+='สร้างภาพอินโฟกราฟิกสรุปความรู้ 1 หน้า สไตล์'+a.thai+'\n\n';
     out+='หัวข้อและเนื้อหา:\n'+(topic||'[ระบุหัวข้อเรื่อง พร้อมประเด็นย่อย 3-6 ข้อ ในช่อง "หัวข้อ/เนื้อหา"]')+'\n\n';
-    out+='ตัวการ์ตูนผู้นำเสนอ: '+charLine+' อารมณ์'+emo.t+' '+pose.t+' จัดวางมุมบนหรือข้างหัวเรื่อง ทำท่าชี้ชวนให้อ่านเนื้อหา\n\n';
+    out+='ตัวการ์ตูนผู้นำเสนอ: '+charLine+(emo.t?' อารมณ์'+emo.t:'')+(pose.t?' '+pose.t:'')+' จัดวางมุมบนหรือข้างหัวเรื่อง ทำท่าชี้ชวนให้อ่านเนื้อหา\n\n';
     out+='โครงสร้างอินโฟกราฟิก:\n- ชื่อเรื่องตัวใหญ่โดดเด่นด้านบน มีกรอบ/ป้ายรองรับ\n- คำอธิบาย/นิยามสั้นใต้ชื่อเรื่อง\n- แบ่งเนื้อหาเป็นกล่องหัวข้อย่อย ใส่หมายเลขและไอคอนประกอบทุกกล่อง\n- แถบสรุป/ประโยชน์/ข้อคิดปิดท้ายด้านล่างสุด\n';
     if(text) out+='- เครดิตผู้จัดทำมุมล่างของภาพ: "'+text+'"\n';
     out+='- ตัวอักษรภาษาไทยคมชัด สะกดถูกต้อง อ่านง่ายทั้งภาพ ไอคอนสไตล์เดียวกันทั้งหมด โทนสีกลมกลืน\n\n';
@@ -4095,8 +4250,8 @@ function buildCreative(){
     out+='สร้างภาพปกเอกสาร (ปกสื่อการสอน / ปกรายงาน / ปกแผนการสอน) สไตล์'+a.thai+'\n\n';
     out+='ชื่อเรื่องบนปก: "'+(text||'[พิมพ์ชื่อเรื่องในช่อง "ข้อความในภาพ"]')+'" — ตัวอักษรไทยหัวกลมหนาขนาดใหญ่ สีสดใส มีขอบและเงาให้โดดเด่น จัดวางกึ่งกลางส่วนบน สะกดถูกต้อง\n';
     if(topic) out+='ข้อความรอง/รายละเอียดบนปก: '+topic+'\n';
-    out+='\nตัวละครบนปก: '+charLine+' อารมณ์'+emo.t+' '+pose.t+' จัดวางเด่นกลางภาพ\n';
-    out+='ฉากหลัง: '+bg.t+' ตกแต่งด้วยองค์ประกอบที่เกี่ยวข้องกับเนื้อหากระจายรอบภาพอย่างสมดุล ไม่บังตัวอักษร\n';
+    out+='\nตัวละครบนปก: '+charLine+(emo.t?' อารมณ์'+emo.t:'')+(pose.t?' '+pose.t:'')+' จัดวางเด่นกลางภาพ\n';
+    out+='ฉากหลัง: '+(bg.t||'ตามความเหมาะสมกับเนื้อหา')+' ตกแต่งด้วยองค์ประกอบที่เกี่ยวข้องกับเนื้อหากระจายรอบภาพอย่างสมดุล ไม่บังตัวอักษร\n';
     out+='ด้านล่างของปกมีป้าย/กรอบสุภาพสำหรับชื่อผู้จัดทำ ตำแหน่ง และชื่อโรงเรียน ตัวอักษรชัดเจน\n\n';
     out+='Style keywords (EN):\n'+a.en+', educational document cover design, bold rounded thai title typography, balanced composition, '+role.e+', professional lighting' + refStr + ', balanced composition, harmonious colors, high resolution, ultra detailed, 8K\n\n';
     out+='ขนาดภาพ: '+size.spec;
@@ -4104,22 +4259,22 @@ function buildCreative(){
     const topic=v('g_topic');
     out+='สร้างบัตรคำศัพท์ภาษาอังกฤษสำหรับเด็ก สไตล์'+a.thai+'\n\n';
     out+='คำศัพท์: '+(topic||'[พิมพ์ คำศัพท์ / คำอ่านไทย / คำแปล ในช่อง "หัวข้อ/เนื้อหา" เช่น MORNING / มอร์นิง / ตอนเช้า]')+'\n\n';
-    out+='โครงสร้างบัตรคำ:\n- คำศัพท์ภาษาอังกฤษตัวใหญ่หนาเด่นกลางภาพ\n- คำอ่านภาษาไทยในวงเล็บใต้คำศัพท์\n- กรอบคำแปลภาษาไทยด้านล่าง\n- ตัวละครประกอบ: '+charLine+' กำลังทำท่าทางสื่อความหมายของคำศัพท์ อารมณ์'+emo.t+'\n- ไอคอน/ของตกแต่งน่ารักที่สื่อความหมายของคำ กระจายรอบภาพ\n- ใช้โทนสีเดียวกลมกลืนทั้งภาพ (monochromatic) กรอบการ์ดขอบโค้งมน\n- ตัวอักษรทุกส่วนสะกดถูกต้อง คมชัด อ่านง่าย\n\n';
+    out+='โครงสร้างบัตรคำ:\n- คำศัพท์ภาษาอังกฤษตัวใหญ่หนาเด่นกลางภาพ\n- คำอ่านภาษาไทยในวงเล็บใต้คำศัพท์\n- กรอบคำแปลภาษาไทยด้านล่าง\n- ตัวละครประกอบ: '+charLine+' กำลังทำท่าทางสื่อความหมายของคำศัพท์'+(emo.t?' อารมณ์'+emo.t:'')+'\n- ไอคอน/ของตกแต่งน่ารักที่สื่อความหมายของคำ กระจายรอบภาพ\n- ใช้โทนสีเดียวกลมกลืนทั้งภาพ (monochromatic) กรอบการ์ดขอบโค้งมน\n- ตัวอักษรทุกส่วนสะกดถูกต้อง คมชัด อ่านง่าย\n\n';
     out+='Style keywords (EN):\n'+a.en+', english vocabulary flashcard for kids, big bold word typography, cute cohesive single-color pastel theme, rounded card frame, professional lighting' + refStr + ', balanced composition, harmonious colors, high resolution, ultra detailed, 8K\n\n';
     out+='ขนาดภาพ: '+size.spec;
   }else{
     const typeTh = type==='sticker'?'สติกเกอร์':(type==='illus'?'ภาพประกอบสื่อการสอน':'ตัวละคร/มาสคอต');
     out+='สร้างภาพ'+typeTh+' สไตล์'+a.thai+'\n\n';
     out+='ตัวละคร: '+charLine+'\n';
-    out+='อารมณ์/สีหน้า: '+emo.t+'\n';
-    out+='ท่าทาง: '+pose.t+'\n';
+    if(emo.t) out+='อารมณ์/สีหน้า: '+emo.t+'\n';
+    if(pose.t) out+='ท่าทาง: '+pose.t+'\n';
     if(action) out+='เหตุการณ์/กำลังทำ: '+action+'\n';
-    out+='ฉากหลัง: '+bg.t+'\n';
-    out+='มุมกล้อง/ระยะภาพ: '+shot.t+'\n';
+    if(bg.t) out+='ฉากหลัง: '+bg.t+'\n';
+    if(shot.t) out+='มุมกล้อง/ระยะภาพ: '+shot.t+'\n';
     if(text) out+='ข้อความในภาพ: "'+text+'" สะกดภาษาไทยให้ถูกต้อง ชัดเจน อ่านง่าย\n';
     if(type==='sticker') out+='\nลักษณะสติกเกอร์: พื้นหลังขาวล้วน มีเส้นขอบสีขาวหนารอบตัวละครแบบสติกเกอร์ไดคัท (die-cut) องค์ประกอบกระชับ มองรู้เรื่องแม้ขนาดเล็ก\n';
     if(type==='illus') out+='\nลักษณะภาพประกอบ: องค์ประกอบเรียบง่าย ไม่รกตา สื่อความหมายชัดเจน เหมาะนำไปใส่ในใบงาน สไลด์ หรือสื่อการสอน\n';
-    out+='\nStyle keywords (EN):\n'+a.en+', '+role.e+', '+emo.e+', '+pose.e+', '+shot.e+', '+bg.e+(type==='sticker'?', die-cut sticker design, thick white border, white background':'')+', professional lighting, balanced composition, harmonious colors, clean background' + refStr + ', high resolution, ultra detailed, 8K\n\n';
+    out+='\nStyle keywords (EN):\n'+enJoin([a.en,role.e,emo.e,pose.e,shot.e,bg.e,(type==='sticker'?'die-cut sticker design, thick white border, white background':''),'professional lighting','balanced composition','harmonious colors','clean background'])+refStr+', high resolution, ultra detailed, 8K\n\n';
     out+='ขนาดภาพ: '+size.spec;
   }
   document.getElementById('creativeOut').value=out;
