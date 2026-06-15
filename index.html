@@ -289,6 +289,14 @@ body.dark-mode .vocab-meaning{background:var(--purple-light);color:#f3effa}
       </div>
 
       <div class="field">
+        <label>รูปแบบโปสเตอร์</label>
+        <select id="p_layout" onchange="buildPoster()">
+          <option value="full">PR แบบเต็ม (โลโก้ + ผอ. + คอลลาจภาพข่าว + กล่องข้อมูล)</option>
+          <option value="report">รายงานกิจกรรม (ภาพเดียวเด่น ชื่อกิจกรรมตัวใหญ่ + ภาพครู-นักเรียน)</option>
+        </select>
+      </div>
+
+      <div class="field">
         <label>ประเภทโปสเตอร์ / กิจกรรม (เลือกจากรายการ หรือพิมพ์ชื่อกิจกรรมเองก็ได้)</label>
         <input id="p_preset" list="dl_presets" placeholder="เลือกจากรายการ หรือพิมพ์ชื่อกิจกรรมเอง เช่น กิจกรรมวันสุนทรภู่" oninput="applyPreset()">
       </div>
@@ -299,7 +307,7 @@ body.dark-mode .vocab-meaning{background:var(--purple-light);color:#f3effa}
       <!-- Visual Prompt Refiners -->
       <div style="background: var(--input-bg); border: 1.5px solid var(--border-color); border-radius: var(--radius); padding: 12px; margin-bottom: 12px;">
         <label style="font-weight: 600; font-size: 0.88rem; color: var(--text); margin-bottom: 8px; display: block; display: flex; align-items: center; gap: 6px;">
-          <span>🪄 ปรับแต่งสไตล์รูปภาพเพิ่มเติม (Visual Refiners)</span>
+          <span>🪄 ปรับแต่งสไตล์รูปภาพเพิ่มเติม</span>
         </label>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px;">
           <div class="field" style="margin-bottom: 0;">
@@ -433,20 +441,87 @@ body.dark-mode .vocab-meaning{background:var(--purple-light);color:#f3effa}
         <h2 style="margin-bottom:0;">🎨 ตัวสร้างพรอมต์ภาพสร้างสรรค์</h2>
         <button class="btn btn-line" onclick="generateShareLink()" style="padding: 6px 12px; font-size: 0.8rem; border-radius: 6px;">🔗 แชร์หน้านี้</button>
       </div>
-      <p class="hint">สร้างตัวละคร มาสคอต สติกเกอร์ ภาพประกอบสื่อ Character Sheet และสตอรี่บอร์ด — เลือกสไตล์ หน้าตา อารมณ์ ท่าทาง และมุมกล้องได้อิสระ</p>
+      <p class="hint">เลือกได้ 62 ประเภทงาน ครอบคลุมตัวละคร มาสคอต สติกเกอร์ โปสเตอร์ ใบปลิว แผ่นพับ social post แบนเนอร์ AI 3D ฉากคอนเซ็ปต์อาร์ต ภาพพื้นหลัง อินโฟกราฟิกขั้นตอน 3D โลโก้ เกียรติบัตร ป้าย เวที บอร์ด สื่อการสอน และงานกราฟิกโรงเรียน — ทุกพรอมต์ใช้หลัก PARIS พร้อมบทบาทผู้เชี่ยวชาญด้านกราฟิก</p>
 
       <div class="field">
         <label>ประเภทงาน</label>
         <select id="g_type" onchange="onCreativeType()">
-          <option value="char">ตัวละคร / มาสคอต (ภาพเดี่ยว)</option>
-          <option value="sheet">Character Sheet — ตัวเดียว 9 อารมณ์/ท่าทาง</option>
-          <option value="illus">ภาพประกอบสื่อการสอน / ใบงาน</option>
-          <option value="sticker">สติกเกอร์ไดคัท (พื้นหลังขาว)</option>
-          <option value="storyboard">สตอรี่บอร์ด / ฉากต่อเนื่อง (มุมกล้องแบบภาพยนตร์)</option>
-          <option value="infographic">อินโฟกราฟิกสรุปความรู้ (มีตัวการ์ตูนผู้นำเสนอ)</option>
-          <option value="cover">ปกสื่อการสอน / ปกรายงาน / ปกแผนการสอน</option>
-          <option value="idplan">ปก ID Plan / ปกเอกสารราชการครู (ภาพครูสมจริงตามธีมวิชา)</option>
-          <option value="vocab">บัตรคำศัพท์ภาษาอังกฤษ</option>
+          <optgroup label="ตัวละคร / ภาพประกอบ">
+            <option value="char">ตัวละคร / มาสคอต (ภาพเดี่ยว)</option>
+            <option value="sheet">Character Sheet — ตัวเดียว 9 อารมณ์/ท่าทาง</option>
+            <option value="illus">ภาพประกอบสื่อการสอน / ใบงาน</option>
+            <option value="sticker">สติกเกอร์ไดคัท (พื้นหลังขาว)</option>
+            <option value="classroom">ฉากห้องเรียน 3D / มุมห้องเรียนในฝัน</option>
+            <option value="storybook">นิทานคุณธรรม / เรื่องเล่าภาพ 4-8 ฉาก</option>
+            <option value="mascotpack">มาสคอตโรงเรียนหลายท่าทาง</option>
+          </optgroup>
+          <optgroup label="โปสเตอร์ / งานกราฟิกประชาสัมพันธ์">
+            <option value="graphicposter">โปสเตอร์กราฟิกประชาสัมพันธ์</option>
+            <option value="eventposter">โปสเตอร์กิจกรรม / Event Poster</option>
+            <option value="announcement">ประกาศโรงเรียน / Announcement Card</option>
+            <option value="flyer">ใบปลิว / Flyer A4</option>
+            <option value="brochure">แผ่นพับ / Brochure</option>
+            <option value="rollup">ป้าย Roll-up / Standee</option>
+            <option value="backdrop">ฉากหลังเวที / Backdrop</option>
+            <option value="photoframe">กรอบรูปกิจกรรม / Photo Frame</option>
+            <option value="campaign">ภาพรณรงค์ / Campaign Key Visual</option>
+          </optgroup>
+          <optgroup label="Social Media / วิดีโอ">
+            <option value="socialpost">โพสต์ Facebook / Instagram 1 ภาพ</option>
+            <option value="carousel">Carousel Post 5-10 หน้า</option>
+            <option value="storyreel">Story / Reels / TikTok Cover 9:16</option>
+            <option value="thumbnail">ปกคลิป YouTube / TikTok / Reels</option>
+            <option value="facebookcover">ปกเพจ Facebook</option>
+            <option value="webbanner">แบนเนอร์เว็บไซต์ / Hero Banner</option>
+            <option value="lineoa">LINE OA Rich Message / Rich Menu</option>
+          </optgroup>
+          <optgroup label="ภาพสร้างสรรค์ / Concept Art / AI 3D">
+            <option value="ai3dbanner">แบนเนอร์ AI 3D / Community Banner</option>
+            <option value="cinematiccover">ภาพปกชุมชน Cinematic / Cover Art</option>
+            <option value="workspace">ฉากโต๊ะทำงานสร้างสรรค์ / Creative Workspace</option>
+            <option value="process3d">อินโฟกราฟิกขั้นตอน 3D / Process Flow</option>
+            <option value="neonroadmap">โรดแมปเส้นแสง / Neon Roadmap</option>
+            <option value="materialshowcase">โชว์เคสวัสดุ 3D / Material Showcase</option>
+            <option value="scenebackground">ฉากพื้นหลังบรรยากาศ / Cinematic Background</option>
+            <option value="storybookscene">ฉากนิทานภาพวาด / Storybook Scene</option>
+            <option value="sidebyside">ภาพคู่เปรียบเทียบ / Side-by-side Variation</option>
+            <option value="wallpaper">วอลเปเปอร์ / Background Wallpaper</option>
+            <option value="conceptart">คอนเซ็ปต์อาร์ตแฟนตาซี / Concept Art</option>
+            <option value="environmentdesign">ออกแบบฉากสถานที่ / Environment Design</option>
+            <option value="aihero">Hero Image แนว AI / 3D / Tech</option>
+            <option value="moodboard">Moodboard ภาพรวมสไตล์ / Visual Moodboard</option>
+          </optgroup>
+          <optgroup label="เอกสาร / สื่อการสอน">
+            <option value="infographic">อินโฟกราฟิกสรุปความรู้ (มีตัวการ์ตูนผู้นำเสนอ)</option>
+            <option value="cover">ปกสื่อการสอน / ปกรายงาน / ปกแผนการสอน</option>
+            <option value="idplan">ปก ID Plan / ปกเอกสารราชการครู (ภาพครูสมจริงตามธีมวิชา)</option>
+            <option value="vocab">บัตรคำศัพท์ภาษาอังกฤษ</option>
+            <option value="flashcardset">ชุด Flashcard / บัตรคำ 10-20 ใบ</option>
+            <option value="worksheetdesign">เลย์เอาต์ใบงาน / Worksheet Layout</option>
+            <option value="slidedeck">ชุดหน้าปกสไลด์ / Slide Deck Theme</option>
+            <option value="newslettercover">ปกวารสาร / Newsletter Cover</option>
+            <option value="onepage">One-page Summary / สรุป 1 หน้า</option>
+          </optgroup>
+          <optgroup label="แบรนด์ / องค์ประกอบกราฟิก">
+            <option value="logo">โลโก้กิจกรรม / ตราสัญลักษณ์</option>
+            <option value="brandkit">Brand Kit โรงเรียน / กิจกรรม</option>
+            <option value="iconset">ชุดไอคอนโรงเรียน / รายวิชา / กิจกรรม</option>
+            <option value="badge">Badge / Sticker Badge / Medal Icon</option>
+            <option value="pattern">Pattern / พื้นหลังลายแบรนด์โรงเรียน</option>
+            <option value="label">ฉลาก / Label / Sticker Sheet</option>
+          </optgroup>
+          <optgroup label="ใช้งานในโรงเรียน">
+            <option value="certificate">เกียรติบัตร / Certificate Template</option>
+            <option value="invitation">การ์ดเชิญ / Invitation Card</option>
+            <option value="schedule">ตารางเรียน / ตารางสอบ / Schedule</option>
+            <option value="calendar">ปฏิทินกิจกรรมโรงเรียน</option>
+            <option value="signage">ป้ายห้องเรียน / ป้ายนิเทศ / บอร์ดหน้าชั้น</option>
+            <option value="nametag">ป้ายชื่อ / Name Tag / Staff Pass</option>
+            <option value="map">แผนที่งาน / ผังอาคาร / Event Map</option>
+            <option value="menu">เมนูอาหารกลางวัน / Nutrition Board</option>
+            <option value="boardgame">บอร์ดเกมการศึกษา / เกมกระดาน</option>
+            <option value="beforeafter">ภาพข่าว Before-During-After กิจกรรม</option>
+          </optgroup>
         </select>
       </div>
 
@@ -461,7 +536,7 @@ body.dark-mode .vocab-meaning{background:var(--purple-light);color:#f3effa}
       <!-- Visual Prompt Refiners -->
       <div style="background: var(--input-bg); border: 1.5px solid var(--border-color); border-radius: var(--radius); padding: 12px; margin-bottom: 12px;">
         <label style="font-weight: 600; font-size: 0.88rem; color: var(--text); margin-bottom: 8px; display: block; display: flex; align-items: center; gap: 6px;">
-          <span>🪄 ปรับแต่งสไตล์รูปภาพเพิ่มเติม (Visual Refiners)</span>
+          <span>🪄 ปรับแต่งสไตล์รูปภาพเพิ่มเติม</span>
         </label>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px;">
           <div class="field" style="margin-bottom: 0;">
@@ -522,7 +597,7 @@ body.dark-mode .vocab-meaning{background:var(--purple-light);color:#f3effa}
         <div class="field"><label>ท่าทาง (เลือกหรือพิมพ์เอง)</label><input id="g_pose" list="dl_poses" oninput="buildCreative()" placeholder="เลือกหรือพิมพ์เอง · เว้นว่าง = ไม่ระบุ"></div>
       </div>
       <div class="field"><label>เหตุการณ์ / กำลังทำอะไร (เว้นว่างได้)</label><input id="g_action" placeholder="เช่น กำลังทดลองวิทยาศาสตร์, ถือป้ายรณรงค์ประหยัดน้ำ" oninput="buildCreative()"></div>
-      <div class="field" id="g_topicWrap" style="display:none"><label>หัวข้อ / เนื้อหา (อินโฟกราฟิก • ปก • ID Plan • บัตรคำ)</label><textarea id="g_topic" placeholder="อินโฟกราฟิก: หัวข้อ + ประเด็นย่อย 3-6 ข้อ • ปก/ID Plan: ชื่อครู / ตำแหน่ง วิทยฐานะ / โรงเรียน / สังกัดเขต • บัตรคำ: คำศัพท์ / คำอ่าน / คำแปล เช่น MORNING / มอร์นิง / ตอนเช้า" oninput="buildCreative()"></textarea></div>
+      <div class="field" id="g_topicWrap" style="display:none"><label>หัวข้อ / เนื้อหา / คอนเซ็ปต์ภาพ</label><textarea id="g_topic" placeholder="ระบุรายละเอียดงาน เช่น หัวข้อ + ประเด็นย่อย 3-6 ข้อ • ปก/ID Plan: ชื่อครู / โรงเรียน / สังกัด • บัตรคำ: คำศัพท์ / คำอ่าน / คำแปล • ภาพสร้างสรรค์: บรรยากาศ ฉาก วัตถุหลัก โทนสี และข้อความสำคัญที่ต้องการ" oninput="buildCreative()"></textarea></div>
       <div class="row2">
         <div class="field"><label>ฉากหลัง (เลือกหรือพิมพ์เอง)</label><input id="g_bg" list="dl_bgs" oninput="buildCreative()" placeholder="เลือกหรือพิมพ์เอง · เว้นว่าง = ไม่ระบุ"></div>
         <div class="field"><label>มุมกล้อง / ระยะภาพ (เลือกหรือพิมพ์เอง)</label><input id="g_shot" list="dl_shots" oninput="buildCreative()" placeholder="เลือกหรือพิมพ์เอง · เว้นว่าง = ไม่ระบุ"></div>
@@ -696,8 +771,8 @@ body.dark-mode .vocab-meaning{background:var(--purple-light);color:#f3effa}
   <div class="help-card">
     <h2>🎯 5 แท็บ ใช้ทำอะไรบ้าง</h2>
     <h3>📚 คลังพรอมต์ (80+ แบบ)</h3>แผนการสอน ใบงาน ข้อสอบ เกม สื่อ วัดผล วิจัย หลังแผน ว.PA ข่าว PR วารสาร หนังสือราชการ ฯลฯ — เลือกหลักสูตรได้ทั้ง 2551 และ 2568
-    <h3>🖼️ สร้างภาพโปสเตอร์ PR</h3>โปสเตอร์กิจกรรม 19 สไตล์ · เลือกขนาดภาพ · ใส่วันที่แบบปฏิทิน · พิมพ์กิจกรรมเองได้
-    <h3>🎨 ภาพสร้างสรรค์</h3>ตัวละคร/มาสคอต สติกเกอร์ อินโฟกราฟิก ปก ID Plan บัตรคำ สตอรี่บอร์ด — เลือกสไตล์ 22 แนว อารมณ์ ท่าทาง มุมกล้อง
+    <h3>🖼️ สร้างภาพโปสเตอร์ PR</h3>โปสเตอร์กิจกรรม 26 สไตล์ · 35 พรีเซ็ตกิจกรรม · เลือกขนาดภาพ · ใส่วันที่แบบปฏิทิน · พิมพ์กิจกรรมเองได้
+    <h3>🎨 ภาพสร้างสรรค์</h3>เลือกได้ 62 ประเภทงาน ตั้งแต่ตัวละคร/มาสคอต สติกเกอร์ อินโฟกราฟิก ปก ID Plan บัตรคำ สตอรี่บอร์ด ไปจนถึงโปสเตอร์ ใบปลิว แผ่นพับ social post แบนเนอร์ AI 3D ฉากคอนเซ็ปต์อาร์ต ภาพพื้นหลัง อินโฟกราฟิกขั้นตอน 3D โลโก้ เกียรติบัตร ป้าย เวที และงานกราฟิกโรงเรียน — เลือกสไตล์ภาพ 27 แนว อารมณ์ ท่าทาง มุมกล้อง
     <h3>✍️ AI คิดคำโพสต์</h3>กรอกครั้งเดียว ได้คำโพสต์ Facebook + LINE + เว็บไซต์ พร้อมกัน
     <h3>📖 วิธีใช้ + ตัวอย่าง</h3>หน้านี้ — คู่มือและตัวอย่างผลลัพธ์จริง
   </div>
@@ -737,7 +812,7 @@ body.dark-mode .vocab-meaning{background:var(--purple-light);color:#f3effa}
 ด้านบนซ้ายมีตราโรงเรียน (ใช้โลโก้ตามรูปแนบเป๊ะ 100%)...
 "ข่าวประชาสัมพันธ์" / "โรงเรียนบ้านคลองมดแดง"
 กลางโปสเตอร์ป้ายริบบิ้นม่วงทอง "พิธีไหว้ครู ปี 2569"...
-Style: luxury Thai school poster, purple gold, 8K
+สไตล์คีย์เวิร์ด (ไทย): โปสเตอร์โรงเรียนไทยหรูหรา, โทนม่วงทอง, ตัวอักษรไทยอ่านชัด, ความละเอียดสูง
 → นำไปวางใน Gemini/ChatGPT แนบโลโก้ ได้ภาพโปสเตอร์พร้อมใช้</div></div>
 
       <div class="ex"><div class="ex-h">✍️ คำโพสต์ 3 ช่องทาง</div><div class="ex-b">[Facebook] 🎉 วันนี้ลูก ๆ บ้านคลองมดแดงร่วมพิธีไหว้ครู...
@@ -1320,9 +1395,9 @@ const TEMPLATES = [
 {id:'go-poster-retire',cat:'image',icon:'🌅',title:'โปสเตอร์งานเกษียณอายุราชการ',
  desc:'โทนส้ม-ทอง อบอุ่นซาบซึ้ง สมเกียรติผู้เกษียณ → เปิดตัวสร้างโปสเตอร์',
  tags:'เกษียณ มุทิตาจิต retirement โปสเตอร์',goto:'retire'},
-{id:'go-creative',cat:'image',icon:'🎨',title:'ภาพสร้างสรรค์ ตัวละคร อินโฟกราฟิก ปก บัตรคำ',
- desc:'สไตล์ศิลปะ 22 แนว หน้าตา อารมณ์ ท่าทาง มุมกล้อง Character Sheet สตอรี่บอร์ด → เปิดตัวสร้างภาพสร้างสรรค์',
- tags:'ตัวละคร มาสคอต สติกเกอร์ สตอรี่บอร์ด storyboard อนิเมะ การ์ตูน 3d พิกเซล สีน้ำ มุมกล้อง อารมณ์ ท่าทาง character อินโฟกราฟิก infographic ปกสื่อ ปกรายงาน ปกแผน บัตรคำศัพท์ flashcard นีออน ไซเบอร์ แฟนตาซี เวทมนตร์ ไดโอรามา วรรณคดี ตัวจิ๋ว โปสเตอร์หนัง id plan idplan แผนพัฒนาตนเอง ปกราชการ ธีมรายวิชา',goto:'creative'},
+{id:'go-creative',cat:'image',icon:'🎨',title:'ภาพสร้างสรรค์ + งานกราฟิกดีไซน์',
+ desc:'62 ประเภทงาน + สไตล์ศิลปะ 27 แนว: ตัวละคร โปสเตอร์ ใบปลิว แผ่นพับ social post แบนเนอร์ AI 3D ฉากคอนเซ็ปต์อาร์ต ภาพพื้นหลัง workflow 3D โลโก้ เกียรติบัตร ป้าย เวที บอร์ดเกม ปกคลิป และสื่อโรงเรียน → เปิดตัวสร้างภาพสร้างสรรค์',
+ tags:'ตัวละคร มาสคอต สติกเกอร์ สตอรี่บอร์ด storyboard อนิเมะ การ์ตูน 3d พิกเซล สีน้ำ มุมกล้อง อารมณ์ ท่าทาง character อินโฟกราฟิก infographic ปกสื่อ ปกรายงาน ปกแผน บัตรคำศัพท์ flashcard นีออน ไซเบอร์ แฟนตาซี เวทมนตร์ ไดโอรามา วรรณคดี ตัวจิ๋ว โปสเตอร์หนัง id plan idplan แผนพัฒนาตนเอง ปกราชการ ธีมรายวิชา ห้องเรียน 3d นิทานคุณธรรม ชุดไอคอน icon set mascot pack บอร์ดเกม board game ป้ายห้องเรียน thumbnail before during after โปสเตอร์ graphic poster flyer brochure social post carousel logo brand kit certificate invitation schedule calendar rollup backdrop standee facebook cover web banner line oa แบนเนอร์ ai 3d community banner cinematic cover creative workspace process flow neon roadmap material showcase cinematic background storybook scene side by side wallpaper concept art environment design hero image moodboard ภาพพื้นหลัง ฉากนิทาน ภาพวาดเล่าเรื่อง ฉากแฟนตาซี',goto:'creative'},
 {id:'go-poster-mourn',cat:'image',icon:'🕊️',title:'โปสเตอร์ถวายความอาลัย / ไว้อาลัย',
  desc:'โทนขาว-ดำ-เทา-ทอง สง่างาม สมพระเกียรติ → เปิดตัวสร้างโปสเตอร์',
  tags:'อาลัย ไว้อาลัย mourning โปสเตอร์',goto:'mourning'},
@@ -2995,6 +3070,41 @@ const STYLES = [
   ribbon:'ป้ายระเบิดสีแดง-เหลืองตัวอักษรใหญ่', info:'สีเหลืองสดขอบแดง ไอคอนชัดเจน', footer:'สีเขียวเข้ม', accent:'สีแดงสดหรือเหลือง',
   mood:'คึกคัก สนุกสนาน และน่าจับจ่ายร่วมงาน',
   en:'vibrant Thai promotion sale poster, bold red green yellow theme, big layered thai typography with outlines, price burst badges, lively festive commercial layout'},
+ {id:'govclean', name:'ราชการสะอาดตา (ประกาศ/หนังสือแจ้ง)', dots:['#1E3A5F','#FFFFFF','#C9A227'],
+  thai:'สไตล์ราชการไทยสะอาดตา โทนขาว-น้ำเงินกรมท่า-ทอง ใช้พื้นที่ว่างเป็นระเบียบ กรอบเส้นบาง เรียงข้อมูลอ่านง่ายเหมือนประกาศทางการ มีตราโรงเรียนเด่นชัด ตัวอักษรไทยสุภาพคมชัด',
+  ribbon:'น้ำเงินกรมท่าขลิบทอง', info:'สีขาวสะอาดขอบน้ำเงิน', footer:'สีน้ำเงินกรมท่า', accent:'สีน้ำเงินกรมท่าหรือทอง',
+  mood:'สุภาพ เป็นทางการ น่าเชื่อถือ และอ่านง่าย',
+  en:'clean Thai official announcement poster, navy white and gold theme, formal school notice layout, lots of whitespace, thin border, crisp readable Thai typography'},
+ {id:'infographicpr', name:'Infographic ข่าวโรงเรียน อ่านเร็ว', dots:['#1565C0','#26A69A','#FFCA28'],
+  thai:'สไตล์อินโฟกราฟิกข่าวโรงเรียน โทนฟ้า-เขียว-เหลืองสดใส แบ่งข้อมูลเป็นกล่องหัวข้อ ไอคอน เส้นเชื่อม และตัวเลขเด่น อ่านจบเร็วในมือถือ เหมาะกับข่าวกิจกรรมและสรุปกำหนดการ',
+  ribbon:'แถบหัวข้อแบบอินโฟกราฟิกสีฟ้า', info:'กล่องข้อมูลสีขาวพร้อมไอคอน', footer:'สีน้ำเงินเข้ม', accent:'สีเขียวหรือเหลือง',
+  mood:'ทันสมัย กระชับ ชัดเจน และเป็นมิตร',
+  en:'school news infographic poster, blue green yellow theme, modular information cards, icons and timeline, mobile readable layout, clean data visualization'},
+ {id:'alert', name:'ประกาศด่วน / Emergency Alert', dots:['#D32F2F','#FFEB3B','#111111'],
+  thai:'สไตล์ประกาศด่วน สีแดง-เหลือง-ดำ คอนทราสต์สูง มีป้ายเตือน แถบเฉียง ไอคอนแจ้งเตือน และตัวอักษรใหญ่พิเศษ อ่านชัดภายใน 3 วินาที เหมาะกับประกาศหยุดเรียน เหตุเร่งด่วน หรือแจ้งเตือนความปลอดภัย',
+  ribbon:'แถบเตือนสีแดงตัวอักษรขาว', info:'กล่องสีเหลืองอ่อนขอบแดง', footer:'สีดำหรือแดงเข้ม', accent:'สีแดงสดหรือเหลืองเตือนภัย',
+  mood:'เร่งด่วน ชัดเจน จริงจัง และปลอดภัย',
+  en:'urgent school emergency alert poster, red yellow black high contrast, warning sign design, diagonal alert stripes, big readable typography, safety announcement layout'},
+ {id:'photonews', name:'Photo Collage ข่าวกิจกรรม', dots:['#263238','#FFFFFF','#90A4AE'],
+  thai:'สไตล์ข่าวภาพกิจกรรมแบบวารสารโรงเรียน ใช้ภาพถ่ายเป็นพระเอก จัดคอลลาจหลายช่องอย่างเป็นระเบียบ มีแถบพาดหัวข่าว คำบรรยายภาพ และข้อมูลวันที่สถานที่ โทนมืออาชีพเหมือนเพจข่าวโรงเรียน',
+  ribbon:'แถบพาดหัวข่าวสีเข้ม', info:'กล่องคำบรรยายภาพสีขาวโปร่ง', footer:'สีเทาเข้มหรือน้ำเงินเข้ม', accent:'สีขาวหรือฟ้าอ่อน',
+  mood:'จริงใจ น่าเชื่อถือ บอกเล่าเหตุการณ์ และดูเป็นข่าว',
+  en:'school photo news collage poster, editorial magazine layout, large photo grid, headline banner, caption strips, professional school news design'},
+ {id:'quality', name:'ประเมิน/นิเทศ/ประกันคุณภาพ', dots:['#0F766E','#FFFFFF','#F59E0B'],
+  thai:'สไตล์องค์กรการศึกษายุคใหม่ โทนเขียวอมฟ้า-ขาว-ทองอำพัน มีองค์ประกอบเช็กลิสต์ เป้าหมาย กราฟคุณภาพ เอกสาร และทีมครูประชุมร่วมกัน ดูพร้อมรับการประเมิน นิเทศ ติดตาม และประกันคุณภาพ',
+  ribbon:'เขียวอมฟ้าขลิบทอง', info:'กล่องข้อมูลสีขาวขอบเขียว', footer:'สีเขียวเข้ม', accent:'สีทองอำพันหรือเขียวอมฟ้า',
+  mood:'มืออาชีพ มั่นใจ เป็นระบบ และพร้อมพัฒนา',
+  en:'education quality assurance poster, teal white amber theme, checklist target chart documents, professional school evaluation and supervision layout'},
+ {id:'stemdream', name:'ห้องเรียนดิจิทัล / STEM Futuristic', dots:['#0F172A','#22D3EE','#A3E635'],
+  thai:'สไตล์ห้องเรียนดิจิทัลแห่งอนาคต โทนดำกรมท่า-ฟ้านีออน-เขียวมะนาว มีโฮโลแกรม จอข้อมูล หุ่นยนต์ AI และนักเรียนทำกิจกรรม STEM อย่างมีพลัง เหมาะกับนวัตกรรม ห้องเรียนอัจฉริยะ และทักษะอนาคต',
+  ribbon:'ฟ้านีออนเรืองแสง', info:'กล่องข้อมูลโปร่งแสงขอบนีออน', footer:'สีดำกรมท่า', accent:'ฟ้านีออนหรือเขียวมะนาว',
+  mood:'ล้ำสมัย มีพลัง สร้างแรงบันดาลใจ และฉลาด',
+  en:'futuristic digital classroom STEM poster, dark navy cyan lime neon theme, hologram screens, AI robot, students doing innovation activities, smart classroom design'},
+ {id:'safetydoc', name:'ความปลอดภัย / สุขภาพ / Cyber Safety', dots:['#0EA5E9','#FFFFFF','#EF4444'],
+  thai:'สไตล์รณรงค์ความปลอดภัยและสุขภาพ โทนฟ้า-ขาว-แดง มีโล่ป้องกัน เครื่องหมายบวก ไอคอนสุขภาพ หน้ากาก ฝุ่น PM2.5 หรือความปลอดภัยไซเบอร์ จัดข้อมูลเป็นขั้นตอนปฏิบัติชัดเจน',
+  ribbon:'ฟ้าขาวพร้อมไอคอนโล่', info:'กล่องคำแนะนำสีขาวขอบฟ้า', footer:'สีฟ้าเข้มหรือแดง', accent:'สีแดงเตือนภัยหรือฟ้า',
+  mood:'ปลอดภัย เข้าใจง่าย ปฏิบัติได้จริง และน่าเชื่อถือ',
+  en:'school safety health cyber safety campaign poster, blue white red theme, shield medical and digital safety icons, step by step instruction layout, clear readable typography'},
 ];
 
 /* ============================================================
@@ -3087,6 +3197,39 @@ const PRESETS = [
  {name:'ตลาดนัด/งานออกร้านโรงเรียน', style:'promo', activity:'ตลาดนัดนักเรียน งานออกร้านสุดคึกคัก',
   tagline:'ช้อป ชิม ชมผลงานนักเรียน อุดหนุนสินค้าฝีมือลูกหลานเรา',
   closing:'รายได้ทั้งหมดสนับสนุนกิจกรรมการเรียนรู้ของนักเรียน'},
+ {name:'ปฐมนิเทศ / เปิดภาคเรียน', style:'infographicpr', activity:'กิจกรรมปฐมนิเทศและเปิดภาคเรียน',
+  tagline:'เริ่มต้นปีการศึกษาใหม่ด้วยความพร้อม ความสุข และเป้าหมายการเรียนรู้ร่วมกัน',
+  closing:'ก้าวแรกที่มั่นใจ สู่ปีการศึกษาที่เติบโตไปด้วยกัน'},
+ {name:'ตารางสอบกลางภาค / ปลายภาค', style:'govclean', activity:'แจ้งกำหนดการสอบกลางภาคและปลายภาค',
+  tagline:'เตรียมตัวให้พร้อม วางแผนอ่านหนังสือ และเข้าสอบตามกำหนดเวลา',
+  closing:'ตั้งใจ เตรียมพร้อม ซื่อสัตย์ในการสอบ'},
+ {name:'ปิดภาคเรียน / แจ้งผลการเรียน / รับเอกสาร', style:'govclean', activity:'แจ้งกำหนดปิดภาคเรียน การรับผลการเรียน และการรับเอกสารสำคัญ',
+  tagline:'ตรวจสอบกำหนดการให้พร้อม ติดต่อโรงเรียนตามวันเวลา และเตรียมเอกสารให้ครบถ้วน',
+  closing:'ขอขอบคุณผู้ปกครองและนักเรียนที่ร่วมมือกับโรงเรียนตลอดภาคเรียน'},
+ {name:'ประกาศหยุดเรียน / แจ้งเหตุเร่งด่วน', style:'alert', activity:'ประกาศหยุดเรียนหรือแจ้งเหตุเร่งด่วน',
+  tagline:'โปรดติดตามประกาศจากโรงเรียนอย่างใกล้ชิด และปฏิบัติตามคำแนะนำเพื่อความปลอดภัย',
+  closing:'ขออภัยในความไม่สะดวก และขอขอบคุณในความร่วมมือจากทุกท่าน'},
+ {name:'รับการประเมิน สมศ. / ประกันคุณภาพ / นิเทศติดตาม', style:'quality', activity:'การรับการประเมินคุณภาพและการนิเทศติดตาม',
+  tagline:'ร่วมสะท้อนคุณภาพการจัดการศึกษา เพื่อพัฒนาโรงเรียนอย่างต่อเนื่อง',
+  closing:'โรงเรียนพร้อมพัฒนา ด้วยความร่วมมือของทุกภาคส่วน'},
+ {name:'แข่งขันศิลปหัตถกรรมนักเรียน / ทักษะวิชาการ', style:'aquagold', activity:'ขอเชิญร่วมส่งกำลังใจการแข่งขันทักษะวิชาการและศิลปหัตถกรรมนักเรียน',
+  tagline:'เวทีแห่งความสามารถ ความมุ่งมั่น และความภาคภูมิใจของลูก ๆ นักเรียน',
+  closing:'ทุกความพยายามคือชัยชนะที่งดงาม'},
+ {name:'ค่ายคุณธรรม / ค่ายลูกเสือ / ทัศนศึกษา', style:'green', activity:'กิจกรรมค่ายคุณธรรม ลูกเสือ และทัศนศึกษาเพื่อการเรียนรู้',
+  tagline:'เรียนรู้นอกห้องเรียน สร้างวินัย คุณธรรม ความสามัคคี และประสบการณ์ชีวิต',
+  closing:'ประสบการณ์วันนี้ คือบทเรียนชีวิตที่มีคุณค่า'},
+ {name:'เยี่ยมบ้านนักเรียน / ระบบดูแลช่วยเหลือ', style:'photonews', activity:'กิจกรรมเยี่ยมบ้านนักเรียนและระบบดูแลช่วยเหลือนักเรียน',
+  tagline:'บ้าน โรงเรียน และชุมชน ร่วมดูแลลูกหลานให้เติบโตอย่างมีคุณภาพ',
+  closing:'ดูแลด้วยใจ เข้าใจบริบท เพื่อพัฒนาผู้เรียนรายบุคคล'},
+ {name:'มอบทุนการศึกษา / อุปกรณ์การเรียน', style:'pink', activity:'พิธีมอบทุนการศึกษาและอุปกรณ์การเรียน',
+  tagline:'แบ่งปันโอกาส เติมกำลังใจ สนับสนุนการเรียนรู้ของนักเรียน',
+  closing:'ทุกการสนับสนุน คือพลังสร้างอนาคตของเด็กไทย'},
+ {name:'รณรงค์ PM2.5 / ไข้เลือดออก / สุขภาพนักเรียน', style:'safetydoc', activity:'กิจกรรมรณรงค์ดูแลสุขภาพและความปลอดภัยของนักเรียน',
+  tagline:'รู้เท่าทัน ป้องกันได้ ดูแลตนเองและคนรอบข้างให้ปลอดภัย',
+  closing:'สุขภาพดี เรียนรู้อย่างปลอดภัย ใส่ใจทุกวัน'},
+ {name:'Cyber Safety / ใช้สื่อออนไลน์อย่างปลอดภัย', style:'safetydoc', activity:'กิจกรรมรณรงค์ใช้สื่อออนไลน์อย่างปลอดภัย',
+  tagline:'คิดก่อนคลิก รู้ทันภัยไซเบอร์ ใช้เทคโนโลยีอย่างสร้างสรรค์และรับผิดชอบ',
+  closing:'ปลอดภัยบนโลกออนไลน์ เริ่มได้จากตัวเรา'},
 ];
 
 /* ============================================================
@@ -3819,6 +3962,40 @@ function buildPoster(){
   if (p_lighting) refinerStr += ', ' + p_lighting;
   if (p_camera) refinerStr += ', ' + p_camera;
   if (p_effects) refinerStr += ', ' + p_effects;
+  const cleanPosterThaiLabel=function(txt){return (txt||'').replace(/\s*\([^)]*[A-Za-z][^)]*\)/g,'').trim();};
+  const posterSelectedThaiLabel=function(id){
+    const el=document.getElementById(id);
+    return (el&&el.value&&el.selectedOptions&&el.selectedOptions[0])?cleanPosterThaiLabel(el.selectedOptions[0].textContent):'';
+  };
+  const posterRefinerThaiParts=[posterSelectedThaiLabel('p_refiner_lighting'),posterSelectedThaiLabel('p_refiner_camera'),posterSelectedThaiLabel('p_refiner_effects')].filter(Boolean);
+  const posterThaiStyleKeywords=function(parts){
+    const base=['จัดองค์ประกอบสมดุล','ลำดับชั้นภาพชัดเจน','สีสันกลมกลืน','ตัวอักษรไทยคมชัด','พร้อมใช้ในงานประชาสัมพันธ์โรงเรียน','ความละเอียดสูง','รายละเอียดประณีต'];
+    return 'สไตล์คีย์เวิร์ด (ไทย):\n'+parts.concat(base).filter(Boolean).map(cleanPosterThaiLabel).join(', ')+'\n\n';
+  };
+
+  /* ---- รูปแบบ "รายงานกิจกรรม" (ภาพเดียวเด่น Hero Poster) ---- */
+  if(v('p_layout')==='report'){
+    out+='ออกแบบโปสเตอร์ "รายงานกิจกรรม" แนวตั้ง สวยงามระดับมืออาชีพ จัดเป็นภาพเดียวเด่น (Hero Poster) '+s.thai+'\n\n';
+    out+='จัดองค์ประกอบเรียงจากบนลงล่าง:\n';
+    out+='1. ด้านบนสุดกึ่งกลาง: ข้อความ "รายงานกิจกรรม" ตัวอักษรไทยขนาดกลาง สีขาว/ทอง มีเงานุ่ม\n';
+    out+='2. ชื่อกิจกรรมตัวใหญ่โดดเด่นที่สุดของภาพ เป็นตัวอักษรไทยสามมิติหรูหรา มีขอบและเงาทองวิจิตร อ่านชัด สะกดถูกต้อง:\n   "'+activity+'"\n';
+    out+='3. ป้าย/ริบบิ้น'+s.ribbon+'ใต้ชื่อกิจกรรม ใส่ชื่อโรงเรียนและปีการศึกษา ตัวอักษรเด่นชัด:\n   "'+school+'"'+(year?'  "'+year+'"':'')+'\n';
+    if(motto) out+='   คำขวัญโรงเรียน: "'+motto+'"\n';
+    if(tagline) out+='   คำโปรยใต้หัวข้อ: "'+tagline+'"\n';
+    out+='4. ภาพหลักกลางโปสเตอร์ (Hero Image): ครูและนักเรียนไทยกำลังร่วมกิจกรรม "'+activity+'" อย่างมีความสุข นักเรียนแต่งชุดนักเรียนไทย บรรยากาศ'+s.mood+' ภาพสมจริง คมชัด มีมิติ แสงสวยงาม';
+    if(director) out+=' (อาจมีภาพ '+director+' ร่วมในฉากด้วย)';
+    out+='\n';
+    out+='5. พื้นหลังและของตกแต่งประจำธีมจัดวางรอบภาพอย่างวิจิตรเต็มพื้นที่ กลมกลืนแสงเดียวกันทั้งภาพ ไม่บังตัวอักษรและใบหน้า\n';
+    if(closing) out+='6. ข้อความปิดท้ายด้านล่าง ตัวอักษรสวยงาม: "'+closing+'"\n';
+    out+='7. แถบล่างสุด: ชื่อโรงเรียน '+school+(addr.indexOf('[')===-1?' · '+addr:'')+(pr.indexOf('[')===-1?' · ฝ่ายประชาสัมพันธ์: '+pr:'')+' ตัวอักษรชัดเจน\n';
+    out+='ตัวอักษรภาษาไทยทุกจุดสะกดถูกต้อง คมชัด อ่านง่าย จัดวางสมดุลสวยงาม\n\n';
+    out+='สไตล์กราฟิก:\nThai school activity report poster, hero poster composition, '+s.en+', big ornate 3D gold thai title typography, realistic happy teacher and Thai students scene, rich decorative themed background, depth and dimension, professional studio lighting, balanced composition, intricate details, vivid colors, high resolution, ultra detailed, 8K, award-winning poster design'+refinerStr+'\n\n';
+    out+=posterThaiStyleKeywords([s.thai,'รูปแบบรายงานกิจกรรมภาพเดียวเด่น','ชื่อกิจกรรมตัวอักษรทองสามมิติ','ภาพครูและนักเรียนสมจริง','พื้นหลังธีมตกแต่งวิจิตร','มีมิติความลึก','แสงสตูดิโอมืออาชีพ','รายละเอียดประณีต','งานออกแบบระดับรางวัล'].concat(posterRefinerThaiParts));
+    out+=size.spec;
+    document.getElementById('posterOut').value=out;
+    updatePreviews();
+    return;
+  }
 
   if(preset.mourning||activeStyle==='mourning'){
     /* ---- โครงสร้างโปสเตอร์ไว้อาลัย ---- */
@@ -3835,7 +4012,7 @@ function buildPoster(){
     out+='แถบสีดำด้านล่างสุด ตัวอักษรสีขาว-ทองชัดเจน:\n';
     if(reg) out+='ทะเบียนคุม '+reg+'\n';
     out+='Facebook: '+fb+'\nที่อยู่: '+addr+'\nฝ่ายประชาสัมพันธ์: '+pr+'\n\n';
-    out+='สไตล์กราฟิก:\n'+s.en+', official memorial layout, balanced symmetrical composition, harmonious color palette, soft professional lighting' + refinerStr + ', crisp clean readable Thai typography, high resolution, ultra detailed, 8K, award-winning graphic design\n\n';
+    out+=posterThaiStyleKeywords([s.thai,'เลย์เอาต์ไว้อาลัยทางการ','จัดองค์ประกอบสมมาตร','โทนสีสุภาพกลมกลืน','แสงนุ่มแบบมืออาชีพ','ตัวอักษรไทยสะอาดอ่านง่าย','งานออกแบบกราฟิกระดับรางวัล'].concat(posterRefinerThaiParts));
     out+=size.spec;
   }else{
     /* ---- โครงสร้างโปสเตอร์ PR กิจกรรม ---- */
@@ -3858,10 +4035,16 @@ function buildPoster(){
     out+=(body?'"'+body+'"\n\n':'[ให้ AI เรียบเรียงเนื้อหาบรรยายกิจกรรม "'+activity+'" ของ '+school+' ความยาว 4-6 บรรทัด ภาษาทางการสละสลวย สื่อถึงวัตถุประสงค์และคุณค่าของกิจกรรม]\n\n');
     if(closing) out+='ด้านล่างสุด มีข้อความภาษาไทยตัวเขียนหรูหรา '+s.accent+'เด่นชัด:\n"'+closing+'"\n\n';
     out+='แถบ'+s.footer+'ด้านล่างสุด ตัวอักษรสีขาวชัดเจน เพิ่มไอคอน Facebook เว็บไซต์ ที่อยู่ และผู้รับผิดชอบ:\nFacebook: '+fb+'\nที่อยู่: '+addr+'\nฝ่ายประชาสัมพันธ์: '+pr+'\n\n';
-    out+='สไตล์กราฟิก:\nThai educational PR poster, '+s.en+', elegant Thai typography, official school PR poster, modern infographic layout, balanced eye-catching composition, clear visual hierarchy, harmonious vibrant colors, professional studio lighting' + refinerStr + ', crisp readable Thai text, depth and dimension, high resolution, ultra detailed, 8K, award-winning graphic design\n\n';
+    out+=posterThaiStyleKeywords([s.thai,'โปสเตอร์ประชาสัมพันธ์โรงเรียนไทย','ตัวอักษรไทยสง่างาม','เลย์เอาต์ราชการโรงเรียน','จัดข้อมูลแบบอินโฟกราฟิกทันสมัย','องค์ประกอบดึงดูดสายตา','ลำดับชั้นภาพชัดเจน','สีสดใสกลมกลืน','แสงสตูดิโอมืออาชีพ','ภาพมีมิติและความลึก','งานออกแบบกราฟิกระดับรางวัล'].concat(posterRefinerThaiParts));
     out+=size.spec;
   }
-  document.getElementById('posterOut').value=out;
+  const posterParis='P - Purpose (จุดประสงค์): สร้างโปสเตอร์ประชาสัมพันธ์โรงเรียนเรื่อง "'+activity+'" ให้สื่อสารชัดเจน อ่านง่าย และพร้อมนำไปใช้เผยแพร่จริง\n'+
+    'A - Audience (กลุ่มเป้าหมาย): นักเรียน ผู้ปกครอง คณะครู ชุมชน และผู้ติดตามช่องทางประชาสัมพันธ์ของโรงเรียน\n'+
+    'R - Role (บทบาท): คุณคือนักออกแบบกราฟิกมืออาชีพ ผู้เชี่ยวชาญด้านโปสเตอร์ประชาสัมพันธ์และอาร์ตไดเรกเตอร์สถานศึกษา เชี่ยวชาญการจัดองค์ประกอบ ตัวอักษร อัตลักษณ์แบรนด์ และลำดับชั้นภาพสำหรับงานโรงเรียนไทย\n'+
+    'I - Input (ข้อมูลที่ใช้): ชื่อโรงเรียน='+school+' | กิจกรรม='+activity+' | วันที่='+date+' | สถานที่='+venue+' | ปีการศึกษา='+(year||'[ไม่ระบุ]')+' | คำโปรย='+(tagline||'[ไม่ระบุ]')+' | ผู้บริหาร='+(director||'[ไม่ใส่]')+' | จำนวนภาพคอลลาจ='+collage+' | Facebook='+fb+' | ที่อยู่='+addr+' | ฝ่ายประชาสัมพันธ์='+pr+'\n'+
+    'S - Style (สไตล์): '+s.name+' — '+s.thai+(posterRefinerThaiParts.length?'\nตัวปรับแต่งภาพ: '+posterRefinerThaiParts.join(', '):'')+'\n\n'+
+    '--- คำสั่งสร้างภาพแบบละเอียด ---\n\n';
+  document.getElementById('posterOut').value=posterParis+out;
   updatePreviews();
 }
 
@@ -4176,12 +4359,197 @@ function pickCreative(arr,id){
   const found=arr.find(x=>x.t===val);
   return found || {t:val, e:val};
 }
+
+const GRAPHIC_JOB_TYPES={
+  graphicposter:{label:'โปสเตอร์กราฟิกประชาสัมพันธ์',size:0,placeholder:'ชื่อเรื่อง / กลุ่มเป้าหมาย / ข้อความหลัก / วันเวลา / สถานที่ / ช่องทางติดต่อ',
+    purpose:'ออกแบบโปสเตอร์ประชาสัมพันธ์ที่ดึงสายตา อ่านชัด และนำไปใช้เผยแพร่ได้ทันที',
+    points:['หัวเรื่องใหญ่เด่นที่สุด มีลำดับชั้นภาพชัดเจน','แบ่งข้อมูลเป็นส่วน: หัวเรื่อง รายละเอียดสำคัญ วันเวลา สถานที่ คำชวนลงมือทำ และช่องทางติดต่อ','ใช้ภาพหลักหรือมาสคอตช่วยเล่าเรื่อง ไม่บังข้อความ','จัดขอบและพื้นที่ว่างเผื่อการพิมพ์และโพสต์ออนไลน์','ตัวอักษรไทยต้องคมชัด สะกดถูกต้อง และอ่านได้บนมือถือ'],
+    keywords:'professional graphic poster design, strong visual hierarchy, readable Thai typography, modern educational PR poster'},
+  eventposter:{label:'โปสเตอร์กิจกรรม / Event Poster',size:0,placeholder:'ชื่อกิจกรรม / ธีมงาน / วันเวลา / สถานที่ / ผู้จัด / ไฮไลท์กิจกรรม',
+    purpose:'สร้างโปสเตอร์กิจกรรมโรงเรียนที่บอกบรรยากาศงานและข้อมูลสำคัญครบในภาพเดียว',
+    points:['มี key visual ที่สะท้อนธีมกิจกรรม','จัดพื้นที่สำหรับวัน เวลา สถานที่ และไฮไลท์กิจกรรมชัดเจน','ใช้สีและองค์ประกอบให้เข้ากับประเภทงาน','ใส่โลโก้หรือชื่อโรงเรียนในตำแหน่งสุภาพ','เหมาะทั้งพิมพ์ติดบอร์ดและโพสต์ Facebook'],
+    keywords:'school event poster design, festive key visual, clear schedule information, professional Thai layout'},
+  announcement:{label:'ประกาศโรงเรียน / Announcement Card',size:2,placeholder:'เรื่องประกาศ / วันที่มีผล / ใครต้องทำอะไร / ช่องทางสอบถาม',
+    purpose:'ทำภาพประกาศโรงเรียนที่อ่านรู้เรื่องเร็วและลดความเข้าใจผิด',
+    points:['หัวข้อประกาศต้องใหญ่และชัดภายใน 3 วินาที','ใช้กล่องข้อมูลสั้น ๆ: เรื่อง วันที่ ผู้เกี่ยวข้อง สิ่งที่ต้องปฏิบัติ','ถ้าเป็นประกาศด่วนให้ใช้สีเตือนภัยอย่างพอดี','หลีกเลี่ยงข้อความยาวเกินไป ใช้ bullet สั้น','มีช่องทางติดต่อหรือหมายเหตุด้านล่าง'],
+    keywords:'official school announcement card, clear alert layout, concise information design, high readability'},
+  flyer:{label:'ใบปลิว / Flyer A4',size:0,placeholder:'หัวข้อใบปลิว / จุดขายหรือประโยชน์ / รายละเอียด / ช่องทางสมัครหรือเข้าร่วม',
+    purpose:'ออกแบบใบปลิว A4 ที่อ่านง่าย แจกหรือพิมพ์ได้จริง',
+    points:['จัดหน้าแบบ A4 มีหัวเรื่อง ภาพหลัก รายละเอียด และ CTA','แบ่งข้อมูลเป็น 3-5 บล็อก ไม่แน่นเกินไป','ใช้ไอคอนช่วยแยกประเด็น','เผื่อระยะขอบสำหรับงานพิมพ์','มี QR code placeholder หรือช่องทางติดต่อ'],
+    keywords:'A4 flyer design, printable educational flyer, clean information blocks, professional typography'},
+  brochure:{label:'แผ่นพับ / Brochure',size:1,placeholder:'หัวข้อแผ่นพับ / 3-6 หัวข้อย่อย / ข้อมูลโรงเรียน / ช่องทางติดต่อ',
+    purpose:'ออกแบบแผ่นพับประชาสัมพันธ์แบบพับ 3 ตอนที่ข้อมูลเป็นระบบ',
+    points:['จัดเป็น 6 panel สำหรับแผ่นพับ tri-fold','มีปกหน้า ปกหลัง และ panel เนื้อหาเป็นสัดส่วน','แต่ละ panel มีหัวข้อสั้น ภาพหรือไอคอน และข้อความย่อ','จัดแนวเส้นพับและระยะปลอดภัยให้ชัด','เหมาะสำหรับพิมพ์และแจกผู้ปกครองหรือชุมชน'],
+    keywords:'tri-fold brochure design, six panel layout, school brochure, printable clean editorial design'},
+  rollup:{label:'ป้าย Roll-up / Standee',size:5,placeholder:'หัวข้อป้าย / ข้อความหลัก / รายละเอียดสั้น / โลโก้ / ช่องทางติดต่อ',
+    purpose:'สร้างป้ายตั้งพื้นที่อ่านได้จากระยะไกลและใช้ในงานโรงเรียน',
+    points:['หัวข้ออยู่บนสุด ตัวใหญ่ อ่านจากไกล','ภาพหลักอยู่กลางป้าย มีพื้นที่หายใจ','ข้อมูลรองเรียงจากสำคัญไปน้อย','CTA หรือ QR code อยู่ช่วงล่างในตำแหน่งมองเห็น','ห้ามวางข้อความเล็กเกินไปหรือชิดขอบ'],
+    keywords:'roll up banner standee design, vertical exhibition banner, large readable typography, school event display'},
+  backdrop:{label:'ฉากหลังเวที / Backdrop',size:4,placeholder:'ชื่องาน / ธีม / วันที่ / โรงเรียน / โลโก้หน่วยงาน / ข้อความบนฉาก',
+    purpose:'ออกแบบฉากหลังเวทีที่ถ่ายรูปสวยและข้อมูลครบโดยไม่รก',
+    points:['ชื่องานใหญ่กลางภาพ อ่านได้จากไกล','มีพื้นที่ว่างสำหรับคนยืนถ่ายรูปด้านหน้า','โลโก้และหน่วยงานจัดวางสมดุล ไม่แย่งสายตา','องค์ประกอบธีมกระจายด้านข้างหรือขอบภาพ','คุมสีให้เข้ากับงานและดูภูมิฐาน'],
+    keywords:'stage backdrop design, event photo wall, large format banner, balanced official school ceremony layout'},
+  photoframe:{label:'กรอบรูปกิจกรรม / Photo Frame',size:2,placeholder:'ชื่อกิจกรรม / ปีการศึกษา / โรงเรียน / ข้อความสั้นบนกรอบ',
+    purpose:'ทำกรอบรูปกิจกรรมสำหรับถ่ายภาพหรือใช้ซ้อนภาพข่าวประชาสัมพันธ์',
+    points:['เว้นพื้นที่กลางภาพสำหรับใส่รูปหรือถ่ายคนจริง','ตกแต่งเฉพาะขอบ ไม่บังใบหน้าผู้ถ่าย','ใส่ชื่อกิจกรรมและโรงเรียนบนกรอบอย่างอ่านง่าย','ใช้สีและลวดลายเข้ากับธีมงาน','เหมาะสำหรับ photo booth หรือ overlay ภาพข่าว'],
+    keywords:'event photo frame overlay, transparent center composition, school photo booth frame, festive border design'},
+  campaign:{label:'ภาพรณรงค์ / Campaign Key Visual',size:2,placeholder:'ประเด็นรณรงค์ / ข้อความสั้น / พฤติกรรมที่อยากให้ทำ / กลุ่มเป้าหมาย',
+    purpose:'สร้าง key visual สำหรับรณรงค์ให้เกิดการจดจำและเปลี่ยนพฤติกรรม',
+    points:['มีข้อความหลักสั้น จำง่าย และแรงพอให้หยุดดู','ใช้ภาพเปรียบเทียบหรือสัญลักษณ์ที่เข้าใจทันที','ใส่คำแนะนำปฏิบัติได้จริง 3-5 ข้อ','ใช้สีเน้นอารมณ์ตามประเด็น เช่น ปลอดภัย สุขภาพ สิ่งแวดล้อม','มี hashtag หรือ CTA ท้ายภาพ'],
+    keywords:'campaign key visual, public awareness poster, memorable message, behavior change communication design'},
+  socialpost:{label:'โพสต์ Facebook / Instagram 1 ภาพ',size:2,placeholder:'หัวข้อโพสต์ / ประโยค hook / รายละเอียดสั้น / CTA / hashtag',
+    purpose:'ออกแบบภาพโพสต์โซเชียลที่หยุดนิ้วและอ่านง่ายบนมือถือ',
+    points:['Hook ตัวใหญ่ด้านบนหรือกลางภาพ','ใช้ภาพหลักหนึ่งจุดโฟกัส ไม่กระจายสายตา','ข้อความไม่เกิน 20-30% ของพื้นที่ภาพ','เว้นขอบปลอดภัยสำหรับมือถือ','มี CTA หรือ hashtag สั้น ๆ'],
+    keywords:'social media post design, mobile first layout, thumb stopping key visual, Facebook Instagram square post'},
+  carousel:{label:'Carousel Post 5-10 หน้า',size:2,placeholder:'หัวข้อ carousel / จำนวนหน้า / ประเด็นแต่ละหน้า / CTA หน้าสุดท้าย',
+    purpose:'ออกแบบชุดโพสต์ carousel ที่เล่าเรื่องเป็นลำดับและชวนปัดอ่านต่อ',
+    points:['หน้า 1 เป็น hook cover ที่ดึงดูด','หน้า 2-9 แบ่งประเด็นทีละเรื่อง ใช้เลขหน้าชัดเจน','ทุกหน้าคุมกริด สี ฟอนต์ และตำแหน่งซ้ำกัน','หน้าสุดท้ายมีสรุปและ CTA','ออกแบบให้แต่ละหน้าพออ่านได้ใน 5 วินาที'],
+    keywords:'Instagram Facebook carousel post design, multi slide educational content, consistent grid system, swipeable story layout'},
+  storyreel:{label:'Story / Reels / TikTok Cover 9:16',size:5,placeholder:'หัวข้อ story/reels / ข้อความสั้น / visual หลัก / CTA',
+    purpose:'ออกแบบภาพแนวตั้ง 9:16 สำหรับ story หรือหน้าปกคลิปสั้น',
+    points:['จัดองค์ประกอบสำคัญให้อยู่กึ่งกลางไม่โดน UI ของแพลตฟอร์มบัง','ใช้ข้อความใหญ่ 3-7 คำ','มีตัวละครหรือภาพหลักเด่นช่วงกลาง','สีคอนทราสต์สูงสำหรับหน้าจอมือถือ','เว้นพื้นที่บนและล่างเป็น safe zone'],
+    keywords:'vertical 9:16 story cover, TikTok Reels cover design, mobile safe zone layout, bold readable title'},
+  facebookcover:{label:'ปกเพจ Facebook',size:6,placeholder:'ชื่อเพจ/โรงเรียน / คำโปรย / ช่องทางติดต่อ / ธีมภาพปก',
+    purpose:'ออกแบบภาพปกเพจ Facebook ที่แสดงตัวตนโรงเรียนและไม่ถูกครอบตัดบนมือถือ',
+    points:['วางข้อความสำคัญไว้กลางภาพใน safe area','ใช้ภาพโรงเรียนหรือ key visual เป็นพื้นหลังที่ดูจริงใจ','ใส่ชื่อโรงเรียนและคำโปรยสั้น','หลีกเลี่ยงข้อมูลเล็กมากเพราะปกเพจถูกย่อ','เผื่อการครอบตัดบนมือถือและเดสก์ท็อป'],
+    keywords:'Facebook page cover design, responsive safe area, school branding header, clean banner composition'},
+  webbanner:{label:'แบนเนอร์เว็บไซต์ / Hero Banner',size:7,placeholder:'หัวข้อแบนเนอร์ / ข้อความรอง / ปุ่ม CTA / ภาพหรือธีมเว็บ',
+    purpose:'สร้างแบนเนอร์หัวเว็บที่สื่อสารข้อเสนอหลักและนำสายตาไปยัง CTA',
+    points:['มีพื้นที่ข้อความด้านหนึ่งและภาพหลักอีกด้านอย่างสมดุล','ข้อความหลักสั้นและอ่านง่ายบนจอกว้าง','ไม่ใช้รายละเอียดเล็กเกินไป','เผื่อ safe area สำหรับ responsive crop','ใช้ mood ภาพให้เข้ากับเว็บโรงเรียน'],
+    keywords:'website hero banner design, educational landing header, responsive crop safe area, clear call to action'},
+  lineoa:{label:'LINE OA Rich Message / Rich Menu',size:2,placeholder:'หัวข้อ LINE / ปุ่มหรือเมนูที่ต้องมี / ข้อความ CTA / ช่องทางติดต่อ',
+    purpose:'ออกแบบภาพสำหรับ LINE OA ที่กดดูแล้วเข้าใจเมนูหรือข่าวได้ทันที',
+    points:['แบ่งพื้นที่เป็นปุ่มหรือช่องเมนูชัดเจน','ใช้ข้อความสั้นมากเพราะแสดงบนมือถือ','สีและไอคอนต้องต่างกันพอแยกเมนูได้','วาง CTA ให้เห็นทันที','เหมาะกับผู้ปกครองที่อ่านเร็ว'],
+    keywords:'LINE OA rich message rich menu design, mobile menu grid, clear button layout, Thai parent communication design'},
+  ai3dbanner:{label:'แบนเนอร์ชุมชน AI สามมิติ',size:7,icon:'🤖',placeholder:'ชื่อชุมชนหรือโปรเจกต์ / ตัวละครหรือวัตถุหลัก / โทนสี / ข้อความบนแบนเนอร์ / โลโก้',
+    purpose:'สร้างภาพแบนเนอร์แนวกว้างสไตล์ภาพยนตร์ AI 3D สำหรับปกชุมชน เพจ หรือหัวเว็บ',
+    points:['จัดองค์ประกอบแบบจอกว้าง มีตัวละครหรือวัตถุเด่นซ้าย-ขวา และพื้นที่ข้อความกลางภาพ','ใช้แสงภาพยนตร์ เงาสะท้อน วัสดุโลหะ กระจก หรือพลังงานเรืองแสงให้ดูพรีเมียม','วางข้อความหลักให้ใหญ่ คมชัด ไม่ทับใบหน้าหรือวัตถุสำคัญ','มีรายละเอียดพื้นหลัง เช่น ควัน แสงขอบ เส้นกริด หรือชิ้นส่วน 3D อย่างพอดี','เผื่อพื้นที่ครอบตัดสำหรับปกเพจ หัวเว็บ หรือแบนเนอร์ชุมชน'],
+    keywords:'แบนเนอร์ AI สามมิติ, ภาพยนตร์ไซไฟ, วัสดุโลหะ, แสงเรืองรอง, ปกชุมชน'},
+  cinematiccover:{label:'ภาพปกชุมชนแนวภาพยนตร์',size:4,icon:'🎬',placeholder:'ชื่อเพจ/ชุมชน / ธีมภาพ / ตัวละครหลัก / สโลแกน / สีหรืออารมณ์ภาพ',
+    purpose:'ออกแบบภาพปกหรือคีย์วิชวลแนวภาพยนตร์ที่ดูยิ่งใหญ่และจดจำง่าย',
+    points:['มีจุดโฟกัสหลักชัดเจนเหมือนโปสเตอร์ภาพยนตร์หรือปกซีรีส์','ใช้แสงขอบ เงาลึก หมอก ควัน หรือฉากหลังมีมิติช่วยสร้างอารมณ์','จัดพื้นที่ชื่อหรือสโลแกนให้เด่น อ่านง่าย และไม่แน่นเกินไป','ให้ตัวละคร วัตถุ หรือสัญลักษณ์สื่อสารเรื่องราวของชุมชนได้ทันที','คุมโทนสีให้มีอัตลักษณ์ เช่น เทคโนโลยี อบอุ่น ลึกลับ หรือแฟนตาซี'],
+    keywords:'ภาพปกแนวภาพยนตร์, คีย์วิชวลชุมชน, แสงขอบ, เงาลึก, องค์ประกอบยิ่งใหญ่'},
+  workspace:{label:'ฉากโต๊ะทำงานสร้างสรรค์',size:4,icon:'💻',visualOnly:true,placeholder:'พื้นที่ทำงาน / อุปกรณ์บนโต๊ะ / ช่วงเวลา / แสง / โทนสี / สิ่งที่อยากให้รู้สึก',
+    purpose:'สร้างภาพฉากโต๊ะทำงานหรือมุมสร้างสรรค์ที่อบอุ่น น่าใช้ และเหมาะกับสื่อการเรียนรู้',
+    points:['จัดโต๊ะทำงานให้มีอุปกรณ์หลัก เช่น แท็บเล็ต หนังสือ สมุดสเก็ตช์ โคมไฟ ต้นไม้ หรือดินสอ','ใช้แสงธรรมชาติหรือแสงโคมไฟให้เกิดบรรยากาศสงบและมีแรงบันดาลใจ','วางวัตถุเป็นชั้นหน้า-กลาง-หลังเพื่อให้ภาพมีมิติ','หลีกเลี่ยงความรกเกินไป ให้ทุกชิ้นช่วยเล่าเรื่องการเรียนรู้หรือการออกแบบ','เหมาะใช้เป็นพื้นหลังสไลด์ ปกบทเรียน ภาพประกอบบทความ หรือโพสต์แรงบันดาลใจ'],
+    keywords:'ฉากโต๊ะทำงานสร้างสรรค์, แสงธรรมชาติอบอุ่น, อุปกรณ์การเรียน, มุมทำงานน่าใช้, ภาพพื้นหลังการศึกษา'},
+  process3d:{label:'อินโฟกราฟิกขั้นตอนสามมิติ',size:4,icon:'🧩',placeholder:'ชื่อกระบวนการ / จำนวนขั้นตอน / รายละเอียดแต่ละขั้น / ตัวละครนำเสนอ / โทนสี',
+    purpose:'สร้างภาพอินโฟกราฟิกขั้นตอนแบบ 3D ที่เล่า workflow หรือกระบวนการเรียนรู้ให้เข้าใจง่าย',
+    points:['วางขั้นตอนเป็นเส้นทางต่อเนื่อง มีจุดหรือแท่น 3D แทนแต่ละขั้น','ใส่เลขขั้นตอนและหัวข้อสั้นมาก อ่านง่ายในภาพเดียว','มีตัวละครผู้นำเสนอหรือมาสคอตยืนข้างเส้นทางเพื่อเพิ่มความเป็นมิตร','ใช้เส้นแสง ลูกศร หรือริบบอนเชื่อมขั้นตอนให้เห็นทิศทางชัดเจน','เผื่อพื้นที่หัวเรื่องด้านบนและโลโก้/เครดิตมุมล่างอย่างสุภาพ'],
+    keywords:'อินโฟกราฟิกสามมิติ, ขั้นตอนการทำงาน, เส้นทางการเรียนรู้, ตัวละครนำเสนอ, จุดเชื่อมเรืองแสง'},
+  neonroadmap:{label:'โรดแมปเส้นแสงเรืองรอง',size:4,icon:'🛣️',placeholder:'เป้าหมาย / ขั้นตอนหลัก / ช่วงเวลา / ปลายทาง / สีแสงหรือธีม',
+    purpose:'ออกแบบภาพโรดแมปหรือแผนการดำเนินงานแบบเส้นแสงที่ดูทันสมัยและเข้าใจทิศทางชัดเจน',
+    points:['ใช้เส้นทางคดเคี้ยวหรือเส้นแสงนำสายตาจากจุดเริ่มต้นไปปลายทาง','แบ่ง milestone เป็น 4-7 จุด พร้อมป้ายชื่อสั้นและไอคอนประกอบ','ให้พื้นหลังมืดหรือกึ่งอนาคตเพื่อขับแสงนีออนอย่างพอดี','จัดจังหวะช่องว่างไม่ให้ป้ายขั้นตอนทับกัน','เหมาะสำหรับแผนโครงการ AI แผนพัฒนางาน หรือเส้นทางการเรียนรู้'],
+    keywords:'โรดแมปเรืองแสง, เส้นทางอนาคต, จุดหมายสำคัญ, แผนโครงการ, แสงนีออนพอดี'},
+  materialshowcase:{label:'โชว์เคสวัสดุสามมิติ',size:4,icon:'⚙️',visualOnly:true,placeholder:'ชนิดวัสดุ / จำนวนตัวอย่าง / โทนสี / วัตถุหลัก / คำอธิบายสั้น',
+    purpose:'สร้างภาพโชว์เคสวัสดุหรือวัตถุ 3D สำหรับอธิบาย texture แสงเงา และคุณภาพงานออกแบบ',
+    points:['จัดวางตัวอย่างวัสดุเป็นแถวหรือ grid เช่น โลหะ กระจก หิน ดิน ไม้ พลาสติก หรือผิวเรืองแสง','ให้แต่ละวัสดุมีแสงสะท้อนและ texture ต่างกันชัดเจน','ใช้พื้นหลังเรียบหรือฉากสตูดิโอมืดเพื่อให้วัตถุเด่น','ใส่ป้ายชื่อวัสดุสั้น ๆ ได้ แต่ต้องไม่บังตัวอย่าง','เหมาะใช้ประกอบบทเรียน 3D งานออกแบบ หรือ moodboard วัสดุ'],
+    keywords:'โชว์เคสวัสดุสามมิติ, texture ชัดเจน, แสงสะท้อน, วัตถุสตูดิโอ, ตัวอย่างวัสดุ'},
+  scenebackground:{label:'ฉากพื้นหลังบรรยากาศภาพยนตร์',size:4,icon:'🌄',visualOnly:true,placeholder:'สถานที่ / ฤดูกาล / เวลา / อารมณ์ภาพ / วัตถุหรือคนในฉาก / โทนสี',
+    purpose:'สร้างฉากพื้นหลังบรรยากาศสวยสำหรับใช้เป็นภาพประกอบ สไลด์ ปกบทเรียน หรือฉากวิดีโอ',
+    points:['สร้างสถานที่ให้มีบรรยากาศชัด เช่น ป่า ฤดูใบไม้ร่วง หมู่บ้าน ถนนกลางคืน ห้องเรียน หรือภูเขา','ใช้แสง เวลา และสภาพอากาศช่วยกำหนดอารมณ์ภาพ เช่น อบอุ่น ลึกลับ สงบ หรือมหัศจรรย์','จัดองค์ประกอบให้มีพื้นที่ว่างสำหรับวางข้อความได้ถ้าต้องการ','เพิ่มรายละเอียดเล็ก ๆ ที่เล่าเรื่อง เช่น หนังสือ โคมไฟ ทางเดิน ใบไม้ หรือหน้าต่าง','หลีกเลี่ยงตัวอักษรถ้าไม่ได้ระบุข้อความในภาพ'],
+    keywords:'ฉากพื้นหลังภาพยนตร์, บรรยากาศชัดเจน, แสงตามฤดูกาล, ภาพประกอบสไลด์, พื้นที่วางข้อความ'},
+  storybookscene:{label:'ฉากนิทานภาพวาดเล่าเรื่อง',size:4,icon:'📖',visualOnly:true,placeholder:'ฉากนิทาน / ตัวละคร / เหตุการณ์ / อารมณ์ / ฤดูกาล / รายละเอียดสำคัญ',
+    purpose:'สร้างภาพฉากนิทานหรือภาพวาดเล่าเรื่องที่มีเสน่ห์ อบอุ่น และใช้ต่อยอดเป็นสื่อภาษา/คุณธรรมได้',
+    points:['ฉากต้องเล่าเรื่องได้จากภาพเดียว มีตัวละครหรือวัตถุที่ทำให้เกิดคำถามต่อเนื่อง','ใช้แสงและสีแบบภาพวาดนิทาน เช่น อบอุ่น ละมุน ลึกลับ หรือมหัศจรรย์','จัดลำดับชั้นภาพให้มองเห็นฉากหลัก ตัวละคร และรายละเอียดรองชัดเจน','เพิ่มรายละเอียดธรรมชาติหรือสถาปัตยกรรม เช่น กระท่อม ต้นไม้ ทางเดิน หนังสือ หรือสวนดอกไม้','เหมาะสำหรับปกนิทาน ใบงานเขียนเรื่อง บัตรภาพเล่าเรื่อง หรือสไลด์เปิดบทเรียน'],
+    keywords:'ฉากนิทานภาพวาด, ภาพเล่าเรื่อง, แสงอบอุ่น, รายละเอียดละมุน, สื่อภาษาและคุณธรรม'},
+  sidebyside:{label:'ภาพคู่เปรียบเทียบสองเวอร์ชัน',size:4,icon:'🖼️',placeholder:'หัวข้อเปรียบเทียบ / เวอร์ชันซ้าย / เวอร์ชันขวา / จุดต่าง / ป้ายกำกับ',
+    purpose:'สร้างภาพคู่แบบซ้าย-ขวาเพื่อเปรียบเทียบสไตล์ ฉาก ก่อน-หลัง หรือสองแนวคิดในภาพเดียว',
+    points:['แบ่งภาพเป็น 2 ช่องเท่ากัน ซ้ายและขวา มีเส้นแบ่งสะอาดหรือไม่มีเส้นตามความเหมาะสม','ทั้งสองฝั่งต้องมี subject เดียวกันหรือหัวข้อเดียวกันเพื่อให้เปรียบเทียบง่าย','เปลี่ยนเฉพาะสิ่งที่ต้องการเทียบ เช่น ฤดูกาล เวลา โทนสี สไตล์ภาพ หรือผลลัพธ์ก่อน-หลัง','ใส่ป้ายกำกับสั้น ๆ ได้ แต่ต้องอ่านง่ายและไม่บดบังภาพ','คุมมุมกล้องและระยะภาพให้ใกล้เคียงกันเพื่อเทียบได้ยุติธรรม'],
+    keywords:'ภาพคู่เปรียบเทียบ, สองเวอร์ชัน, ก่อนหลัง, ซ้ายขวาสมดุล, มุมกล้องสอดคล้อง'},
+  wallpaper:{label:'วอลเปเปอร์และภาพพื้นหลัง',size:4,icon:'🖥️',visualOnly:true,placeholder:'ธีมภาพพื้นหลัง / อารมณ์ / โทนสี / วัตถุหลัก / ต้องการมีพื้นที่ว่างตรงไหน',
+    purpose:'สร้างภาพพื้นหลังหรือวอลเปเปอร์ที่สวย ใช้งานได้จริง และไม่รบกวนข้อความหรือไอคอน',
+    points:['องค์ประกอบหลักต้องสวยแต่ไม่แน่นเกินไป เหมาะเป็นพื้นหลังเดสก์ท็อป สไลด์ หรือจอประชาสัมพันธ์','เผื่อพื้นที่ว่างด้านซ้าย/ขวา/กลางตามที่ระบุสำหรับวางข้อความหรือไอคอน','ใช้รายละเอียด texture และแสงให้ภาพดูมีมิติเมื่อเปิดเต็มจอ','หลีกเลี่ยงตัวอักษร โลโก้ หรือป้ายถ้าไม่ได้ระบุ','คุมสีให้ไม่แสบตาและใช้งานนานได้'],
+    keywords:'วอลเปเปอร์, ภาพพื้นหลังสวย, พื้นที่ว่างสำหรับข้อความ, แสงนุ่ม, ใช้งานเต็มจอ'},
+  conceptart:{label:'คอนเซ็ปต์อาร์ตแฟนตาซี',size:4,icon:'🏰',visualOnly:true,placeholder:'โลกหรือสถานที่ / ตัวละครหรือวัตถุหลัก / อารมณ์ / ยุคสมัย / จุดเด่นแฟนตาซี',
+    purpose:'สร้างภาพคอนเซ็ปต์อาร์ตสำหรับโลกแฟนตาซี ฉากเรื่องเล่า หรือภาพประกอบโปรเจกต์สร้างสรรค์',
+    points:['ออกแบบโลกหรือสถานที่ให้มีเอกลักษณ์ เช่น บ้านบนต้นไม้ ป่ามหัศจรรย์ เมืองอนาคต หรือหมู่บ้านกลางแสงจันทร์','มี focal point ชัดเจนหนึ่งจุด เช่น อาคาร ตัวละคร ประตู แสง หรือวัตถุเวทมนตร์','ใช้แสง สี และสภาพอากาศขยายอารมณ์ของฉาก','รายละเอียดต้องช่วยเล่าเรื่อง ไม่กระจายจนเสียจุดโฟกัส','เหมาะสำหรับปกเรื่องเล่า สตอรี่บอร์ด เกมการศึกษา หรือภาพเปิดบทเรียน'],
+    keywords:'คอนเซ็ปต์อาร์ตแฟนตาซี, โลกสมมติ, จุดโฟกัสชัดเจน, แสงเล่าเรื่อง, ฉากสร้างสรรค์'},
+  environmentdesign:{label:'ออกแบบฉากสถานที่',size:4,icon:'🏞️',visualOnly:true,placeholder:'สถานที่ที่ต้องการ / ฟังก์ชันของพื้นที่ / มุมกล้อง / ผู้ใช้งาน / บรรยากาศ',
+    purpose:'ออกแบบฉากสถานที่หรือสภาพแวดล้อมให้มีโครงสร้างชัด ใช้ต่อยอดเป็นฉากวิดีโอ เกม หรือสื่อการสอนได้',
+    points:['กำหนดพื้นที่หลัก-รองให้ชัด เช่น ทางเข้า จุดกิจกรรม ทางเดิน พื้นที่นั่ง หรือฉากหลัง','ใช้มุมกล้องกว้างเพื่อให้เห็น layout และความสัมพันธ์ขององค์ประกอบ','คุมสเกลสิ่งของ คน อาคาร และธรรมชาติให้สมเหตุสมผล','ใส่รายละเอียดที่บอกการใช้งานจริงโดยไม่รก','เหมาะกับฉากห้องเรียนในฝัน เมืองจำลอง พิพิธภัณฑ์ โรงเรียนอนาคต หรือพื้นที่กิจกรรม'],
+    keywords:'ออกแบบฉากสถานที่, environment design, มุมกว้าง, layout ชัดเจน, ฉากสำหรับสื่อการสอน'},
+  aihero:{label:'ภาพฮีโร่แนว AI เทคโนโลยีสามมิติ',size:7,icon:'✨',placeholder:'หัวข้อฮีโร่ / ข้อความหลัก / วัตถุหรือสัญลักษณ์ AI / โทนสี / จุดที่ต้องเว้นว่าง',
+    purpose:'สร้างภาพฮีโร่แนวกว้างสำหรับหัวเว็บ สไลด์เปิดงาน หรือแคมเปญ AI ที่ดูทันสมัยและมีพลัง',
+    points:['จัดภาพแบบกว้างมาก มีพื้นที่ข้อความชัดเจนและ visual หลักโดดเด่น','ใช้สัญลักษณ์ AI เทคโนโลยี เครือข่ายข้อมูล วัตถุ 3D หรือแสงอนาคตอย่างพอดี','เน้นความสะอาดพรีเมียม ไม่รกด้วยรายละเอียดเล็กเกินไป','วางจุดสว่างและเส้นนำสายตาไปยังหัวข้อหรือ CTA','เหมาะกับหัวเว็บไซต์ ปกคอร์ส AI ป้ายงานอบรม หรือสไลด์เปิดนำเสนอ'],
+    keywords:'ภาพฮีโร่ AI, เทคโนโลยีสามมิติ, หัวเว็บ, แสงอนาคต, พื้นที่ข้อความชัดเจน'},
+  moodboard:{label:'มู้ดบอร์ดภาพรวมสไตล์',size:4,icon:'🎛️',placeholder:'ธีมงาน / สีหลัก / วัสดุ / ตัวอย่างภาพ / คำอารมณ์ 3-5 คำ / ใช้กับโปรเจกต์อะไร',
+    purpose:'สร้าง moodboard ภาพรวมสไตล์เพื่อสื่อทิศทางงานออกแบบ สี วัสดุ และบรรยากาศให้ทีมเข้าใจตรงกัน',
+    points:['จัดเป็น collage หรือ grid ที่มีภาพอ้างอิง สี วัสดุ typography และคำอารมณ์รวมกัน','เลือก 4-8 บล็อกสำคัญ ไม่แน่นเกินไป','ใช้ swatch สีและ texture ช่วยบอกทิศทางภาพอย่างชัดเจน','คุมสไตล์ให้ไปในทางเดียวกัน แม้มีหลายภาพย่อย','เหมาะสำหรับวางแผนโปสเตอร์ แบรนด์กิจกรรม ฉาก 3D หรือสื่อการสอนชุดใหญ่'],
+    keywords:'มู้ดบอร์ด, ภาพรวมสไตล์, swatch สี, texture, ทิศทางงานออกแบบ'},
+  worksheetdesign:{label:'เลย์เอาต์ใบงาน / Worksheet Layout',size:0,placeholder:'วิชา / ชั้น / เรื่อง / จำนวนตอน / กิจกรรมในใบงาน / โทนเด็กเล็กหรือโต',
+    purpose:'ออกแบบหน้าใบงานให้สวย อ่านง่าย และมีพื้นที่ให้นักเรียนเขียนจริง',
+    points:['มีหัวใบงาน ชื่อ-ชั้น-เลขที่ และคำชี้แจง','แบ่งกิจกรรมเป็นตอน ๆ พร้อมพื้นที่คำตอบเพียงพอ','ใช้ภาพประกอบช่วยเข้าใจ ไม่รก','เหมาะกับการพิมพ์ขาวดำหรือสีตามที่ระบุ','จัดรูปแบบให้ครูนำไปทำต่อใน Word/Canva ได้'],
+    keywords:'printable worksheet layout design, student activity sheet, clear answer spaces, educational illustration layout'},
+  slidedeck:{label:'ชุดหน้าปกสไลด์ / Slide Deck Theme',size:4,placeholder:'หัวข้อบทเรียน / วิชา / ชั้น / จำนวนสไลด์ / ธีมสี / องค์ประกอบที่ต้องมี',
+    purpose:'ออกแบบธีมสไลด์การสอนให้เป็นชุดเดียวกันและพร้อมต่อยอด',
+    points:['สร้างหน้าปกหลักและตัวอย่าง layout สำหรับหัวข้อ เนื้อหา กิจกรรม และสรุป','กำหนดสี ฟอนต์ ไอคอน และรูปแบบกล่องข้อความให้เป็นระบบ','เว้นพื้นที่สำหรับครูใส่เนื้อหาเพิ่ม','เหมาะกับ PowerPoint/Canva/Google Slides','ตัวอักษรใหญ่พออ่านจากหลังห้อง'],
+    keywords:'educational slide deck theme, PowerPoint cover template, consistent teaching presentation layout, classroom readable design'},
+  newslettercover:{label:'ปกวารสาร / Newsletter Cover',size:0,placeholder:'ชื่อวารสาร / ฉบับเดือน / ข่าวเด่น / โรงเรียน / ภาพหลัก',
+    purpose:'ออกแบบปกวารสารโรงเรียนที่ดูเป็นมืออาชีพและน่าเปิดอ่าน',
+    points:['มี masthead ชื่อวารสารด้านบน','ภาพหลักสื่อข่าวเด่นหรือธีมของฉบับ','ใส่ teaser ข่าว 3-5 รายการด้านข้างหรือด้านล่าง','มีฉบับที่ เดือน ปี และโลโก้โรงเรียน','จัดแบบ editorial magazine ไม่รก'],
+    keywords:'school newsletter cover design, editorial magazine layout, headline teasers, professional publication cover'},
+  onepage:{label:'One-page Summary / สรุป 1 หน้า',size:0,placeholder:'หัวข้อสรุป / ประเด็นหลัก 3-6 ข้อ / ข้อมูลตัวเลข / ข้อเสนอแนะ',
+    purpose:'ทำสรุปข้อมูลหนึ่งหน้าให้อ่านเร็ว ใช้ประชุม รายงาน หรือส่งผู้บริหาร',
+    points:['หัวเรื่องและ key message ชัดเจนด้านบน','ใช้กล่องข้อมูล ไอคอน ตัวเลข และ mini chart','แบ่งส่วนข้อมูลไม่เกิน 5 กลุ่ม','มีช่องสรุปข้อเสนอแนะหรือ next step','ดูเป็นเอกสารวิชาการที่อ่านง่าย'],
+    keywords:'one page summary infographic, executive brief design, clean data cards, educational report one pager'},
+  logo:{label:'โลโก้กิจกรรม / ตราสัญลักษณ์',size:2,placeholder:'ชื่อกิจกรรม / ความหมาย / สีหลัก / สัญลักษณ์ที่ต้องการ / ข้อห้าม',
+    purpose:'ออกแบบโลโก้หรือตราสัญลักษณ์ที่จำง่ายและใช้ได้หลายขนาด',
+    points:['รูปทรงเรียบ จำง่าย ไม่ซับซ้อน','มีเวอร์ชันหลักที่ใช้บนพื้นอ่อนและพื้นเข้มได้','สื่อความหมายของกิจกรรมหรือโรงเรียนชัดเจน','หลีกเลี่ยงตัวอักษรเล็กมาก','จัดวางแบบ vector logo mark พร้อมพื้นที่ว่างรอบโลโก้'],
+    keywords:'logo design, school event emblem, vector style logo mark, clean scalable symbol, brand identity'},
+  brandkit:{label:'Brand Kit โรงเรียน / กิจกรรม',size:4,placeholder:'ชื่อแบรนด์/กิจกรรม / สีหลัก / บุคลิกแบรนด์ / ฟอนต์หรือสัญลักษณ์ / ตัวอย่างการใช้',
+    purpose:'สร้างชุดอัตลักษณ์กราฟิกที่ใช้ต่อเนื่องทั้งโปสเตอร์ สไลด์ และโซเชียล',
+    points:['แสดงโลโก้หรือ key mark','กำหนด palette สี 4-6 สีพร้อมตัวอย่างการใช้','มีตัวอย่างฟอนต์ หัวข้อ ปุ่ม ไอคอน และ pattern','มี mini mockup เช่น โปสเตอร์ นามบัตร social post','คุมภาพรวมให้เหมือนระบบแบรนด์เดียวกัน'],
+    keywords:'brand kit board, school visual identity system, color palette typography icon pattern mockups, professional brand guideline'},
+  badge:{label:'Badge / Sticker Badge / Medal Icon',size:2,placeholder:'ข้อความ badge / ระดับรางวัล / สี / สัญลักษณ์ / ใช้ติดงานอะไร',
+    purpose:'ออกแบบ badge หรือไอคอนรางวัลสำหรับใช้ในเกียรติบัตร โพสต์ หรือสื่อการสอน',
+    points:['รูปทรง badge เด่น เช่น วงกลม โล่ เหรียญ ริบบิ้น','ข้อความสั้น อ่านง่ายแม้ย่อเล็ก','ใช้สีบอกระดับ เช่น ทอง เงิน ทองแดง หรือสีประจำกิจกรรม','มีเงา/มิติพอดี ไม่รก','เหมาะสำหรับตัดไปใช้ต่อเป็นองค์ประกอบกราฟิก'],
+    keywords:'award badge sticker design, medal icon, ribbon seal, clean scalable graphic element'},
+  pattern:{label:'Pattern / พื้นหลังลายแบรนด์โรงเรียน',size:2,placeholder:'ธีม pattern / สีประจำโรงเรียน / สัญลักษณ์ซ้ำ / ใช้กับงานอะไร',
+    purpose:'สร้างลายพื้นหลังแบรนด์ที่ใช้ซ้ำในโปสเตอร์ สไลด์ ป้าย และเอกสาร',
+    points:['ทำเป็น repeatable pattern ที่ไม่แย่งความสำคัญจากข้อความ','ใช้สัญลักษณ์โรงเรียนหรือวิชาแบบเรียบง่าย','คุมโทนสีให้ไม่ฉูดฉาดเกินไป','ออกแบบให้ใช้ได้ทั้งพื้นหลังอ่อนและเข้ม','เว้นพื้นที่พอสำหรับวางข้อความทับ'],
+    keywords:'seamless brand pattern background, school identity pattern, subtle repeat design, clean educational background'},
+  label:{label:'ฉลาก / Label / Sticker Sheet',size:2,placeholder:'ชื่อฉลาก / ขนาดหรือชุดฉลาก / ข้อความแต่ละดวง / สีและธีม',
+    purpose:'ออกแบบฉลากหรือ sticker sheet สำหรับติดแฟ้ม สมุด ของรางวัล หรือสื่อการสอน',
+    points:['จัดเป็นชุดฉลากหลายดวงในภาพเดียว ขนาดเท่ากัน','แต่ละฉลากมีพื้นที่ชื่อ/ข้อความสั้น','ขอบตัดชัดเจน เหมาะกับการพิมพ์และตัด','ใช้สีและไอคอนที่สอดคล้องกันทั้งชุด','ตัวอักษรไม่เล็กเกินไป'],
+    keywords:'printable label sticker sheet design, school labels, consistent sticker grid, cute clear typography'},
+  certificate:{label:'เกียรติบัตร / Certificate Template',size:1,placeholder:'ชื่อเกียรติบัตร / ผู้รับ / โอกาส / วันที่ / ผู้ลงนาม / โลโก้',
+    purpose:'ออกแบบเกียรติบัตรที่ดูเป็นทางการ สวย และมีช่องกรอกข้อมูลครบ',
+    points:['กรอบเกียรติบัตรสง่างาม ไม่รก','มีพื้นที่ชื่อผู้รับเด่นกลางใบ','เรียงข้อมูลโอกาส วันที่ ผู้ลงนาม และตราโรงเรียนครบ','เผื่อช่องลายเซ็น 1-3 จุด','ใช้ฟอนต์ไทยสุภาพ อ่านง่าย และเหมาะกับงานพิมพ์'],
+    keywords:'certificate template design, formal Thai school award certificate, elegant border, signature area, printable official layout'},
+  invitation:{label:'การ์ดเชิญ / Invitation Card',size:2,placeholder:'ชื่องาน / ผู้เชิญ / วันเวลา / สถานที่ / dress code / RSVP',
+    purpose:'ออกแบบการ์ดเชิญที่ให้ความรู้สึกเหมาะกับงานและข้อมูลครบ',
+    points:['ชื่อกิจกรรมเด่นชัดและมีบรรยากาศเข้ากับงาน','วันเวลาและสถานที่อ่านง่าย','มีส่วน RSVP หรือช่องทางติดต่อ','ใช้ภาพประกอบหรือกรอบตกแต่งพอดี','เหมาะสำหรับส่งออนไลน์และพิมพ์'],
+    keywords:'invitation card design, school ceremony invitation, elegant Thai typography, printable and digital invite'},
+  schedule:{label:'ตารางเรียน / ตารางสอบ / Schedule',size:0,placeholder:'ประเภทตาราง / วันเวลา / รายการวิชา/กิจกรรม / ห้อง / หมายเหตุ',
+    purpose:'ออกแบบตารางข้อมูลให้อ่านง่าย ลดความสับสน และใช้งานจริงได้',
+    points:['ใช้ grid ตารางชัดเจน แถวคอลัมน์อ่านง่าย','แยกสีตามวัน วิชา หรือประเภทกิจกรรม','มี legend หรือหมายเหตุถ้าจำเป็น','ใช้ตัวอักษรใหญ่พอสำหรับพิมพ์ A4','จัดข้อมูลไม่ให้แน่นเกินไป'],
+    keywords:'school schedule timetable design, exam timetable, clean table grid, color coded readable layout'},
+  calendar:{label:'ปฏิทินกิจกรรมโรงเรียน',size:0,placeholder:'เดือน/ปี / รายการกิจกรรม / วันสำคัญ / สีแยกประเภทกิจกรรม',
+    purpose:'ออกแบบปฏิทินกิจกรรมที่เห็นภาพรวมทั้งเดือนได้เร็ว',
+    points:['มี calendar grid รายเดือนชัดเจน','ใช้สีหรือไอคอนแยกประเภทกิจกรรม','กิจกรรมเด่นมี callout หรือ sticker label','มีช่องหมายเหตุด้านล่าง','เหมาะติดบอร์ดหรือส่งผู้ปกครอง'],
+    keywords:'school monthly activity calendar, clean calendar grid, color coded events, printable parent communication design'},
+  nametag:{label:'ป้ายชื่อ / Name Tag / Staff Pass',size:2,placeholder:'ชื่อ-ตำแหน่ง / งานหรือกิจกรรม / สีประจำกลุ่ม / โลโก้',
+    purpose:'ออกแบบป้ายชื่อหรือบัตร staff ที่อ่านง่ายและดูเป็นระบบ',
+    points:['ชื่อบุคคลหรือตำแหน่งต้องอ่านชัดที่สุด','มีพื้นที่รูปถ่ายหรือไอคอนถ้าต้องการ','ใช้สีแยกบทบาท เช่น ครู นักเรียน เจ้าหน้าที่ วิทยากร','มีโลโก้และชื่องานอย่างพอดี','เหมาะสำหรับพิมพ์หลายใบเป็นชุด'],
+    keywords:'name tag staff pass design, school event ID card, role color coding, clear readable badge layout'},
+  map:{label:'แผนที่งาน / ผังอาคาร / Event Map',size:1,placeholder:'ชื่อสถานที่ / จุดสำคัญ / เส้นทาง / จุดลงทะเบียน / ห้องน้ำ / เวที / บูธ',
+    purpose:'ออกแบบแผนที่หรือผังงานให้ผู้ร่วมงานเดินทางและเข้าใจพื้นที่ได้ง่าย',
+    points:['ใช้มุมมอง top-down หรือ isometric ที่อ่านง่าย','มี legend ไอคอนจุดสำคัญครบ','เส้นทางหลักและจุดเริ่มต้นเด่นชัด','ใช้สีแยกโซนพื้นที่','ตัวอักษรสั้นและไม่ซ้อนทับเส้นทาง'],
+    keywords:'event map design, school campus map, isometric floor plan, wayfinding icons, clear legend layout'},
+  menu:{label:'เมนูอาหารกลางวัน / Nutrition Board',size:0,placeholder:'รายการอาหาร / วัน / สารอาหาร / ข้อความรณรงค์สุขภาพ / โรงเรียน',
+    purpose:'ออกแบบบอร์ดเมนูอาหารหรือโภชนาการที่เด็กและผู้ปกครองเข้าใจง่าย',
+    points:['จัดเมนูตามวันหรือหมวดอาหาร','มีไอคอนอาหารและสีสดใสเป็นมิตร','แสดงสารอาหารหรือข้อคิดสุขภาพสั้น ๆ','ใช้ตัวอักษรใหญ่พอสำหรับติดบอร์ด','หลีกเลี่ยงภาพอาหารที่ดูไม่น่ารับประทาน'],
+    keywords:'school lunch menu board, nutrition poster design, food icons, kid friendly readable layout'}
+};
+
 function onCreativeType(){
   const t=document.getElementById('g_type').value;
-  const sb=(t==='storyboard');
-  const tp=(t==='infographic'||t==='cover'||t==='vocab'||t==='idplan');
+  const sb=(t==='storyboard'||t==='storybook'||t==='beforeafter');
+  const isGraphicJob=!!GRAPHIC_JOB_TYPES[t];
+  const tp=isGraphicJob||['infographic','cover','vocab','idplan','classroom','storybook','iconset','mascotpack','boardgame','flashcardset','signage','thumbnail','beforeafter'].includes(t);
   document.getElementById('g_storyWrap').style.display=sb?'block':'none';
-  document.getElementById('g_framesWrap').style.display=sb?'block':'none';
+  document.getElementById('g_framesWrap').style.display=(t==='storyboard'||t==='storybook')?'block':'none';
   document.getElementById('g_topicWrap').style.display=tp?'block':'none';
   document.getElementById('g_themeWrap').style.display=(t==='idplan')?'block':'none';
   /* แนะนำขนาดภาพ/สไตล์อัตโนมัติตามประเภทงาน */
@@ -4191,6 +4559,16 @@ function onCreativeType(){
   else if(t==='idplan'){ sizeSel.value=0; activeArt='real'; renderArtStyles(); }
   else if(t==='vocab') sizeSel.value=4;          /* 16:9 */
   else if(t==='sticker') sizeSel.value=2;        /* 1:1 */
+  else if(t==='classroom') sizeSel.value=4;      /* 16:9 */
+  else if(t==='storybook') sizeSel.value=0;      /* A4 ตั้ง */
+  else if(t==='iconset') sizeSel.value=2;        /* 1:1 */
+  else if(t==='mascotpack') sizeSel.value=2;     /* 1:1 */
+  else if(t==='boardgame') sizeSel.value=0;      /* A4 ตั้ง */
+  else if(t==='flashcardset') sizeSel.value=0;   /* A4 ตั้ง */
+  else if(t==='signage') sizeSel.value=4;        /* 16:9 */
+  else if(t==='thumbnail') sizeSel.value=4;      /* 16:9 */
+  else if(t==='beforeafter') sizeSel.value=4;    /* 16:9 */
+  else if(isGraphicJob) sizeSel.value=GRAPHIC_JOB_TYPES[t].size;
   buildCreative();
 }
 function buildCreative(){
@@ -4199,11 +4577,23 @@ function buildCreative(){
   const role=pickCreative(ROLES,'g_role'), emo=pickCreative(EMOTIONS,'g_emotion'), pose=pickCreative(POSES,'g_pose');
   const bg=pickCreative(BGS,'g_bg'), shot=pickCreative(SHOTS,'g_shot');
   const look=v('g_look'), action=v('g_action'), text=v('g_text');
+  const topicInput=v('g_topic'), storyInput=v('g_story');
   const size=SIZES[+v('g_size')||0];
   const isPhoto=role.t.indexOf('รูปแนบ')>-1;
   let charLine=role.t+(look?(role.t?' — ':'')+look:'')+(isPhoto?' (ใช้ใบหน้าและรูปลักษณ์ตามรูปภาพที่แนบมาเป๊ะ 100% ห้ามดัดแปลงใบหน้า ทรงผม และสีผิว)':'');
   if(!charLine.trim()) charLine='[ระบุตัวละครในช่องลักษณะ]';
   const enJoin=function(parts){return parts.filter(Boolean).join(', ');};
+  const cleanThaiLabel=function(txt){return (txt||'').replace(/\s*\([^)]*[A-Za-z][^)]*\)/g,'').trim();};
+  const selectedThaiLabel=function(id){
+    const el=document.getElementById(id);
+    return (el&&el.value&&el.selectedOptions&&el.selectedOptions[0])?cleanThaiLabel(el.selectedOptions[0].textContent):'';
+  };
+  const thaiStyleKeywords=function(parts,opts){
+    const base=(opts&&opts.visualOnly)
+      ? ['จัดองค์ประกอบสมดุล','ลำดับชั้นภาพชัดเจน','สีสันกลมกลืน','แสงมืออาชีพ','ความละเอียดสูง','รายละเอียดประณีต','ไม่มีตัวอักษรหากไม่ได้ระบุข้อความ']
+      : ['จัดองค์ประกอบสมดุล','ลำดับชั้นภาพชัดเจน','สีสันกลมกลืน','ตัวอักษรไทยคมชัด','แสงมืออาชีพ','ความละเอียดสูง','รายละเอียดประณีต'];
+    return 'สไตล์คีย์เวิร์ด (ไทย):\n'+parts.concat(base).filter(Boolean).map(cleanThaiLabel).join(', ')+'\n\n';
+  };
   
   // Visual Prompt Refiners
   const g_lighting = v('g_refiner_lighting');
@@ -4213,6 +4603,7 @@ function buildCreative(){
   if (g_lighting) refStr += ', ' + g_lighting;
   if (g_camera) refStr += ', ' + g_camera;
   if (g_effects) refStr += ', ' + g_effects;
+  const refThaiParts=[selectedThaiLabel('g_refiner_lighting'),selectedThaiLabel('g_refiner_camera'),selectedThaiLabel('g_refiner_effects')].filter(Boolean);
 
   let out='';
   if(type==='sheet'){
@@ -4221,7 +4612,7 @@ function buildCreative(){
     out+='จัดวางเป็นตาราง 3×3 รวม 9 ช่องในภาพเดียว ทุกช่องต้องเป็นตัวละครตัวเดิม หน้าตา ทรงผม สีผิว และเสื้อผ้าเหมือนกันทุกประการ เปลี่ยนเฉพาะอารมณ์และท่าทางดังนี้:\n';
     SHEET9.forEach((s9,i)=>{out+=(i+1)+') '+s9.t+'\n';});
     out+='\nพื้นหลัง: '+(bg.t||'พื้นหลังเรียบสะอาด')+'\nจัดองค์ประกอบให้ทุกช่องขนาดเท่ากัน สะอาดตา\n\n';
-    out+='Style keywords (EN):\n'+enJoin([a.en,role.e,'character expression sheet, 3x3 grid, consistent character design, same outfit and hairstyle in every panel',bg.e,'professional lighting'])+refStr+', balanced composition, harmonious colors, high resolution, ultra detailed, 8K\n\n';
+    out+=thaiStyleKeywords([a.thai,role.t,'ตารางตัวละคร 3×3','คาแรกเตอร์สม่ำเสมอทุกช่อง','เสื้อผ้าและทรงผมเหมือนกันทุกช่อง',bg.t].concat(refThaiParts));
     out+='ขนาดภาพ: '+size.spec;
   }else if(type==='storyboard'){
     const frames=v('g_frames')||'6';
@@ -4231,7 +4622,7 @@ function buildCreative(){
     out+='เรื่องราว:\n'+(story||'[เล่าเหตุการณ์เรียงลำดับ เช่น 1) นักเรียนเดินมาโรงเรียน 2) พบขยะหน้าประตู 3) ชวนเพื่อนช่วยกันเก็บ 4) โรงเรียนสะอาดน่าอยู่]')+'\n\n';
     out+='ข้อกำหนดมุมกล้อง: แบ่งเรื่องเป็น '+frames+' ฉากต่อเนื่อง ใช้มุมกล้องหลากหลายแบบงานภาพยนตร์ — เปิดเรื่องด้วยมุมกว้าง (Wide Shot) แนะนำสถานที่, ใช้ระยะครึ่งตัว (Medium Shot) ดำเนินเรื่อง, แทรกโคลสอัพ (Close-up) เน้นอารมณ์ตัวละครในจุดสำคัญ, อาจใช้มุมสูง/มุมต่ำเพิ่มความน่าสนใจ และปิดเรื่องด้วยภาพรวมที่สื่อความหมาย\n\n';
     out+='ใต้แต่ละช่องระบุ: หมายเลขช่อง + ช่วงเวลา (เช่น 00:00–00:01) + คำบรรยายสั้น 1 บรรทัด เพื่อนำภาพแต่ละช่องไปใช้เป็นเฟรมตั้งต้นสร้างวิดีโอด้วย AI (เช่น Dreamina/Seedance, Veo, Kling) ต่อได้ทันที\n\n';
-    out+='Style keywords (EN):\n'+a.en+', film storyboard panels, numbered frames, varied cinematic camera angles, wide shot medium shot close-up, consistent character, clean panel borders, professional lighting' + refStr + ', balanced composition, harmonious colors, high resolution, ultra detailed, 8K\n\n';
+    out+=thaiStyleKeywords([a.thai,'ช่องสตอรี่บอร์ดแบบภาพยนตร์','มีหมายเลขกำกับแต่ละช่อง','มุมกล้องหลากหลาย','มุมกว้าง','ระยะครึ่งตัว','โคลสอัพ','ตัวละครต่อเนื่องสม่ำเสมอ','เส้นแบ่งช่องสะอาด'].concat(refThaiParts));
     out+='ขนาดภาพ: '+size.spec;
   }else if(type==='infographic'){
     const topic=v('g_topic');
@@ -4241,7 +4632,7 @@ function buildCreative(){
     out+='โครงสร้างอินโฟกราฟิก:\n- ชื่อเรื่องตัวใหญ่โดดเด่นด้านบน มีกรอบ/ป้ายรองรับ\n- คำอธิบาย/นิยามสั้นใต้ชื่อเรื่อง\n- แบ่งเนื้อหาเป็นกล่องหัวข้อย่อย ใส่หมายเลขและไอคอนประกอบทุกกล่อง\n- แถบสรุป/ประโยชน์/ข้อคิดปิดท้ายด้านล่างสุด\n';
     if(text) out+='- เครดิตผู้จัดทำมุมล่างของภาพ: "'+text+'"\n';
     out+='- ตัวอักษรภาษาไทยคมชัด สะกดถูกต้อง อ่านง่ายทั้งภาพ ไอคอนสไตล์เดียวกันทั้งหมด โทนสีกลมกลืน\n\n';
-    out+='Style keywords (EN):\n'+a.en+', educational infographic poster, clean section layout, numbered content boxes with icons, clear thai typography, professional lighting' + refStr + ', balanced composition, harmonious colors, high resolution, ultra detailed, 8K\n\n';
+    out+=thaiStyleKeywords([a.thai,'อินโฟกราฟิกเพื่อการศึกษา','แบ่งส่วนเนื้อหาสะอาดตา','กล่องเนื้อหามีหมายเลข','ไอคอนประกอบสไตล์เดียวกัน','ตัวอักษรไทยอ่านง่าย'].concat(refThaiParts));
     out+='ขนาดภาพ: '+size.spec;
   }else if(type==='idplan'){
     const theme=IDTHEMES[+v('g_theme')||0];
@@ -4258,7 +4649,7 @@ function buildCreative(){
     out+='6. ล่างสุด: ชื่อโรงเรียน เขตพื้นที่การศึกษา และสังกัด ตัวอักษรขาว/ทองชัดเจน\n\n';
     out+='ข้อมูลที่ต้องใส่ในป้ายชื่อและส่วนล่าง:\n'+(topic||'[พิมพ์ ชื่อครู / ตำแหน่ง วิทยฐานะ / โรงเรียน / สังกัดเขตพื้นที่ ในช่อง "หัวข้อ/เนื้อหา"]')+'\n';
     out+='ตัวอักษรภาษาไทยทุกจุดสะกดถูกต้อง คมชัด อ่านง่าย\n\n';
-    out+='Style keywords (EN):\n'+a.en+', official Thai teacher document cover, Thai teacher in khaki government uniform standing confidently at center, Thai students in uniform doing themed activities around, '+theme.e+', cinematic poster composition, elegant gold 3D thai title typography, ornate name plate banner' + refStr + ', ultra detailed, 4K\n\n';
+    out+=thaiStyleKeywords([a.thai,'ปกเอกสารราชการครู','ครูชุดข้าราชการสีกากียืนเด่นกลางภาพ','นักเรียนชุดนักเรียนไทยทำกิจกรรมตามธีม','ธีม'+theme.t,theme.thai,'จัดองค์ประกอบแบบโปสเตอร์ภาพยนตร์','ตัวอักษรไทยสีทองสามมิติ','ป้ายชื่อหรูหรา'].concat(refThaiParts));
     out+='ขนาดภาพ: '+size.spec;
   }else if(type==='cover'){
     const topic=v('g_topic');
@@ -4268,14 +4659,109 @@ function buildCreative(){
     out+='\nตัวละครบนปก: '+charLine+(emo.t?' อารมณ์'+emo.t:'')+(pose.t?' '+pose.t:'')+' จัดวางเด่นกลางภาพ\n';
     out+='ฉากหลัง: '+(bg.t||'ตามความเหมาะสมกับเนื้อหา')+' ตกแต่งด้วยองค์ประกอบที่เกี่ยวข้องกับเนื้อหากระจายรอบภาพอย่างสมดุล ไม่บังตัวอักษร\n';
     out+='ด้านล่างของปกมีป้าย/กรอบสุภาพสำหรับชื่อผู้จัดทำ ตำแหน่ง และชื่อโรงเรียน ตัวอักษรชัดเจน\n\n';
-    out+='Style keywords (EN):\n'+a.en+', educational document cover design, bold rounded thai title typography, balanced composition, '+role.e+', professional lighting' + refStr + ', balanced composition, harmonious colors, high resolution, ultra detailed, 8K\n\n';
+    out+=thaiStyleKeywords([a.thai,'ปกเอกสารเพื่อการศึกษา','หัวเรื่องไทยตัวหนาอ่านง่าย','จัดหน้าปกเป็นระเบียบ',role.t].concat(refThaiParts));
     out+='ขนาดภาพ: '+size.spec;
   }else if(type==='vocab'){
     const topic=v('g_topic');
     out+='สร้างบัตรคำศัพท์ภาษาอังกฤษสำหรับเด็ก สไตล์'+a.thai+'\n\n';
     out+='คำศัพท์: '+(topic||'[พิมพ์ คำศัพท์ / คำอ่านไทย / คำแปล ในช่อง "หัวข้อ/เนื้อหา" เช่น MORNING / มอร์นิง / ตอนเช้า]')+'\n\n';
     out+='โครงสร้างบัตรคำ:\n- คำศัพท์ภาษาอังกฤษตัวใหญ่หนาเด่นกลางภาพ\n- คำอ่านภาษาไทยในวงเล็บใต้คำศัพท์\n- กรอบคำแปลภาษาไทยด้านล่าง\n- ตัวละครประกอบ: '+charLine+' กำลังทำท่าทางสื่อความหมายของคำศัพท์'+(emo.t?' อารมณ์'+emo.t:'')+'\n- ไอคอน/ของตกแต่งน่ารักที่สื่อความหมายของคำ กระจายรอบภาพ\n- ใช้โทนสีเดียวกลมกลืนทั้งภาพ (monochromatic) กรอบการ์ดขอบโค้งมน\n- ตัวอักษรทุกส่วนสะกดถูกต้อง คมชัด อ่านง่าย\n\n';
-    out+='Style keywords (EN):\n'+a.en+', english vocabulary flashcard for kids, big bold word typography, cute cohesive single-color pastel theme, rounded card frame, professional lighting' + refStr + ', balanced composition, harmonious colors, high resolution, ultra detailed, 8K\n\n';
+    out+=thaiStyleKeywords([a.thai,'บัตรคำศัพท์ภาษาอังกฤษสำหรับเด็ก','คำศัพท์ตัวใหญ่หนา','โทนสีพาสเทลกลมกลืน','กรอบการ์ดขอบโค้งมน','ภาพประกอบน่ารักสื่อความหมาย'].concat(refThaiParts));
+    out+='ขนาดภาพ: '+size.spec;
+  }else if(type==='classroom'){
+    out+='สร้างภาพฉากห้องเรียน 3D / ห้องเรียนในฝัน สไตล์'+a.thai+'\n\n';
+    out+='หัวข้อหรือธีมห้องเรียน:\n'+(topicInput||'[ระบุธีมห้องเรียน เช่น ห้องเรียน AI, ห้องเรียนวิทยาศาสตร์, ห้องเรียนภาษาอังกฤษ, ห้องเรียนอ่านออกเขียนได้]')+'\n\n';
+    out+='องค์ประกอบหลัก:\n- ครู/ตัวละครหลัก: '+charLine+'\n- นักเรียนกำลังเรียนรู้อย่างมีส่วนร่วม มีความสุข และปลอดภัย\n- มุมการเรียนรู้ชัดเจน เช่น กระดานอัจฉริยะ โต๊ะกลุ่ม มุมอ่านหนังสือ มุมทดลอง มุมสื่อดิจิทัล\n- จัดแสงให้เห็นพื้นที่ทั้งห้อง ใช้มุมกว้างที่อ่านภาพได้ทันที\n';
+    if(text) out+='- ข้อความบนป้ายหรือกระดาน: "'+text+'" สะกดภาษาไทยให้ถูกต้องและอ่านง่าย\n';
+    out+='ข้อกำหนด: ไม่ให้ตัวอักษรทับหน้าคนหรือวัตถุสำคัญ องค์ประกอบต้องดูเป็นห้องเรียนจริงที่นำไปใช้เป็นภาพประกอบโรงเรียนได้\n\n';
+    out+=thaiStyleKeywords([a.thai,'ฉากห้องเรียน 3D ในฝัน','ห้องเรียนไทย','พื้นที่ Active Learning','กระดานอัจฉริยะ','มุมการเรียนรู้','นักเรียนทำงานร่วมกัน','องค์ประกอบมุมกว้าง',role.t,bg.t].concat(refThaiParts));
+    out+='ขนาดภาพ: '+size.spec;
+  }else if(type==='storybook'){
+    const frames=v('g_frames')||'6';
+    out+='สร้างภาพนิทานคุณธรรม / เรื่องเล่าภาพ จำนวน '+frames+' ฉากในภาพเดียว สไตล์'+a.thai+'\n\n';
+    out+='หัวข้อ/คุณธรรมหลัก:\n'+(topicInput||'[ระบุหัวข้อ เช่น ความซื่อสัตย์ ความรับผิดชอบ ความมีน้ำใจ การประหยัดน้ำ การเก็บขยะ]')+'\n\n';
+    out+='ตัวละครหลัก: '+charLine+' ต้องหน้าตาและเสื้อผ้าเหมือนกันทุกฉาก\n';
+    out+='เรื่องราวเรียงลำดับ:\n'+(storyInput||'[เล่าโครงเรื่อง 4-8 ฉาก เช่น 1) พบปัญหา 2) ตัดสินใจ 3) ลงมือทำ 4) เห็นผลลัพธ์ 5) สรุปข้อคิด]')+'\n\n';
+    out+='โครงสร้างภาพ: แบ่งเป็นช่องภาพนิทานเรียงซ้ายไปขวา/บนลงล่าง แต่ละช่องมีหมายเลขฉากและคำบรรยายสั้น 1 บรรทัด ใช้ภาษาง่ายเหมาะกับเด็ก ตัวอักษรไทยคมชัด\n';
+    out+='ปิดท้ายด้วยช่องข้อคิด/คติสอนใจสั้น ๆ ด้านล่างของภาพ\n\n';
+    out+=thaiStyleKeywords([a.thai,'ภาพนิทานคุณธรรม','เรื่องเล่าหลายช่อง','ตัวละครสม่ำเสมอทุกฉาก','เล่าเรื่องเหมาะกับเด็ก','คำบรรยายไทยชัดเจน'].concat(refThaiParts));
+    out+='ขนาดภาพ: '+size.spec;
+  }else if(type==='iconset'){
+    out+='สร้างชุดไอคอนโรงเรียน / รายวิชา / กิจกรรม สไตล์'+a.thai+'\n\n';
+    out+='รายการไอคอนที่ต้องการ:\n'+(topicInput||'[พิมพ์รายการไอคอน 8-16 รายการ เช่น ห้องเรียน ห้องสมุด วิทยาศาสตร์ คอมพิวเตอร์ กีฬา ศิลปะ ดนตรี สุขภาพ ความปลอดภัย]')+'\n\n';
+    out+='ข้อกำหนดชุดไอคอน:\n- ทุกไอคอนต้องใช้สไตล์เดียวกัน ขนาดเท่ากัน มุมมองเดียวกัน และโทนสีเดียวกัน\n- จัดวางเป็นกริดเรียบร้อย มีพื้นที่ว่างรอบแต่ละไอคอนเพียงพอ\n- ใช้พื้นหลังเรียบหรือโปร่งใสตามที่ AI รองรับ\n- ถ้ามีข้อความกำกับ ให้ใช้ภาษาไทยสั้น คมชัด อ่านง่าย\n- หลีกเลี่ยงรายละเอียดเล็กเกินไป เพราะต้องใช้ได้ทั้งบนสไลด์ ใบงาน และป้ายประชาสัมพันธ์\n\n';
+    out+=thaiStyleKeywords([a.thai,'ชุดไอคอนโรงเรียน','น้ำหนักเส้นสม่ำเสมอ','มุมมองเดียวกันทั้งชุด','จัดวางแบบกริดสะอาด','ไอคอนเพื่อการศึกษา','ออกแบบเรียบง่ายอ่านรู้เรื่อง'].concat(refThaiParts));
+    out+='ขนาดภาพ: '+size.spec;
+  }else if(type==='mascotpack'){
+    out+='สร้างชุดมาสคอตโรงเรียนหลายท่าทางในภาพเดียว สไตล์'+a.thai+'\n\n';
+    out+='มาสคอตหลัก: '+charLine+'\n';
+    out+='ข้อมูลแบรนด์/บุคลิกมาสคอต:\n'+(topicInput||'[ระบุชื่อมาสคอต สีประจำโรงเรียน คุณลักษณะ เช่น เป็นมิตร ฉลาด ร่าเริง รักการเรียนรู้]')+'\n\n';
+    out+='จัดวางเป็นชุด 8 ท่าทางในภาพเดียว โดยทุกท่าต้องเป็นมาสคอตตัวเดียวกัน สี รูปร่าง ใบหน้า และเครื่องแต่งกายเหมือนกันทุกประการ:\n1) โบกมือทักทาย\n2) ชูนิ้วโป้งให้กำลังใจ\n3) ถือหนังสือ\n4) ชี้ป้ายประกาศ\n5) ดีใจ/ฉลอง\n6) คิดวิเคราะห์\n7) เตือนเรื่องความปลอดภัย\n8) ยกมือไหว้แบบไทย\n\n';
+    out+='พื้นหลังเรียบสะอาด แยกตัวมาสคอตแต่ละท่าเป็นสัดส่วน เหมาะใช้ต่อเป็นสติกเกอร์ ป้าย และสื่อประชาสัมพันธ์โรงเรียน\n\n';
+    out+=thaiStyleKeywords([a.thai,role.t,'ชุดมาสคอตโรงเรียน 8 ท่าทาง','ดีไซน์มาสคอตสม่ำเสมอ','ชุดและใบหน้าเหมือนกันทุกท่า','พื้นหลังสะอาดพร้อมใช้ทำสติกเกอร์','จัดวางแบบกริดสมดุล'].concat(refThaiParts));
+    out+='ขนาดภาพ: '+size.spec;
+  }else if(type==='boardgame'){
+    out+='สร้างภาพบอร์ดเกมการศึกษา / เกมกระดานสำหรับห้องเรียน สไตล์'+a.thai+'\n\n';
+    out+='หัวข้อเกมและสาระการเรียนรู้:\n'+(topicInput||'[ระบุชื่อเกม วิชา เรื่อง ทักษะที่ต้องการฝึก และกติกาย่อ เช่น เกมเส้นทางพิชิตคำศัพท์ 20 ช่อง]')+'\n\n';
+    out+='โครงสร้างบอร์ดเกม:\n- กระดานเส้นทางเริ่มต้นถึงเส้นชัย มีช่องกิจกรรม/คำถาม/โบนัส/พัก/ย้อนกลับ อย่างน้อย 20 ช่อง\n- มีพื้นที่วางการ์ดคำถาม ลูกเต๋า และตัวเดิน\n- ใช้สีแยกประเภทช่องอย่างชัดเจน มีไอคอนช่วยจำ\n- ตัวละครหรือมาสคอตประกอบ: '+charLine+'\n- ตัวอักษรไทยในภาพต้องสั้น คมชัด และไม่แน่นเกินไป\n';
+    if(text) out+='- ชื่อเกมตัวใหญ่บนกระดาน: "'+text+'"\n';
+    out+='\n'+thaiStyleKeywords([a.thai,'บอร์ดเกมการศึกษา','กระดานเกมสำหรับพิมพ์ใช้ในห้องเรียน','เส้นทางเดินเกมคดเคี้ยว','พื้นที่การ์ดคำถาม','ลูกเต๋าและตัวเดิน','ป้ายกำกับภาษาไทยชัดเจน'].concat(refThaiParts));
+    out+='ขนาดภาพ: '+size.spec;
+  }else if(type==='flashcardset'){
+    out+='สร้างชุด Flashcard / บัตรคำสำหรับการสอนในภาพเดียว สไตล์'+a.thai+'\n\n';
+    out+='รายการคำหรือหัวข้อบัตร:\n'+(topicInput||'[พิมพ์รายการคำ 10-20 คำ แยกบรรทัด เช่น apple แอปเปิล, book หนังสือ, school โรงเรียน]')+'\n\n';
+    out+='ข้อกำหนด:\n- จัดวางเป็นกริดบัตรคำหลายใบในภาพเดียว แต่ละใบมีคำหลัก ภาพประกอบ และคำแปล/คำอ่านสั้น ๆ\n- ทุกบัตรต้องมีโครงสร้างเดียวกัน ขนาดเท่ากัน สีและฟอนต์กลมกลืน\n- ภาพประกอบแต่ละใบสื่อความหมายชัดเจน เหมาะกับเด็ก\n- ถ้าคำเยอะ ให้คงความอ่านง่าย ไม่อัดข้อความแน่น\n- ตัวอักษรไทยและอังกฤษต้องสะกดถูกต้อง คมชัด\n\n';
+    out+=thaiStyleKeywords([a.thai,'ชุดบัตรคำเพื่อการศึกษา','พร้อมพิมพ์ใช้งานจริง','กริดบัตรคำสม่ำเสมอ','ภาพประกอบน่ารักชัดเจน','ตัวอักษรใหญ่ อ่านง่าย','สื่อการสอนในห้องเรียน'].concat(refThaiParts));
+    out+='ขนาดภาพ: '+size.spec;
+  }else if(type==='signage'){
+    out+='สร้างป้ายห้องเรียน / ป้ายนิเทศ / บอร์ดหน้าชั้น สไตล์'+a.thai+'\n\n';
+    out+='ข้อมูลป้ายหรือบอร์ด:\n'+(topicInput||'[ระบุข้อความหลัก รายละเอียดป้าย ชื่อห้อง ชื่อกิจกรรม หรือหัวข้อบอร์ดนิเทศ]')+'\n\n';
+    out+='โครงสร้างป้าย:\n- หัวข้อใหญ่ด้านบน อ่านชัดจากระยะไกล\n- พื้นที่เนื้อหาหลักแบ่งเป็น 3-5 กล่อง หรือมีพื้นที่ว่างสำหรับติดผลงานนักเรียน\n- ขอบป้าย/กรอบตกแต่งเข้ากับธีม แต่ไม่รก\n- มีไอคอนหรือมาสคอตประกอบ: '+charLine+'\n';
+    if(text) out+='- ข้อความหัวป้าย: "'+text+'" สะกดถูกต้องและคมชัด\n';
+    out+='- เหมาะสำหรับนำไปออกแบบต่อใน Canva หรือพิมพ์ติดห้องเรียน\n\n';
+    out+=thaiStyleKeywords([a.thai,'ป้ายห้องเรียนและบอร์ดนิเทศ','หัวข้อภาษาไทยขนาดใหญ่อ่านง่าย','กล่องเนื้อหาเป็นระเบียบ','ตกแต่งบรรยากาศโรงเรียน','บอร์ดพร้อมพิมพ์ใช้งาน'].concat(refThaiParts));
+    out+='ขนาดภาพ: '+size.spec;
+  }else if(type==='thumbnail'){
+    out+='สร้างภาพปกคลิป YouTube / TikTok / Reels สำหรับคอนเทนต์ครู สไตล์'+a.thai+'\n\n';
+    out+='หัวข้อคลิป:\n'+(topicInput||'[ระบุหัวข้อคลิป เช่น 5 เทคนิคใช้ AI ทำใบงาน, สรุปกิจกรรมกีฬาสี, เปิดบ้านวิชาการ]')+'\n\n';
+    out+='องค์ประกอบปกคลิป:\n- ตัวละคร/ผู้ดำเนินรายการ: '+charLine+(emo.t?' สีหน้า'+emo.t:'')+(pose.t?' '+pose.t:'')+'\n- ข้อความหลักบนภาพสั้นมาก 3-7 คำ อ่านชัดบนมือถือ\n- ใช้คอนทราสต์สูง มีจุดโฟกัสเดียว ไม่วางข้อความชิดขอบ\n- ใส่องค์ประกอบที่บอกประเภทคลิป เช่น ปุ่ม play, timeline, ไอคอน AI, ไมโครโฟน หรือกล้อง\n';
+    if(text) out+='- ข้อความบนปก: "'+text+'" สะกดถูกต้อง คมชัด และไม่เกิน 1-2 บรรทัด\n';
+    out+='\n'+thaiStyleKeywords([a.thai,'ปกคลิปวิดีโอการศึกษา','คอนทราสต์สูง','หัวข้ออ่านง่ายบนมือถือ','ผู้ดำเนินรายการแสดงอารมณ์ชัด','จุดโฟกัสเด่น','ภาพปกคอนเทนต์โซเชียล'].concat(refThaiParts));
+    out+='ขนาดภาพ: '+size.spec;
+  }else if(type==='beforeafter'){
+    out+='สร้างภาพข่าวกิจกรรมแบบ Before-During-After จำนวน 3 ช่องในภาพเดียว สไตล์'+a.thai+'\n\n';
+    out+='หัวข้อข่าว/กิจกรรม:\n'+(topicInput||'[ระบุชื่อกิจกรรม เช่น Big Cleaning Day, โครงการปลูกผัก, ปรับปรุงห้องสมุด]')+'\n\n';
+    out+='ลำดับเหตุการณ์:\n'+(storyInput||'[ระบุ Before: ก่อนทำกิจกรรม / During: ระหว่างดำเนินการ / After: ผลลัพธ์หลังเสร็จสิ้น]')+'\n\n';
+    out+='โครงสร้างภาพ: แบ่งเป็น 3 ช่องแนวนอนหรือแนวตั้งเท่ากัน มีป้ายกำกับชัดเจน "ก่อนดำเนินการ" "ระหว่างดำเนินการ" "หลังดำเนินการ" พร้อมคำบรรยายสั้นใต้แต่ละช่อง\n';
+    out+='ตัวละคร/ผู้เกี่ยวข้อง: '+charLine+' และกลุ่มนักเรียนหรือครูร่วมกิจกรรมอย่างเหมาะสม\n';
+    out+='ภาพต้องเล่าเรื่องความเปลี่ยนแปลงได้ทันที เหมาะใช้สรุปข่าวประชาสัมพันธ์หรือรายงานโครงการ\n\n';
+    out+=thaiStyleKeywords([a.thai,'ภาพข่าวกิจกรรมแบบก่อน-ระหว่าง-หลัง','เลย์เอาต์เปรียบเทียบ 3 ช่อง','ป้ายกำกับชัดเจน','คอลลาจเล่าเรื่อง','สรุปผลโครงการทางการศึกษา'].concat(refThaiParts));
+    out+='ขนาดภาพ: '+size.spec;
+  }else if(GRAPHIC_JOB_TYPES[type]){
+    const cfg=GRAPHIC_JOB_TYPES[type];
+    out+='สร้างงานกราฟิกประเภท "'+cfg.label+'" สไตล์'+a.thai+'\n\n';
+    out+='บทบาทเฉพาะงาน:\nสวมบทบาทเป็นผู้เชี่ยวชาญด้านกราฟิกดีไซน์ อาร์ตไดเรกเตอร์ นักออกแบบภาพสร้างสรรค์ คอนเซ็ปต์อาร์ต งาน AI 3D และสื่อประชาสัมพันธ์สถานศึกษา ที่เชี่ยวชาญการจัดองค์ประกอบ ตัวอักษร อัตลักษณ์แบรนด์ ลำดับชั้นภาพ งานพร้อมพิมพ์ และงานพร้อมเผยแพร่บนสื่อโซเชียล\n\n';
+    out+='เป้าหมายของงาน:\n'+cfg.purpose+'\n\n';
+    out+='ข้อมูลหลักที่ใช้สร้างงาน:\n'+(topicInput||'['+cfg.placeholder+']')+'\n\n';
+    out+='องค์ประกอบภาพหลัก:\n- ตัวละคร/ภาพประกอบ/มาสคอตที่ใช้ได้: '+charLine+'\n';
+    if(emo.t) out+='- อารมณ์ภาพหรือสีหน้าตัวละคร: '+emo.t+'\n';
+    if(pose.t) out+='- ท่าทางหรือภาษากาย: '+pose.t+'\n';
+    if(bg.t) out+='- ฉากหลังหรือ texture: '+bg.t+'\n';
+    if(shot.t) out+='- มุมกล้อง/ระยะภาพ: '+shot.t+'\n';
+    if(action) out+='- เหตุการณ์หรือการกระทำในภาพ: '+action+'\n';
+    if(text) out+='- ข้อความหลักในภาพ: "'+text+'" ต้องสะกดถูกต้อง อ่านชัด และจัดวางเป็นจุดเด่น\n';
+    else if(cfg.visualOnly) out+='- ไม่ต้องใส่ตัวอักษร โลโก้ หรือข้อความใด ๆ ในภาพ ให้เน้นองค์ประกอบภาพ บรรยากาศ แสง และรายละเอียดของฉาก\n';
+    out+='\nโครงสร้างงานกราฟิกที่ต้องออกแบบ:\n';
+    cfg.points.forEach((p,i)=>{out+=(i+1)+'. '+p+'\n';});
+    out+='\nข้อกำหนดคุณภาพกราฟิก:\n';
+    out+='- ใช้ลำดับชั้นภาพชัดเจน: หัวเรื่อง > รายละเอียดสำคัญ > ข้อมูลรอง > ส่วนท้าย/เครดิต\n';
+    if(cfg.visualOnly&&!text) out+='- หากไม่ได้ระบุข้อความในภาพ ให้หลีกเลี่ยงตัวอักษรสุ่ม ป้ายอ่านไม่ออก ลายน้ำ และโลโก้ปลอม\n';
+    else out+='- จัดตัวอักษรภาษาไทยให้คมชัด ไม่บิดเบี้ยว ไม่สะกดผิด และไม่แน่นเกินไป\n';
+    out+='- คุม grid, alignment, spacing และ safe margin ให้ดูมืออาชีพ\n';
+    out+='- สีต้องกลมกลืนกับธีม ใช้ contrast พออ่านได้ทั้งบนจอและงานพิมพ์\n';
+    out+='- หลีกเลี่ยงข้อความทับภาพใบหน้า โลโก้ หรือองค์ประกอบสำคัญ\n';
+    out+='- ถ้ามีพื้นที่สำหรับโลโก้ รูปภาพ QR code หรือลายเซ็น ให้ทำเป็น placeholder ที่ชัดเจน\n\n';
+    out+=thaiStyleKeywords([a.thai,cfg.label,role.t,emo.t,pose.t,shot.t,bg.t,'เลย์เอาต์กราฟิกระดับมืออาชีพ','กำกับศิลป์ชัดเจน',cfg.visualOnly&&!text?'แสงและบรรยากาศมีมิติ':'ตัวอักษรไทยแบบมืออาชีพ','พร้อมใช้ทั้งงานพิมพ์และสื่อโซเชียล'].concat(refThaiParts),{visualOnly:cfg.visualOnly&&!text});
     out+='ขนาดภาพ: '+size.spec;
   }else{
     const typeTh = type==='sticker'?'สติกเกอร์':(type==='illus'?'ภาพประกอบสื่อการสอน':'ตัวละคร/มาสคอต');
@@ -4289,10 +4775,37 @@ function buildCreative(){
     if(text) out+='ข้อความในภาพ: "'+text+'" สะกดภาษาไทยให้ถูกต้อง ชัดเจน อ่านง่าย\n';
     if(type==='sticker') out+='\nลักษณะสติกเกอร์: พื้นหลังขาวล้วน มีเส้นขอบสีขาวหนารอบตัวละครแบบสติกเกอร์ไดคัท (die-cut) องค์ประกอบกระชับ มองรู้เรื่องแม้ขนาดเล็ก\n';
     if(type==='illus') out+='\nลักษณะภาพประกอบ: องค์ประกอบเรียบง่าย ไม่รกตา สื่อความหมายชัดเจน เหมาะนำไปใส่ในใบงาน สไลด์ หรือสื่อการสอน\n';
-    out+='\nStyle keywords (EN):\n'+enJoin([a.en,role.e,emo.e,pose.e,shot.e,bg.e,(type==='sticker'?'die-cut sticker design, thick white border, white background':''),'professional lighting','balanced composition','harmonious colors','clean background'])+refStr+', high resolution, ultra detailed, 8K\n\n';
+    out+='\n'+thaiStyleKeywords([a.thai,role.t,emo.t,pose.t,shot.t,bg.t,(type==='sticker'?'สติกเกอร์ไดคัท ขอบสีขาวหนา พื้นหลังขาว':''),'พื้นหลังสะอาด'].concat(refThaiParts));
     out+='ขนาดภาพ: '+size.spec;
   }
-  document.getElementById('creativeOut').value=out;
+  const creativeTypeNames={
+    char:'ตัวละคร / มาสคอต',
+    sheet:'Character Sheet 3x3',
+    illus:'ภาพประกอบสื่อการสอน / ใบงาน',
+    sticker:'สติกเกอร์ไดคัท',
+    storyboard:'สตอรี่บอร์ด / ฉากต่อเนื่อง',
+    infographic:'อินโฟกราฟิกสรุปความรู้',
+    cover:'ปกสื่อการสอน / ปกรายงาน',
+    idplan:'ปก ID Plan / ปกเอกสารราชการครู',
+    vocab:'บัตรคำศัพท์ภาษาอังกฤษ',
+    classroom:'ฉากห้องเรียน 3D / ห้องเรียนในฝัน',
+    storybook:'นิทานคุณธรรม / เรื่องเล่าภาพ',
+    iconset:'ชุดไอคอนโรงเรียน',
+    mascotpack:'มาสคอตโรงเรียนหลายท่าทาง',
+    boardgame:'บอร์ดเกมการศึกษา',
+    flashcardset:'ชุด Flashcard / บัตรคำ',
+    signage:'ป้ายห้องเรียน / ป้ายนิเทศ',
+    thumbnail:'ปกคลิป YouTube / TikTok / Reels',
+    beforeafter:'ภาพข่าว Before-During-After'
+  };
+  const graphicTypeName=GRAPHIC_JOB_TYPES[type]?GRAPHIC_JOB_TYPES[type].label:'';
+  const creativeParis='P - Purpose (จุดประสงค์): สร้างภาพประเภท "'+(graphicTypeName||creativeTypeNames[type]||'ภาพสร้างสรรค์')+'" สำหรับใช้เป็นสื่อการเรียนรู้ ประชาสัมพันธ์ หรือเอกสารของโรงเรียน\n'+
+    'A - Audience (กลุ่มเป้าหมาย): ครู นักเรียน ผู้ปกครอง และผู้ชมสื่อการศึกษาของโรงเรียน\n'+
+    'R - Role (บทบาท): คุณคือนักออกแบบกราฟิกมืออาชีพ ผู้เชี่ยวชาญด้านกราฟิกดีไซน์และอาร์ตไดเรกเตอร์ AI ที่เข้าใจบริบทโรงเรียนไทย เชี่ยวชาญการจัดองค์ประกอบ ตัวอักษร อัตลักษณ์แบรนด์ และลำดับชั้นภาพ\n'+
+    'I - Input (ข้อมูลที่ใช้): ตัวละคร='+charLine+' | อารมณ์='+(emo.t||'[ไม่ระบุ]')+' | ท่าทาง='+(pose.t||'[ไม่ระบุ]')+' | ฉาก='+(bg.t||'[ไม่ระบุ]')+' | มุมกล้อง='+(shot.t||'[ไม่ระบุ]')+' | หัวข้อ/เนื้อหา='+(topicInput||'[ไม่ระบุ]')+' | เรื่องราว='+(storyInput||'[ไม่ระบุ]')+' | ข้อความในภาพ='+(text||'[ไม่ระบุ]')+'\n'+
+    'S - Style (สไตล์): '+a.name+' — '+a.thai+(refThaiParts.length?'\nตัวปรับแต่งภาพ: '+refThaiParts.join(', '):'')+'\n\n'+
+    '--- คำสั่งสร้างภาพแบบละเอียด ---\n\n';
+  document.getElementById('creativeOut').value=creativeParis+out;
   updatePreviews();
 }
 
@@ -4809,6 +5322,48 @@ function updatePosterPreview() {
     ribbonBg = '#E53935';
     footerBg = '#1B5E20';
     accentColor = '#FFD600';
+  } else if (styleId === 'govclean') {
+    gradient = 'linear-gradient(135deg, #FFFFFF 0%, #E8EEF5 70%, #F7F3E8 100%)';
+    titleColor = '#1E3A5F';
+    ribbonBg = '#1E3A5F';
+    footerBg = '#102A43';
+    accentColor = '#C9A227';
+  } else if (styleId === 'infographicpr') {
+    gradient = 'linear-gradient(135deg, #E3F2FD 0%, #E0F2F1 55%, #FFF8E1 100%)';
+    titleColor = '#1565C0';
+    ribbonBg = '#1565C0';
+    footerBg = '#0D47A1';
+    accentColor = '#26A69A';
+  } else if (styleId === 'alert') {
+    gradient = 'linear-gradient(135deg, #D32F2F 0%, #FFEB3B 58%, #FFFFFF 100%)';
+    titleColor = '#B71C1C';
+    ribbonBg = '#B71C1C';
+    footerBg = '#111111';
+    accentColor = '#FFEB3B';
+  } else if (styleId === 'photonews') {
+    gradient = 'linear-gradient(135deg, #263238 0%, #ECEFF1 65%, #FFFFFF 100%)';
+    titleColor = '#263238';
+    ribbonBg = '#37474F';
+    footerBg = '#263238';
+    accentColor = '#90A4AE';
+  } else if (styleId === 'quality') {
+    gradient = 'linear-gradient(135deg, #0F766E 0%, #ECFDF5 68%, #FFFBEB 100%)';
+    titleColor = '#0F766E';
+    ribbonBg = '#0F766E';
+    footerBg = '#064E3B';
+    accentColor = '#F59E0B';
+  } else if (styleId === 'stemdream') {
+    gradient = 'linear-gradient(135deg, #0F172A 0%, #082F49 55%, #164E63 100%)';
+    titleColor = '#22D3EE';
+    ribbonBg = '#0E7490';
+    footerBg = '#020617';
+    accentColor = '#A3E635';
+  } else if (styleId === 'safetydoc') {
+    gradient = 'linear-gradient(135deg, #E0F2FE 0%, #FFFFFF 62%, #FEE2E2 100%)';
+    titleColor = '#0EA5E9';
+    ribbonBg = '#0EA5E9';
+    footerBg = '#075985';
+    accentColor = '#EF4444';
   }
 
   let collageHtml = '';
@@ -5050,6 +5605,73 @@ function updateCreativePreview() {
         </div>
       </div>
     `;
+  } else if (typeof GRAPHIC_JOB_TYPES !== 'undefined' && GRAPHIC_JOB_TYPES[type]) {
+    const cfg = GRAPHIC_JOB_TYPES[type];
+    const topic = document.getElementById('g_topic').value || cfg.placeholder;
+    const textVal = document.getElementById('g_text').value || cfg.label;
+    const isTall = ['rollup','storyreel','certificate','flyer','newslettercover','onepage','schedule','calendar','worksheetdesign'].includes(type);
+    const isWide = ['backdrop','webbanner','facebookcover','slidedeck','ai3dbanner','cinematiccover','workspace','process3d','neonroadmap','materialshowcase','scenebackground','storybookscene','sidebyside','wallpaper','conceptart','environmentdesign','aihero','moodboard'].includes(type);
+    const visualIcon = cfg.icon || '🎯';
+    const maxW = isWide ? '300px' : (isTall ? '190px' : '240px');
+    const aspect = isWide ? '16/9' : (isTall ? '1/1.414' : '1/1');
+    const blocks = (cfg.points || []).slice(0,4);
+    box.innerHTML = `
+      <h3 style="font-size:0.85rem; margin:0 0 10px; color:var(--purple); text-align:center;">🎨 ตัวอย่าง ${cfg.label} (สไตล์${artName})</h3>
+      <div style="width:100%; max-width:${maxW}; aspect-ratio:${aspect}; border:2px solid var(--border-color); border-radius:10px; background:linear-gradient(135deg, var(--card), var(--purple-light)); padding:10px; box-sizing:border-box; box-shadow:0 3px 8px rgba(0,0,0,0.08); display:flex; flex-direction:column; gap:7px; font-family:'Prompt',sans-serif; overflow:hidden;">
+        <div style="background:var(--purple); color:#fff; border-radius:6px; padding:6px 8px; font-size:0.68rem; font-weight:bold; text-align:center; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+          ${textVal}
+        </div>
+        <div style="flex:1; display:grid; grid-template-columns:${isWide ? '1.1fr .9fr' : '1fr'}; gap:6px; min-height:0;">
+          <div style="background:rgba(255,255,255,0.55); border:1px dashed var(--border-color); border-radius:6px; display:flex; align-items:center; justify-content:center; color:var(--purple); font-size:1.6rem;">
+            ${visualIcon}
+          </div>
+          <div style="display:flex; flex-direction:column; gap:4px; min-height:0;">
+            ${blocks.map((item, idx) => `
+              <div style="background:rgba(255,255,255,0.7); border-left:3px solid var(--purple); border-radius:4px; padding:3px 5px; font-size:0.43rem; color:var(--text); line-height:1.15; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                ${idx + 1}. ${item}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        <div style="font-size:0.48rem; color:var(--text-muted); text-align:center; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+          ${topic}
+        </div>
+      </div>
+    `;
+  } else if (['classroom','storybook','iconset','mascotpack','boardgame','flashcardset','signage','thumbnail','beforeafter'].includes(type)) {
+    const topic = document.getElementById('g_topic').value || 'หัวข้อ/เนื้อหาที่ต้องการสร้าง';
+    const textVal = document.getElementById('g_text').value || 'ข้อความหลัก';
+    const previewMap = {
+      classroom: { icon:'🏫', title:'ฉากห้องเรียน 3D', items:['มุมกระดาน', 'โต๊ะกลุ่ม', 'มุมสื่อ', 'นักเรียนร่วมกิจกรรม'] },
+      storybook: { icon:'📚', title:'นิทานคุณธรรม', items:['ฉากเปิดเรื่อง', 'พบปัญหา', 'ลงมือแก้ไข', 'ข้อคิดท้ายเรื่อง'] },
+      iconset: { icon:'🔲', title:'ชุดไอคอนโรงเรียน', items:['ไอคอน 1', 'ไอคอน 2', 'ไอคอน 3', 'ไอคอน 4'] },
+      mascotpack: { icon:'🎭', title:'มาสคอตหลายท่า', items:['ทักทาย', 'ชี้ป้าย', 'อ่านหนังสือ', 'เตือนภัย'] },
+      boardgame: { icon:'🎲', title:'บอร์ดเกมการศึกษา', items:['START', 'คำถาม', 'โบนัส', 'FINISH'] },
+      flashcardset: { icon:'🃏', title:'ชุด Flashcard', items:['Card 1', 'Card 2', 'Card 3', 'Card 4'] },
+      signage: { icon:'📌', title:'ป้ายห้องเรียน/บอร์ด', items:['หัวป้าย', 'กล่องเนื้อหา', 'พื้นที่ผลงาน', 'เครดิต'] },
+      thumbnail: { icon:'▶️', title:'ปกคลิปวิดีโอ', items:['Hook', 'Presenter', 'Icon', 'CTA'] },
+      beforeafter: { icon:'📰', title:'Before-During-After', items:['ก่อน', 'ระหว่าง', 'หลัง', 'สรุปผล'] }
+    };
+    const cfg = previewMap[type];
+    box.innerHTML = `
+      <h3 style="font-size:0.85rem; margin:0 0 10px; color:var(--purple); text-align:center;">${cfg.icon} ตัวอย่าง ${cfg.title} (สไตล์${artName})</h3>
+      <div style="width:100%; max-width:260px; border:2px solid var(--border-color); border-radius:10px; background:var(--card); padding:10px; box-sizing:border-box; box-shadow:0 3px 8px rgba(0,0,0,0.06); font-family:'Prompt',sans-serif;">
+        <div style="background:var(--purple); color:#fff; border-radius:6px; padding:6px 8px; font-size:0.68rem; font-weight:bold; text-align:center; margin-bottom:8px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+          ${textVal}
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:6px;">
+          ${cfg.items.map(item => `
+            <div style="aspect-ratio:1.25; background:var(--input-bg); border:1px dashed var(--border-color); border-radius:6px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:5px;">
+              <div style="font-size:1.1rem; margin-bottom:2px;">${cfg.icon}</div>
+              <div style="font-size:0.52rem; color:var(--text); font-weight:bold; line-height:1.15;">${item}</div>
+            </div>
+          `).join('')}
+        </div>
+        <div style="margin-top:8px; font-size:0.52rem; color:var(--text-muted); text-align:center; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+          ${topic}
+        </div>
+      </div>
+    `;
   } else {
     box.innerHTML = `
       <h3 style="font-size:0.85rem; margin:0 0 16px; color:var(--purple); text-align:center;">✨ ภาพประกอบ / ตัวละครเดี่ยว (สไตล์${artName})</h3>
@@ -5086,8 +5708,20 @@ function logActionFromId(id) {
       cover: 'ปกรายงาน/สื่อ',
       vocab: 'บัตรคำศัพท์',
       sticker: 'สติกเกอร์ไดคัท',
-      illus: 'ภาพประกอบใบงาน'
+      illus: 'ภาพประกอบใบงาน',
+      classroom: 'ฉากห้องเรียน 3D',
+      storybook: 'นิทานคุณธรรม',
+      iconset: 'ชุดไอคอนโรงเรียน',
+      mascotpack: 'มาสคอตหลายท่า',
+      boardgame: 'บอร์ดเกมการศึกษา',
+      flashcardset: 'ชุด Flashcard',
+      signage: 'ป้ายห้องเรียน/บอร์ด',
+      thumbnail: 'ปกคลิปวิดีโอ',
+      beforeafter: 'Before-During-After'
     };
+    if (typeof GRAPHIC_JOB_TYPES !== 'undefined' && GRAPHIC_JOB_TYPES[type]) {
+      typeNames[type] = GRAPHIC_JOB_TYPES[type].label;
+    }
     title = '🎨 ' + (typeNames[type] || 'ภาพสร้างสรรค์');
   } else if (id === 'captionOut') {
     title = '✍️ คำโพสต์: ' + (document.getElementById('c_activity').value || 'ไม่มีหัวข้อ');
