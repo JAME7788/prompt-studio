@@ -514,18 +514,18 @@ body.dark-mode .vocab-meaning{background:var(--purple-light);color:#f3effa}
       </div>
 
       <div class="row2">
-        <div class="field"><label>ตัวละครหลัก</label><select id="g_role" onchange="buildCreative()"></select></div>
+        <div class="field"><label>ตัวละครหลัก (เลือกหรือพิมพ์เอง)</label><input id="g_role" list="dl_roles" oninput="buildCreative()" placeholder="เลือกหรือพิมพ์เอง · เว้นว่าง = ไม่ระบุ"></div>
         <div class="field"><label>ลักษณะหน้าตา / ผม / ชุด (กำหนดอิสระ)</label><input id="g_look" placeholder="เช่น ผมบ๊อบดำ ใส่แว่นกลม ชุดครูสีกากี" oninput="buildCreative()"></div>
       </div>
       <div class="row2">
-        <div class="field"><label>อารมณ์ / สีหน้า</label><select id="g_emotion" onchange="buildCreative()"></select></div>
-        <div class="field"><label>ท่าทาง</label><select id="g_pose" onchange="buildCreative()"></select></div>
+        <div class="field"><label>อารมณ์ / สีหน้า (เลือกหรือพิมพ์เอง)</label><input id="g_emotion" list="dl_emotions" oninput="buildCreative()" placeholder="เลือกหรือพิมพ์เอง · เว้นว่าง = ไม่ระบุ"></div>
+        <div class="field"><label>ท่าทาง (เลือกหรือพิมพ์เอง)</label><input id="g_pose" list="dl_poses" oninput="buildCreative()" placeholder="เลือกหรือพิมพ์เอง · เว้นว่าง = ไม่ระบุ"></div>
       </div>
       <div class="field"><label>เหตุการณ์ / กำลังทำอะไร (เว้นว่างได้)</label><input id="g_action" placeholder="เช่น กำลังทดลองวิทยาศาสตร์, ถือป้ายรณรงค์ประหยัดน้ำ" oninput="buildCreative()"></div>
       <div class="field" id="g_topicWrap" style="display:none"><label>หัวข้อ / เนื้อหา (อินโฟกราฟิก • ปก • ID Plan • บัตรคำ)</label><textarea id="g_topic" placeholder="อินโฟกราฟิก: หัวข้อ + ประเด็นย่อย 3-6 ข้อ • ปก/ID Plan: ชื่อครู / ตำแหน่ง วิทยฐานะ / โรงเรียน / สังกัดเขต • บัตรคำ: คำศัพท์ / คำอ่าน / คำแปล เช่น MORNING / มอร์นิง / ตอนเช้า" oninput="buildCreative()"></textarea></div>
       <div class="row2">
-        <div class="field"><label>ฉากหลัง</label><select id="g_bg" onchange="buildCreative()"></select></div>
-        <div class="field"><label>มุมกล้อง / ระยะภาพ</label><select id="g_shot" onchange="buildCreative()"></select></div>
+        <div class="field"><label>ฉากหลัง (เลือกหรือพิมพ์เอง)</label><input id="g_bg" list="dl_bgs" oninput="buildCreative()" placeholder="เลือกหรือพิมพ์เอง · เว้นว่าง = ไม่ระบุ"></div>
+        <div class="field"><label>มุมกล้อง / ระยะภาพ (เลือกหรือพิมพ์เอง)</label><input id="g_shot" list="dl_shots" oninput="buildCreative()" placeholder="เลือกหรือพิมพ์เอง · เว้นว่าง = ไม่ระบุ"></div>
       </div>
       <div class="field" id="g_storyWrap" style="display:none"><label>เรื่องราว / เหตุการณ์เรียงลำดับ (สำหรับสตอรี่บอร์ด)</label><textarea id="g_story" placeholder="เช่น 1) นักเรียนเดินมาโรงเรียน 2) พบขยะหน้าประตู 3) ชวนเพื่อนช่วยกันเก็บ 4) โรงเรียนสะอาดน่าอยู่" oninput="buildCreative()"></textarea></div>
       <div class="row2">
@@ -876,6 +876,11 @@ Style: luxury Thai school poster, purple gold, 8K
   <option>ประถมศึกษาปีที่ 4</option><option>ประถมศึกษาปีที่ 5</option><option>ประถมศึกษาปีที่ 6</option>
   <option>มัธยมศึกษาปีที่ 1</option><option>มัธยมศึกษาปีที่ 2</option><option>มัธยมศึกษาปีที่ 3</option>
 </datalist>
+<datalist id="dl_roles"></datalist>
+<datalist id="dl_emotions"></datalist>
+<datalist id="dl_poses"></datalist>
+<datalist id="dl_bgs"></datalist>
+<datalist id="dl_shots"></datalist>
 <datalist id="dl_presets"></datalist>
 <datalist id="dl_years">
   <option>ประจำปีการศึกษา 2568</option><option>ประจำปีการศึกษา 2569</option><option>ประจำปีการศึกษา 2570</option>
@@ -4160,7 +4165,17 @@ function fillSelect(id,arr){
   arr.forEach((o,i)=>{const op=document.createElement('option');op.value=i;op.textContent=o.t;s.appendChild(op);});
   s.value='0'; /* ค่าเริ่มต้น = ตัวเลือกแรก (ไม่ใช่ "ไม่ระบุ") */
 }
-function pickCreative(arr,id){const val=v(id);return (val==='none'||val==='')?{t:'',e:''}:(arr[+val]||arr[0]);}
+function fillDatalist(id,arr){
+  const dl=document.getElementById(id); if(!dl)return;
+  arr.forEach(o=>{const op=document.createElement('option');op.value=o.t;dl.appendChild(op);});
+}
+/* เลือกจากรายการ หรือพิมพ์เอง (เว้นว่าง = ไม่ระบุ ไม่ใส่ในพรอมต์) */
+function pickCreative(arr,id){
+  const val=(v(id)||'').trim();
+  if(!val) return {t:'',e:''};
+  const found=arr.find(x=>x.t===val);
+  return found || {t:val, e:val};
+}
 function onCreativeType(){
   const t=document.getElementById('g_type').value;
   const sb=(t==='storyboard');
@@ -5413,7 +5428,14 @@ renderStyles();renderSizes();renderPresets();renderDatalists();
 document.getElementById('p_preset').value=PRESETS[1].name;applyPreset();
 buildCaption();
 renderArtStyles();
-fillSelect('g_role',ROLES);fillSelect('g_emotion',EMOTIONS);fillSelect('g_pose',POSES);fillSelect('g_bg',BGS);fillSelect('g_shot',SHOTS);fillSelect('g_theme',IDTHEMES);
+fillDatalist('dl_roles',ROLES);fillDatalist('dl_emotions',EMOTIONS);fillDatalist('dl_poses',POSES);fillDatalist('dl_bgs',BGS);fillDatalist('dl_shots',SHOTS);
+fillSelect('g_theme',IDTHEMES);
+/* ค่าเริ่มต้น (แก้/ลบทิ้งได้) */
+document.getElementById('g_role').value=ROLES[0].t;
+document.getElementById('g_emotion').value=EMOTIONS[0].t;
+document.getElementById('g_pose').value=POSES[0].t;
+document.getElementById('g_bg').value=BGS[0].t;
+document.getElementById('g_shot').value=SHOTS[0].t;
 SIZES.forEach((s,i)=>{const o=document.createElement('option');o.value=i;o.textContent=s.name;document.getElementById('g_size').appendChild(o);});
 document.getElementById('g_size').value=2;
 buildCreative();
