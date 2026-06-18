@@ -82,6 +82,16 @@ body.dark-mode .field label {color:var(--text)}
 .field textarea{min-height:74px;resize:vertical}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media(max-width:540px){.row2{grid-template-columns:1fr}}
+.paris3d-panel{background:var(--input-bg);border:1.5px solid var(--border-color);border-radius:var(--radius);padding:12px;margin:12px 0}
+.paris3d-panel summary{cursor:pointer;font-family:'Prompt',sans-serif;font-weight:600;color:var(--purple-dark);display:flex;align-items:center;gap:6px}
+body.dark-mode .paris3d-panel summary{color:var(--text)}
+.paris3d-note{font-size:.8rem;color:var(--muted);margin:6px 0 10px}
+.paris3d-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
+.paris3d-grid .field{margin-bottom:0}
+.paris3d-grid .field label{font-size:.78rem;font-weight:500;margin-bottom:2px}
+.paris3d-grid .field select,.paris3d-grid .field input,.paris3d-grid .field textarea{font-size:.84rem;padding:7px 9px}
+.paris3d-grid .field textarea{min-height:58px}
+.paris3d-section-title{grid-column:1/-1;font-family:'Prompt',sans-serif;font-size:.82rem;font-weight:600;color:var(--purple);margin-top:4px;border-top:1px dashed var(--border-color);padding-top:8px}
 
 .style-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-bottom:12px}
 .style-opt{border:1.5px solid var(--border-color);border-radius:10px;padding:9px 10px;cursor:pointer;font-size:.82rem;background:var(--card);color:var(--text);transition:var(--transition);text-align:left}
@@ -476,6 +486,7 @@ body.dark-mode .vocab-meaning{background:var(--purple-light);color:#f3effa}
             <option value="lineoa">LINE OA Rich Message / Rich Menu</option>
           </optgroup>
           <optgroup label="ภาพสร้างสรรค์ / Concept Art / AI 3D">
+            <option value="paris3dtemplate">เทมเพลต 3D PARIS เต็มรูปแบบ (จากไฟล์ Word)</option>
             <option value="ai3dbanner">แบนเนอร์ AI 3D / Community Banner</option>
             <option value="cinematiccover">ภาพปกชุมชน Cinematic / Cover Art</option>
             <option value="workspace">ฉากโต๊ะทำงานสร้างสรรค์ / Creative Workspace</option>
@@ -587,6 +598,54 @@ body.dark-mode .vocab-meaning{background:var(--purple-light);color:#f3effa}
           </div>
         </div>
       </div>
+
+      <details class="paris3d-panel" id="g_paris3dPanel" open>
+        <summary>🧊 เทมเพลต 3D PARIS จากไฟล์ Word + Dropdown เพิ่มเติม</summary>
+        <p class="paris3d-note">เลือกจากรายการเพื่อเติมรายละเอียด A-P-R-I-S แบบเด็ก ม.1-3 เขียนง่าย แต่ได้พรอมต์ 3D ที่มีแสง เงา Texture มุมกล้อง และความลึกครบถ้วน</p>
+        <div class="paris3d-grid">
+          <div class="paris3d-section-title">A - Audience / กลุ่มเป้าหมาย</div>
+          <div class="field"><label>ผู้ชมหลัก</label><select id="g_3d_audience" data-paris3d="audience" onchange="buildCreative()"></select></div>
+          <div class="field"><label>ความรู้สึกที่อยากให้เกิด</label><select id="g_3d_feeling" data-paris3d="feeling" onchange="buildCreative()"></select></div>
+          <div class="field"><label>เข้าใจภาพภายใน</label><select id="g_3d_understand" data-paris3d="understand" onchange="buildCreative()"></select></div>
+          <div class="field"><label>ระดับความเหมาะสม</label><select id="g_3d_suitability" data-paris3d="suitability" onchange="buildCreative()"></select></div>
+
+          <div class="paris3d-section-title">P - Purpose / จุดประสงค์</div>
+          <div class="field"><label>ประเภทภาพ</label><select id="g_3d_purpose" data-paris3d="purpose" onchange="buildCreative()"></select></div>
+          <div class="field"><label>แนวคิดสำคัญ</label><select id="g_3d_concept" data-paris3d="concept" onchange="buildCreative()"></select></div>
+          <div class="field"><label>จุดเด่นที่สุด</label><select id="g_3d_keysubject" data-paris3d="keysubject" onchange="buildCreative()"></select></div>
+          <div class="field"><label>นำภาพไปใช้ทำอะไร</label><select id="g_3d_usage" data-paris3d="usage" onchange="buildCreative()"></select></div>
+
+          <div class="paris3d-section-title">R - Role / บทบาท AI</div>
+          <div class="field"><label>ให้ AI เป็น</label><select id="g_3d_role" data-paris3d="role" onchange="buildCreative()"></select></div>
+          <div class="field"><label>ความเชี่ยวชาญที่ใช้</label><select id="g_3d_expertise" data-paris3d="expertise" onchange="buildCreative()"></select></div>
+
+          <div class="paris3d-section-title">I - Input / รายละเอียดภาพ</div>
+          <div class="field"><label>จำนวนตัวละคร/วัตถุหลัก</label><select id="g_3d_count" data-paris3d="count" onchange="buildCreative()"></select></div>
+          <div class="field"><label>เวลาในภาพ</label><select id="g_3d_time" data-paris3d="time" onchange="buildCreative()"></select></div>
+          <div class="field"><label>สภาพอากาศ/บรรยากาศ</label><select id="g_3d_weather" data-paris3d="weather" onchange="buildCreative()"></select></div>
+          <div class="field"><label>สีหลักของภาพ</label><select id="g_3d_color" data-paris3d="color" onchange="buildCreative()"></select></div>
+          <div class="field"><label>ฉากหน้า / Foreground</label><select id="g_3d_foreground" data-paris3d="foreground" onchange="buildCreative()"></select></div>
+          <div class="field"><label>ฉากกลาง / Midground</label><select id="g_3d_midground" data-paris3d="midground" onchange="buildCreative()"></select></div>
+          <div class="field"><label>ฉากหลัง / Background</label><select id="g_3d_background" data-paris3d="background" onchange="buildCreative()"></select></div>
+          <div class="field"><label>Texture พื้นผิว</label><select id="g_3d_texture" data-paris3d="texture" onchange="buildCreative()"></select></div>
+          <div class="field"><label>Material วัสดุ</label><select id="g_3d_material" data-paris3d="material" onchange="buildCreative()"></select></div>
+          <div class="field"><label>Lighting แสง</label><select id="g_3d_lighting" data-paris3d="lighting" onchange="buildCreative()"></select></div>
+          <div class="field"><label>ทิศทางแสง</label><select id="g_3d_lightdir" data-paris3d="lightdir" onchange="buildCreative()"></select></div>
+          <div class="field"><label>Shadow เงา</label><select id="g_3d_shadow" data-paris3d="shadow" onchange="buildCreative()"></select></div>
+          <div class="field"><label>Camera angle มุมกล้อง</label><select id="g_3d_cameraangle" data-paris3d="cameraangle" onchange="buildCreative()"></select></div>
+          <div class="field"><label>ระยะภาพ</label><select id="g_3d_shotdistance" data-paris3d="shotdistance" onchange="buildCreative()"></select></div>
+          <div class="field"><label>เลนส์</label><select id="g_3d_lens" data-paris3d="lens" onchange="buildCreative()"></select></div>
+          <div class="field"><label>Depth of Field</label><select id="g_3d_depth" data-paris3d="depth" onchange="buildCreative()"></select></div>
+          <div class="field"><label>ตำแหน่งข้อความในภาพ</label><select id="g_3d_textpos" data-paris3d="textpos" onchange="buildCreative()"></select></div>
+
+          <div class="paris3d-section-title">S - Style / สไตล์ + Negative Prompt</div>
+          <div class="field"><label>แนวภาพ 3D</label><select id="g_3d_visualstyle" data-paris3d="visualstyle" onchange="buildCreative()"></select></div>
+          <div class="field"><label>คุณภาพภาพ</label><select id="g_3d_quality" data-paris3d="quality" onchange="buildCreative()"></select></div>
+          <div class="field"><label>อารมณ์ภาพรวม</label><select id="g_3d_mood" data-paris3d="mood" onchange="buildCreative()"></select></div>
+          <div class="field"><label>ชุด Negative Prompt</label><select id="g_3d_negative" data-paris3d="negative" onchange="buildCreative()"></select></div>
+          <div class="field"><label>ห้ามมีสิ่งเฉพาะ (พิมพ์เพิ่มได้)</label><textarea id="g_3d_avoid" placeholder="เช่น ห้ามมีรถยนต์ / ห้ามมีอาคารสมัยใหม่ / ห้ามมีคนเยอะเกินไป" oninput="buildCreative()"></textarea></div>
+        </div>
+      </details>
 
       <div class="row2">
         <div class="field"><label>ตัวละครหลัก (เลือกหรือพิมพ์เอง)</label><input id="g_role" list="dl_roles" oninput="buildCreative()" placeholder="เลือกหรือพิมพ์เอง · เว้นว่าง = ไม่ระบุ"></div>
@@ -1398,6 +1457,270 @@ const TEMPLATES = [
 {id:'go-creative',cat:'image',icon:'🎨',title:'ภาพสร้างสรรค์ + งานกราฟิกดีไซน์',
  desc:'62 ประเภทงาน + สไตล์ศิลปะ 27 แนว: ตัวละคร โปสเตอร์ ใบปลิว แผ่นพับ social post แบนเนอร์ AI 3D ฉากคอนเซ็ปต์อาร์ต ภาพพื้นหลัง workflow 3D โลโก้ เกียรติบัตร ป้าย เวที บอร์ดเกม ปกคลิป และสื่อโรงเรียน → เปิดตัวสร้างภาพสร้างสรรค์',
  tags:'ตัวละคร มาสคอต สติกเกอร์ สตอรี่บอร์ด storyboard อนิเมะ การ์ตูน 3d พิกเซล สีน้ำ มุมกล้อง อารมณ์ ท่าทาง character อินโฟกราฟิก infographic ปกสื่อ ปกรายงาน ปกแผน บัตรคำศัพท์ flashcard นีออน ไซเบอร์ แฟนตาซี เวทมนตร์ ไดโอรามา วรรณคดี ตัวจิ๋ว โปสเตอร์หนัง id plan idplan แผนพัฒนาตนเอง ปกราชการ ธีมรายวิชา ห้องเรียน 3d นิทานคุณธรรม ชุดไอคอน icon set mascot pack บอร์ดเกม board game ป้ายห้องเรียน thumbnail before during after โปสเตอร์ graphic poster flyer brochure social post carousel logo brand kit certificate invitation schedule calendar rollup backdrop standee facebook cover web banner line oa แบนเนอร์ ai 3d community banner cinematic cover creative workspace process flow neon roadmap material showcase cinematic background storybook scene side by side wallpaper concept art environment design hero image moodboard ภาพพื้นหลัง ฉากนิทาน ภาพวาดเล่าเรื่อง ฉากแฟนตาซี',goto:'creative'},
+{id:'ai-contest-m13-3d-prompt',cat:'image',icon:'🏆',title:'ประกวด AI ม.1-3: พรอมต์ภาพ 3D',
+ desc:'สร้างพรอมต์ภาพ 3D มีมิติสมจริงตามหลัก PARIS พร้อมเช็กลิสต์ส่งงานตามเกณฑ์ประกวด AI 2569',
+ tags:'ประกวด AI ม.1-3 มัธยมต้น สร้างสื่อด้วยปัญญาประดิษฐ์ 3D มีมิติสมจริง prompt JPEG PNG ครูผู้ฝึกสอน โรงเรียน เกณฑ์การแข่งขัน 2569 กำแพงเพชร',
+ fields:[
+  {k:'topic',l:'หัวข้อที่ได้รับในวันแข่งขัน',t:'textarea',p:'เช่น AI กับการอนุรักษ์สิ่งแวดล้อม / โรงเรียนปลอดภัย / เมืองแห่งอนาคต'},
+  {k:'student',l:'ชื่อผู้เข้าแข่งขัน',p:'เช่น ด.ช. ... / ด.ญ. ...'},
+  {k:'coach',l:'ชื่อครูผู้ฝึกสอน',p:'เช่น ครูเจมส์ ...'},
+  {k:'school',l:'ชื่อโรงเรียน',p:'เช่น โรงเรียน...'},
+  {k:'concept',l:'แนวคิดหลักของภาพ',t:'textarea',p:'ภาพนี้ต้องการสื่อว่าอะไร ให้กรรมการเห็นแล้วเข้าใจทันที'},
+  {k:'main',l:'ตัวละคร/วัตถุหลักในภาพ',p:'เช่น นักเรียน ม.ต้น กับหุ่นยนต์ AI / ห้องเรียน 3D / เมืองอนาคต'},
+  {k:'scene',l:'ฉาก/สถานที่',p:'เช่น ห้องเรียนอนาคต สนามโรงเรียน ชุมชน จังหวัดกำแพงเพชร'},
+  {k:'mood',l:'โทนและอารมณ์ภาพ',t:'select',o:['สมจริง อบอุ่น มีความหวัง','แฟนตาซีสมจริง ตื่นตา','เทคโนโลยีอนาคต แสงนีออนพอดี','ไทยร่วมสมัย ภูมิฐาน','ธรรมชาติและสิ่งแวดล้อม สดใส']},
+  {k:'ratio',l:'สัดส่วนภาพ',t:'select',o:['16:9 แนวนอน 1920x1080','4:3 แนวนอน','1:1 จัตุรัส','3:4 แนวตั้ง']},
+  {k:'tool',l:'เครื่องมือ AI ที่จะใช้',t:'select',o:['Gemini / Nano Banana','ChatGPT สร้างภาพ','Canva AI','Leonardo AI','ให้ AI ปรับตามเครื่องมือที่ใช้']},
+  {k:'creditMode',l:'การใส่ชื่อในภาพ',t:'select',o:['ให้ AI ทำแถบเครดิตด้านล่างในภาพ','เว้นแถบเครดิต แล้วเติมชื่อใน Canva/PowerPoint หลังสร้างภาพ']}],
+ tpl:`P - Purpose (จุดประสงค์):
+ช่วยนักเรียนระดับมัธยมศึกษาปีที่ 1-3 สร้างพรอมต์ภาพ 3D มีมิติสมจริงสำหรับการประกวดสร้างสื่อด้วยปัญญาประดิษฐ์ (AI) ให้ตรงหัวข้อ สร้างสรรค์ ใช้เทคนิค AI ชัดเจน สวยงาม และพร้อมส่งภายในเวลาแข่งขัน 3 ชั่วโมง
+
+A - Audience (กลุ่มเป้าหมาย):
+นักเรียนผู้เข้าแข่งขัน ม.1-3, ครูผู้ฝึกสอน, และคณะกรรมการตัดสินที่ประเมินตามเกณฑ์ 100 คะแนน
+
+R - Role (บทบาท):
+คุณคือโค้ชการแข่งขันสร้างสื่อด้วยปัญญาประดิษฐ์ (AI) ระดับมัธยมศึกษาปีที่ 1-3 และเป็น Art Director งานภาพ 3D มีมิติสมจริง เชี่ยวชาญการออกแบบพรอมต์ให้ตรงหัวข้อ สร้างสรรค์ ใช้เทคนิค AI ชัดเจน และมีความสวยงามตามเกณฑ์กรรมการ
+
+I - Input (ข้อมูลที่ใช้):
+ใช้หัวข้อวันแข่งขัน ข้อมูลผู้เข้าแข่งขัน ครูผู้ฝึกสอน โรงเรียน แนวคิดหลัก ตัวละคร/วัตถุหลัก ฉาก โทนภาพ สัดส่วนภาพ เครื่องมือ AI และวิธีใส่เครดิตจากข้อมูลด้านล่างเท่านั้น
+
+S - Style (สไตล์/รูปแบบ):
+จัดคำตอบเป็นภาษาไทย อ่านง่าย เหมาะกับนักเรียน ม.1-3 ใช้หัวข้อย่อยชัดเจน พร้อม Prompt ฉบับสมบูรณ์แบบ PARIS สำหรับสร้างภาพ 3D มีมิติสมจริง
+
+บริบทการแข่งขัน:
+- รายการ: การประกวดสร้างสื่อด้วยปัญญาประดิษฐ์ (AI) ประจำปีงบประมาณ 2569
+- ระดับ: มัธยมศึกษาปีที่ 1-3
+- ประเภท: เดี่ยว
+- ผลงานที่ต้องสร้าง: ภาพ 3D มีมิติสมจริง
+- เวลาแข่งขัน: 3 ชั่วโมง
+- ไฟล์ส่ง: JPEG หรือ PNG
+- ต้องส่ง Prompt ฉบับสมบูรณ์ที่ใช้สร้างภาพสุดท้ายพร้อมไฟล์ผลงาน
+- ภาพต้องระบุชื่อผู้เข้าแข่งขัน ครูผู้ฝึกสอน และชื่อโรงเรียนในตำแหน่งที่เหมาะสม
+- เกณฑ์คะแนน 100 คะแนน: ความเกี่ยวเนื่องในหัวข้อ 30, ความคิดสร้างสรรค์ 30, เทคนิคการสร้างด้วย AI 20, ความสวยงาม 20
+
+ข้อมูลผู้เข้าแข่งขัน:
+- หัวข้อวันแข่งขัน: {{topic}}
+- ผู้เข้าแข่งขัน: {{student}}
+- ครูผู้ฝึกสอน: {{coach}}
+- โรงเรียน: {{school}}
+- แนวคิดหลัก: {{concept}}
+- ตัวละคร/วัตถุหลัก: {{main}}
+- ฉาก/สถานที่: {{scene}}
+- โทนภาพ: {{mood}}
+- สัดส่วนภาพ: {{ratio}}
+- เครื่องมือ AI: {{tool}}
+- วิธีใส่เครดิต: {{creditMode}}
+
+งานที่ต้องทำ:
+ช่วยสร้างชุดคำตอบสำหรับนักเรียนใช้ทำงานจริง โดยจัดเป็น 6 ส่วนดังนี้
+
+1. วิเคราะห์โจทย์และแนวคิดภาพ
+- สรุปว่าโจทย์ต้องการสื่ออะไร
+- เสนอแก่นภาพ 1 ประโยคที่เกี่ยวเนื่องกับหัวข้อชัดเจน
+- ระบุจุดขายความคิดสร้างสรรค์ 3 ข้อที่ทำให้ภาพต่างจากงานทั่วไป
+
+2. โครงภาพ 3D ที่ควรสร้าง
+- ระบุ foreground / midground / background
+- ระบุจุดโฟกัสหลัก จุดนำสายตา และพื้นที่เครดิต
+- ระบุแสง กล้อง เลนส์ มุมภาพ texture วัสดุ และ depth of field
+- ให้ภาพเป็น 3D มีมิติสมจริง ไม่ใช่ภาพแบน 2D
+
+3. Prompt ฉบับสมบูรณ์สำหรับสร้างภาพตามหลัก PARIS
+เขียน Prompt ภาษาไทยแบบละเอียด พร้อมใช้กับ {{tool}} โดยจัดหัวข้อภายใน Prompt เป็น:
+- P - Purpose (จุดประสงค์): ระบุภาพ 3D ที่ต้องสร้างและเป้าหมายการสื่อสาร
+- A - Audience (กลุ่มเป้าหมาย): ระบุว่าภาพนี้ทำเพื่อกรรมการ ผู้ชม และบริบทการแข่งขัน
+- R - Role (บทบาท): สั่งให้ AI ทำงานในฐานะ Art Director / 3D Artist มืออาชีพ
+- I - Input (ข้อมูลที่ใช้): ใส่รายละเอียดฉาก ตัวละคร วัตถุ แสง กล้อง สี อารมณ์ภาพ และเครดิต
+- S - Style (สไตล์): ระบุ 3D มีมิติสมจริง วัสดุ แสง เงา depth of field และความคมชัด
+ในส่วน Input ต้องมีข้อความเครดิตในภาพให้สะกดถูกต้อง:
+  ผู้เข้าแข่งขัน: {{student}} | ครูผู้ฝึกสอน: {{coach}} | โรงเรียน: {{school}}
+- ถ้าเลือก "{{creditMode}}" แล้ว AI มักสะกดไทยผิด ให้สั่ง AI เว้นแถบเครดิตด้านล่างให้ชัดเจน และแนะนำให้เติมข้อความจริงใน Canva/PowerPoint ก่อนส่ง
+- ระบุสัดส่วนภาพ {{ratio}}
+
+4. Negative Prompt / ข้อห้าม
+เขียนรายการสิ่งที่ต้องหลีกเลี่ยง เช่น ภาพเบลอ ตัวอักษรมั่ว มือผิดรูป ใบหน้าบิดเบี้ยว โลโก้ปลอม ลายน้ำ ข้อความสะกดผิด องค์ประกอบรกเกินไป ไม่เกี่ยวหัวข้อ หรือภาพดูเป็น 2D แบน
+
+5. แผนทำงานภายใน 3 ชั่วโมง
+แบ่งเวลาอย่างเหมาะสม:
+- 0-20 นาที: วิเคราะห์หัวข้อและวาง concept
+- 20-60 นาที: สร้าง prompt รุ่นแรก
+- 60-120 นาที: สร้างภาพและปรับ prompt 3-5 รอบ
+- 120-160 นาที: เลือกภาพสุดท้ายและใส่เครดิต
+- 160-180 นาที: ตรวจไฟล์ JPEG/PNG ตรวจ prompt ฉบับสุดท้าย และเตรียมส่ง
+
+6. เช็กลิสต์ก่อนส่งตามเกณฑ์ 100 คะแนน
+ทำตารางตรวจ 4 ด้าน:
+- ความเกี่ยวเนื่องในหัวข้อ 30 คะแนน: ต้องเห็นอะไรในภาพ
+- ความคิดสร้างสรรค์ 30 คะแนน: จุดเด่นคืออะไร
+- เทคนิคการสร้างด้วย AI 20 คะแนน: ใช้รายละเอียด prompt/ปรับรอบอย่างไร
+- ความสวยงาม 20 คะแนน: องค์ประกอบ แสง สี ความคมชัด เป็นอย่างไร
+ปิดท้ายด้วยคำแนะนำสั้น ๆ สำหรับนักเรียน ม.1-3 ให้ทำตามได้ทันทีในวันแข่งขัน`},
+{id:'ai-contest-m13-coach-plan',cat:'teach',icon:'🧠',title:'แผนซ้อมเด็กประกวด AI ม.1-3',
+ desc:'วางแผนฝึกนักเรียน ม.1-3 ให้พร้อมแข่งสร้างภาพ 3D ด้วย AI ภายใน 3 ชั่วโมง พร้อมสูตร PARIS',
+ tags:'แผนซ้อม ประกวด AI ม.1-3 มัธยมต้น ภาพ 3D prompt training coach แข่งขันทักษะวิชาการ',
+ fields:[
+  {k:'student',l:'ชื่อนักเรียน / จุดแข็ง',p:'เช่น น้องเอ ชอบวาดภาพ กล้าเล่าเรื่อง แต่ยังเขียนพรอมต์ไม่ละเอียด'},
+  {k:'timeLeft',l:'เวลาที่เหลือก่อนแข่ง',p:'เช่น 2 สัปดาห์ / 5 วัน / ซ้อมพรุ่งนี้'},
+  {k:'tools',l:'เครื่องมือ AI ที่โรงเรียนใช้ได้',p:'เช่น Gemini, ChatGPT, Canva'},
+  {k:'practiceTopics',l:'หัวข้อซ้อมที่อยากใช้',t:'textarea',p:'เช่น โรงเรียนสีเขียว, AI ช่วยชุมชน, เด็กไทยยุคดิจิทัล'},
+  {k:'problem',l:'ปัญหาที่อยากแก้ในการซ้อม',t:'textarea',p:'เช่น เด็กคิดภาพไม่ทัน / ใส่รายละเอียด prompt น้อย / ภาพสวยแต่ไม่ตรงโจทย์ / ลืมส่ง prompt'}],
+ tpl:`P - Purpose (จุดประสงค์):
+ออกแบบแผนซ้อมให้นักเรียน ม.1-3 พร้อมแข่งขันสร้างภาพ 3D มีมิติสมจริงด้วย AI ภายในเวลา 3 ชั่วโมง โดยเน้นการคิดภาพเร็ว เขียนพรอมต์ตามหลัก PARIS ปรับผลงานเป็น และส่งงานครบตามเกณฑ์
+
+A - Audience (กลุ่มเป้าหมาย):
+ครูผู้ฝึกสอนและนักเรียน ม.1-3 ที่กำลังเตรียมแข่งขันประเภทเดี่ยว
+
+R - Role (บทบาท):
+คุณคือครูโค้ชการแข่งขันสร้างสื่อด้วยปัญญาประดิษฐ์ (AI) ระดับมัธยมศึกษาปีที่ 1-3 เชี่ยวชาญการฝึกนักเรียนให้สร้างภาพ 3D มีมิติสมจริงได้ภายในเวลาจำกัด
+
+I - Input (ข้อมูลที่ใช้):
+ใช้ข้อมูลนักเรียน เวลาที่เหลือ เครื่องมือ AI ที่โรงเรียนใช้ได้ หัวข้อซ้อม และปัญหาที่ต้องแก้จากข้อมูลด้านล่าง
+
+S - Style (สไตล์/รูปแบบ):
+เขียนเป็นแผนซ้อมภาษาไทยแบบครูนำไปใช้ได้ทันที มีตาราง ขั้นตอน เวลา แบบฟอร์ม และตัวอย่างโครง Prompt PARIS สำหรับนักเรียน
+
+บริบทการแข่งขันที่ต้องยึด:
+- ม.1-3 แข่งขันประเภทเดี่ยว
+- สร้างสรรค์ภาพ 3D มีมิติสมจริง
+- เวลาแข่งขัน 3 ชั่วโมง
+- ส่งไฟล์ JPEG หรือ PNG
+- ส่ง Prompt ฉบับสมบูรณ์พร้อมไฟล์ผลงาน
+- ภาพต้องระบุชื่อผู้เข้าแข่งขัน ครูผู้ฝึกสอน และชื่อโรงเรียน
+- เกณฑ์คะแนน: ตรงหัวข้อ 30, ความคิดสร้างสรรค์ 30, เทคนิค AI 20, ความสวยงาม 20
+
+ข้อมูลการซ้อม:
+- นักเรียน/จุดแข็ง: {{student}}
+- เวลาที่เหลือก่อนแข่ง: {{timeLeft}}
+- เครื่องมือที่ใช้ได้: {{tools}}
+- หัวข้อซ้อม: {{practiceTopics}}
+- ปัญหาที่ต้องแก้: {{problem}}
+
+งานที่ต้องทำ:
+ออกแบบแผนซ้อมนักเรียน ม.1-3 แบบใช้งานได้จริง โดยจัดผลลัพธ์เป็น 7 ส่วน
+
+1. เป้าหมายการซ้อม
+ระบุทักษะที่เด็กต้องทำได้ก่อนแข่ง 5 ข้อ เช่น วิเคราะห์โจทย์เร็ว สร้าง concept เขียน prompt 3D ปรับ prompt และตรวจงานก่อนส่ง
+
+2. สูตรคิดภาพ 5 นาที
+สร้าง template ให้นักเรียนกรอก:
+- หัวข้อคืออะไร
+- ภาพต้องเล่าเรื่องอะไร
+- จุดโฟกัสหลักคืออะไร
+- จะทำให้สร้างสรรค์กว่าปกติอย่างไร
+- ต้องใส่ชื่อผู้แข่งขัน/ครู/โรงเรียนตรงไหน
+
+3. สูตรเขียน Prompt แบบจำง่ายสำหรับเด็ก ม.1-3
+ทำเป็นโครง PARIS:
+- P Purpose จุดประสงค์ภาพ
+- A Audience ใครเป็นผู้ชม/กรรมการ
+- R Role ให้ AI เป็น Art Director 3D
+- I Input รายละเอียดฉาก ตัวละคร วัตถุ แสง กล้อง เครดิต
+- S Style สไตล์ 3D มีมิติสมจริง
+พร้อมตัวอย่าง prompt สั้น 1 ชุดจากหัวข้อซ้อม
+
+4. ตารางซ้อมตามเวลาที่เหลือ
+จัดตารางซ้อมรายวันหรือรายคาบตาม {{timeLeft}} ระบุหัวข้อซ้อม กิจกรรม สิ่งที่ครูต้องดู และผลงานที่เด็กต้องส่ง
+
+5. Mock Contest 3 ชั่วโมง
+ออกแบบการซ้อมเหมือนวันแข่งจริงแบบนาทีต่อนาที:
+- วิเคราะห์โจทย์
+- เขียน prompt รุ่น 1
+- สร้างภาพ
+- ปรับ prompt 3 รอบ
+- เลือกภาพสุดท้าย
+- ใส่เครดิต
+- บันทึก prompt ฉบับสมบูรณ์
+- ส่ง JPEG/PNG
+
+6. แบบฟอร์มให้ครูตรวจหลังซ้อม
+ทำตาราง 100 คะแนนตามเกณฑ์จริง:
+- ตรงหัวข้อ 30
+- ความคิดสร้างสรรค์ 30
+- เทคนิค AI 20
+- ความสวยงาม 20
+พร้อมช่องข้อเสนอแนะสั้น ๆ ที่เด็กอ่านแล้วแก้ได้ทันที
+
+7. ข้อควรย้ำก่อนวันแข่ง
+สรุปเป็น bullet สั้น ๆ สำหรับพูดกับนักเรียน เช่น แต่งชุดนักเรียน รายงานตัวก่อนเวลา เตรียมบัตร/หลักฐานราชการ จด prompt สุดท้ายไว้ ห้ามลืมเครดิต และตรวจไฟล์ก่อนส่ง`},
+{id:'ai-contest-m13-rubric-check',cat:'assess',icon:'✅',title:'ตรวจงานประกวด AI ม.1-3 ตามเกณฑ์',
+ desc:'ให้ AI ช่วยประเมินภาพ/พรอมต์ตามเกณฑ์ 100 คะแนน ตรวจความครบของ PARIS พร้อมข้อเสนอแนะก่อนส่ง',
+ tags:'รูบริก ประเมินผลงาน ตรวจงาน ประกวด AI ม.1-3 3D เกณฑ์ 100 คะแนน feedback',
+ fields:[
+  {k:'topic',l:'หัวข้อการแข่งขัน',t:'textarea',p:'หัวข้อที่กรรมการกำหนด'},
+  {k:'prompt',l:'Prompt ฉบับสุดท้ายที่ใช้สร้างภาพ',t:'textarea',p:'วาง prompt ที่นักเรียนใช้จริง'},
+  {k:'imageDesc',l:'คำบรรยายภาพผลงาน / สิ่งที่เห็นในภาพ',t:'textarea',p:'ถ้ายังแนบภาพไม่ได้ ให้บรรยายองค์ประกอบภาพ สี แสง ตัวละคร ข้อความในภาพ'},
+  {k:'student',l:'ชื่อผู้เข้าแข่งขัน',p:''},
+  {k:'coach',l:'ครูผู้ฝึกสอน',p:''},
+  {k:'school',l:'โรงเรียน',p:''}],
+ tpl:`P - Purpose (จุดประสงค์):
+ประเมินผลงานภาพ 3D และ Prompt ฉบับสุดท้ายของนักเรียน ม.1-3 ตามเกณฑ์การแข่งขัน 100 คะแนน พร้อมตรวจว่าพรอมต์ครบหลัก PARIS หรือไม่ และเสนอแนวทางปรับก่อนส่งจริง
+
+A - Audience (กลุ่มเป้าหมาย):
+ครูผู้ฝึกสอนและนักเรียน ม.1-3 ที่ต้องการตรวจผลงานก่อนส่งประกวด
+
+R - Role (บทบาท):
+คุณคือกรรมการจำลองและครูโค้ชการแข่งขันสร้างสื่อด้วยปัญญาประดิษฐ์ (AI) ระดับ ม.1-3 มีหน้าที่ประเมินอย่างยุติธรรมและให้คำแนะนำที่เด็กนำไปแก้ไขได้ทันที
+
+I - Input (ข้อมูลที่ใช้):
+ใช้หัวข้อการแข่งขัน Prompt ฉบับสุดท้าย คำบรรยายภาพ ชื่อผู้เข้าแข่งขัน ครูผู้ฝึกสอน และชื่อโรงเรียนจากข้อมูลด้านล่าง
+
+S - Style (สไตล์/รูปแบบ):
+ตอบเป็นภาษาไทย ใช้ตารางคะแนนชัดเจน ตรงไปตรงมา ให้ข้อเสนอแนะที่เด็กแก้ตามได้ทันที และมีส่วนตรวจ Prompt ตามหลัก PARIS
+
+บริบทการแข่งขัน:
+- ระดับ ม.1-3 ประเภทเดี่ยว
+- ผลงานเป็นภาพ 3D มีมิติสมจริง
+- ส่ง JPEG หรือ PNG
+- ต้องส่ง Prompt ฉบับสมบูรณ์พร้อมไฟล์ผลงาน
+- ภาพต้องมีชื่อผู้เข้าแข่งขัน ครูผู้ฝึกสอน และชื่อโรงเรียนในตำแหน่งเหมาะสม
+- เกณฑ์คะแนน 100 คะแนน: ความเกี่ยวเนื่องในหัวข้อ 30, ความคิดสร้างสรรค์ 30, เทคนิคการสร้างด้วย AI 20, ความสวยงาม 20
+
+ข้อมูลผลงาน:
+- หัวข้อการแข่งขัน: {{topic}}
+- ผู้เข้าแข่งขัน: {{student}}
+- ครูผู้ฝึกสอน: {{coach}}
+- โรงเรียน: {{school}}
+- Prompt ฉบับสุดท้าย:
+{{prompt}}
+- คำบรรยายภาพผลงาน:
+{{imageDesc}}
+
+งานที่ต้องทำ:
+ประเมินผลงานนี้ตามเกณฑ์จริง โดยตอบเป็น 6 ส่วน
+
+1. สรุปภาพรวมผลงาน
+บอกจุดเด่น 3 ข้อ และจุดที่เสี่ยงเสียคะแนน 3 ข้อ
+
+2. ตารางให้คะแนน 100 คะแนน
+ทำตารางคอลัมน์:
+- เกณฑ์
+- คะแนนเต็ม
+- คะแนนที่ควรได้
+- เหตุผล
+- วิธีปรับให้ดีขึ้น
+ใช้เกณฑ์:
+1) ความเกี่ยวเนื่องในหัวข้อ 30 คะแนน
+2) ความคิดสร้างสรรค์ 30 คะแนน
+3) เทคนิคการสร้างด้วย AI 20 คะแนน
+4) ความสวยงาม 20 คะแนน
+
+3. ตรวจข้อบังคับการส่งงาน
+ตรวจว่า:
+- เป็นภาพ 3D มีมิติสมจริงหรือไม่
+- เหมาะกับระดับ ม.1-3 หรือไม่
+- มีชื่อผู้เข้าแข่งขัน ครูผู้ฝึกสอน และโรงเรียนหรือไม่
+- Prompt ฉบับสุดท้ายครบและสอดคล้องกับภาพหรือไม่
+- Prompt ฉบับสุดท้ายมีครบ P - Purpose, A - Audience, R - Role, I - Input, S - Style หรือไม่ หากขาดข้อใดให้ระบุวิธีเติม
+- เหมาะส่งเป็น JPEG/PNG หรือไม่
+
+4. ข้อเสนอแนะการแก้ Prompt
+เขียน prompt รุ่นปรับปรุงให้ดีขึ้นโดยจัดเป็นโครง PARIS ครบ 5 ส่วน และเพิ่มรายละเอียดที่ช่วยคะแนน 4 ด้าน ได้แก่ ตรงหัวข้อ สร้างสรรค์ เทคนิค AI และความสวยงาม
+
+5. เช็กลิสต์ 10 ข้อก่อนส่งจริง
+เขียนเป็นรายการติ๊กถูกสั้น ๆ ให้เด็กตรวจเอง
+
+6. สรุปคำแนะนำแบบพูดกับนักเรียน
+เขียนด้วยภาษาง่าย กระชับ ให้กำลังใจ และบอก 3 สิ่งที่ต้องแก้ก่อนส่ง`},
 {id:'go-poster-mourn',cat:'image',icon:'🕊️',title:'โปสเตอร์ถวายความอาลัย / ไว้อาลัย',
  desc:'โทนขาว-ดำ-เทา-ทอง สง่างาม สมพระเกียรติ → เปิดตัวสร้างโปสเตอร์',
  tags:'อาลัย ไว้อาลัย mourning โปสเตอร์',goto:'mourning'},
@@ -4298,6 +4621,140 @@ const SHOTS=[
  {t:'มุมต่ำติดพื้น (Worm’s Eye)',e:'worm’s eye extreme low angle'},
  {t:'ภาพเต็มฉากกว้างพิเศษ (Extreme Wide)',e:'extreme wide establishing shot'},
 ];
+const PARIS3D_OPTIONS={
+  audience:[
+    'คณะกรรมการประกวด','ครูผู้สอน','นักเรียน ม.1-3','นักเรียน ม.1-3 และครู','ผู้ปกครอง','คนทั่วไปบนอินเทอร์เน็ต','ผู้บริหารสถานศึกษา','ชุมชนรอบโรงเรียน','ผู้ชมงานนิทรรศการ','ผู้ติดตามเพจโรงเรียน','เด็กเล็กและครอบครัว','ผู้เรียนออนไลน์'
+  ],
+  feeling:[
+    'ประทับใจ','ตื่นเต้น','ภูมิใจ','สงบ','ลึกลับ','สนุก','อบอุ่น','น่าค้นหา','น่าเชื่อถือ','ยิ่งใหญ่','สร้างแรงบันดาลใจ','ซาบซึ้ง','สดใส','ทันสมัย','เคารพและสำรวม','อยากลงมือทำ'
+  ],
+  understand:[
+    'เห็นแล้วเข้าใจหัวข้อทันทีภายใน 3-5 วินาที','เข้าใจภายใน 10 วินาที','มีจุดเด่นเดียวชัดมาก','มีลำดับภาพให้ดูจากซ้ายไปขวา','ดูรู้เรื่องแม้บนหน้าจอโทรศัพท์','เหมาะสำหรับอ่านเร็วในงานประกวด'
+  ],
+  suitability:[
+    'เหมาะกับนักเรียน ม.1-3','เหมาะกับงานประกวด','เหมาะกับสื่อโรงเรียน','เหมาะกับสื่อออนไลน์','เหมาะกับโปสเตอร์ทางการ','เหมาะกับบทเรียนในห้องเรียน','เหมาะกับงานไว้อาลัยที่สุภาพ','เหมาะกับกิจกรรมสร้างสรรค์'
+  ],
+  purpose:[
+    'ฉากพื้นหลัง 3D','ภาพประกวดสร้างสื่อด้วย AI','ปกบทเรียน','โปสเตอร์','ภาพประชาสัมพันธ์','ภาพเล่าเรื่อง','อินโฟกราฟิก 3D','ปกสไลด์','แบนเนอร์ออนไลน์','คอนเซ็ปต์อาร์ต','ภาพตัวละคร/มาสคอต','ภาพไว้อาลัยสุภาพ','ภาพรณรงค์','ภาพข่าวกิจกรรม','ภาพโชว์วัสดุ 3D','ภาพประกอบใบงาน'
+  ],
+  concept:[
+    'AI ช่วยนักเรียนเรียนรู้อย่างสร้างสรรค์','ธรรมชาติอยู่ร่วมกับเทคโนโลยี','โรงเรียนใส่ใจสิ่งแวดล้อม','วัฒนธรรมไทยร่วมสมัย','ความกตัญญูและความเคารพ','การเรียนรู้แห่งอนาคต','ความปลอดภัยในโรงเรียน','ชุมชนเข้มแข็งร่วมพัฒนาโรงเรียน','วิทยาศาสตร์ทำให้โลกน่าอยู่','เด็กไทยใช้ AI อย่างรับผิดชอบ','ความสามัคคีในการทำงานกลุ่ม','นวัตกรรมเพื่อท้องถิ่น','ความทรงจำที่สง่างามและสำรวม','การอนุรักษ์โบราณสถานและธรรมชาติ'
+  ],
+  keysubject:[
+    'นักเรียนกับหุ่นยนต์ AI','ห้องเรียนอนาคต','ต้นไม้ใหญ่กลางฉาก','โบราณสถานหินศิลาแลง','อาคารเรียน','น้ำตกและป่า','จอฮอโลแกรม','มาสคอตโรงเรียน','ครูผู้สอน','หนังสือและแท็บเล็ต','ดอกไม้สีขาว','เทียนและแสงอุ่น','บ้านต้นไม้แฟนตาซี','แผนที่ไดโอรามา','วัสดุ 3D หลายชนิด','เวทีโรงเรียน'
+  ],
+  usage:[
+    'ส่งประกวด','ใช้เป็นปกสไลด์','ใช้เป็นพื้นหลังวิดีโอ','ใช้โพสต์ Facebook','ใช้ประกอบบทเรียน','ใช้เป็นโปสเตอร์ติดบอร์ด','ใช้ทำปกคลิป','ใช้เป็นภาพเปิดนิทรรศการ','ใช้ทำป้ายประชาสัมพันธ์','ใช้ทำสื่อ Canva ต่อ','ใช้เป็นภาพประกอบรายงาน','ใช้เป็นต้นแบบสร้างวิดีโอ AI'
+  ],
+  role:[
+    'Art Director มืออาชีพ','3D Artist มืออาชีพ','Cinematic Lighting Artist','Camera Director','Graphic Designer','Environment Designer','Character Designer','Concept Artist','Infographic Designer','Product Render Artist','Memorial Visual Designer','Thai Cultural Art Director','School Media Designer','AI 3D Prompt Engineer'
+  ],
+  expertise:[
+    'ออกแบบฉาก 3D สมจริง','จัดแสงแบบภาพยนตร์','จัดองค์ประกอบภาพ','ออกแบบตัวละคร','ทำภาพให้เหมาะกับงานประกวด','ออกแบบพื้นผิวและวัสดุสมจริง','สร้างมิติ foreground-middle-background','กำกับมุมกล้องและเลนส์','คุมโทนสีให้สื่ออารมณ์','จัดพื้นที่ข้อความให้อ่านง่าย','ทำภาพทางการสุภาพ','ทำงานกราฟิกโรงเรียนพร้อมใช้'
+  ],
+  count:[
+    'ไม่มีคน เน้นฉากและวัตถุ','1 ตัวละครหลัก','2 ตัวละครหลัก','นักเรียน 2-3 คน + วัตถุหลัก 1 ชิ้น','กลุ่มนักเรียน 4-6 คน','ครู 1 คน + นักเรียน 3 คน','มาสคอต 1 ตัว','มาสคอต 1 ตัวหลายท่าทาง','วัตถุหลัก 1 ชิ้น','วัตถุหลัก 3-5 ชิ้น','หลายองค์ประกอบแบบอินโฟกราฟิก'
+  ],
+  time:[
+    'ช่วงเช้าแสงอ่อน','กลางวันแสงสดใส','เย็น golden hour','กลางคืนมีแสงจันทร์','หลังฝนตก','ก่อนพระอาทิตย์ขึ้น','พระอาทิตย์ตกสีทอง','เวลาพิธีการสุภาพ','เวลาเรียนในห้องเรียน','เวลางานนิทรรศการ','ยามค่ำคืนไซไฟ','เวลาแฟนตาซีเหนือจริง'
+  ],
+  weather:[
+    'อากาศสดใส มีแสงละมุน','หมอกบาง','ฝนปรอย','ละอองน้ำ','แสงแดดอ่อน','บรรยากาศลึกลับ','เมฆนุ่มกระจาย','บรรยากาศหลังฝนพื้นสะท้อนแสง','ควันหมอกแบบ cinematic','อากาศอบอุ่นสบาย','บรรยากาศพิธีการสงบ','บรรยากาศเทคโนโลยีสะอาด','ฝุ่นแสงลอยในอากาศ','ฉากในอาคารควบคุมแสง'
+  ],
+  color:[
+    'เขียวธรรมชาติ','น้ำตาลดิน','ทองอ่อน','ฟ้านีออน','ขาวดำทอง','สีอบอุ่น','น้ำเงิน-ทองทางการ','ม่วง-ฟ้าไซเบอร์','พาสเทลสดใส','แดงชาด-ทองไทย','ขาวสะอาด-ฟ้าอ่อน','เทา-เงินเทคโนโลยี','ดำ-ทองหรู','เขียว-ทองอนุรักษ์','ชมพู-ม่วงแฟนตาซี','สีไม้ธรรมชาติ','ขาว-เทาไว้อาลัย','สีประจำโรงเรียน'
+  ],
+  foreground:[
+    'ใบไม้เบลอเล็กน้อย','ก้อนหินใกล้กล้อง','ลำธารสะท้อนแสง','ขอบโต๊ะเบลอเล็กน้อย','ดอกไม้ใกล้กล้อง','พื้นดินมี texture','หนังสือเปิดอยู่ด้านหน้า','แท็บเล็ตหรือปากกาใกล้กล้อง','กรอบหน้าต่าง','แสงฝุ่นละอองหน้าเลนส์','ผ้าสีสุภาพด้านหน้า','เทียนหรือดอกไม้ขาว','สายไฟนีออนบาง ๆ','หยดน้ำบนใบไม้','เงาวัตถุทอดเข้าฉาก'
+  ],
+  midground:[
+    'ตัวละครหลักคมชัด','โบราณสถานเป็นจุดเด่น','ห้องเรียนและนักเรียนทำงานกลุ่ม','หุ่นยนต์ AI ช่วยสอน','อาคารเรียนเป็นจุดกลาง','โต๊ะทดลองวิทยาศาสตร์','ต้นไม้ใหญ่กลางภาพ','เวทีหรือป้ายกิจกรรม','มาสคอตถือป้าย','วัตถุ material showcase','แผนผังอินโฟกราฟิก 3D','ครูนำเสนอหน้าจอ','บ้านต้นไม้แฟนตาซี','โต๊ะทำงานสร้างสรรค์'
+  ],
+  background:[
+    'ภูเขาไกล ๆ','ท้องฟ้ากว้าง','น้ำตกและป่า','ห้องเรียนอนาคตพร้อมจอฮอโลแกรม','โรงเรียนไทย','เมืองอนาคต','ห้องสมุดอบอุ่น','ห้องคอมพิวเตอร์','วัดหรือสถาปัตยกรรมไทย','ป่าหลังฝนตก','ฉากอวกาศ','ฉากเวทีโรงเรียน','เมืองโบราณกลางป่า','ผนังลายไทยทอง','ฉากไว้อาลัยเรียบสงบ','สตูดิโอ product render','แล็บวิทยาศาสตร์','ชุมชนท้องถิ่น','สวนเกษตรโรงเรียน','ฉากไซเบอร์เน็ตเวิร์ก'
+  ],
+  texture:[
+    'หินหยาบมีรอยแตก','ไม้มีลายเสี้ยน','โลหะสะท้อนแสง','ผ้าทอเห็นเส้นใย','น้ำใสมีระลอก','ดินเปียก','กระจกใสสะท้อนขอบแสง','พลาสติกด้านเนียน','กระดาษหยาบ','ผิวปูนเก่ามีรอยขีด','ใบไม้มีเส้นใบชัด','ผิวดินปั้นนุ่มนิ่ม','ผิวเซรามิกเคลือบ','ผิวทองเหลืองขัดเงา','ผ้าไหมไทยมันวาว','หินศิลาแลงรูพรุน','พื้นกระเบื้องสะท้อนแสง','ผิวหน้าจอฮอโลแกรมโปร่งใส','ดอกไม้กลีบบางละเอียด','ฝุ่นและรอยใช้งานจริง'
+  ],
+  material:[
+    'physically based material','rough stone','natural wood','metallic material','transparent glass','matte fabric','clear water surface','brushed metal','polished gold','matte plastic','glossy ceramic','woven Thai silk','wet soil','soft clay material','paper craft material','holographic glass','rubber mascot material','white marble','dark velvet fabric','aged bronze','transparent acrylic','painted wood','realistic foliage material'
+  ],
+  lighting:[
+    'แสงเช้าอ่อน ๆ','soft natural light','golden hour light','cinematic lighting','volumetric light','rim light','global illumination','studio softbox light','dramatic side light','backlight glow','warm candlelight','moonlight soft glow','neon blue and magenta light','window light','sun rays through leaves','spotlight on main subject','ambient occlusion lighting','high contrast movie light','low key lighting','high key lighting','memorial soft warm light','clean product render lighting','hologram glow light','subsurface scattering soft skin light'
+  ],
+  lightdir:[
+    'แสงมาจากมุมขวาบน','แสงลอดผ่านหน้าต่าง','แสงจากด้านหลัง','แสงจากด้านซ้าย','แสงจากด้านหน้าแบบนุ่ม','แสงจากด้านบนเหมือนเวที','แสงจากจอฮอโลแกรม','แสงลอดผ่านใบไม้','แสงสะท้อนจากพื้นน้ำ','แสงเทียนจากด้านล่าง','แสงขอบจากด้านหลังซ้าย','แสงกระจายทั่วฉาก','แสงเฉียง 45 องศา','แสงสองสีจากซ้ายและขวา'
+  ],
+  shadow:[
+    'เงานุ่ม','contact shadow','ambient occlusion','เงาทอดยาว','เงาตามซอกหิน','เงาใต้ตัวละครชัดเจน','เงาจากใบไม้ตกบนพื้น','เงาสะท้อนบนพื้นเปียก','เงาลึกแบบภาพยนตร์','เงาเบามากสำหรับภาพสว่าง','เงาขอบนุ่มบนผ้า','เงาใต้โต๊ะและวัตถุ','เงาชั้น foreground เพิ่มมิติ','เงาแบบสตูดิโอสะอาด','เงากระจกสะท้อนบาง ๆ'
+  ],
+  cameraangle:[
+    'eye level','low angle','high angle','มุมโดรน','bird eye view','isometric view','worm eye view','over the shoulder','POV มุมแทนสายตา','dutch angle มุมเอียง','front view ตรงกลาง','three-quarter view','top-down flat lay','cinematic wide angle','close-up detail angle','hero angle ให้ดูยิ่งใหญ่'
+  ],
+  shotdistance:[
+    'full shot','wide shot','medium shot','close-up','establishing shot','extreme wide shot','bust shot','macro detail shot','two-shot','group shot','overhead shot','product hero shot','poster key visual shot'
+  ],
+  lens:[
+    '24mm wide-angle lens','35mm natural wide lens','50mm normal lens','85mm portrait lens','100mm macro lens','telephoto compressed lens','cinematic anamorphic lens','tilt-shift miniature lens','drone wide lens','isometric orthographic camera','fisheye creative lens','shallow portrait lens'
+  ],
+  depth:[
+    'foreground blur','background softly blurred','shallow depth of field','deep depth of field','focus on main subject','foreground-middle-background ชัดเจน','bokeh behind subject','layered depth composition','near object blurred, subject sharp','soft atmospheric perspective','long depth hallway perspective','miniature tilt-shift depth'
+  ],
+  textpos:[
+    'เว้นพื้นที่ว่างด้านบนสำหรับหัวข้อ','ล่างสุดของภาพ','มุมซ้ายล่าง','บนป้ายไม้','บนแผ่นหิน','กลางภาพแบบโปสเตอร์','ด้านขวาโดยไม่ทับตัวละคร','บนกล่องข้อความโปร่งใส','ไม่ใส่ข้อความในภาพ','ใส่ข้อความทีหลังใน Canva','บนจอฮอโลแกรม','บนริบบิ้นหรือป้ายหัวเรื่อง'
+  ],
+  visualstyle:[
+    'high quality realistic 3D render','cinematic 3D','fantasy 3D','school 3D','Thai historical 3D','futuristic classroom','memorial 3D respectful style','3D diorama','isometric 3D','clay 3D','toy-like 3D','Pixar-like 3D character','product render 3D','environment design 3D','concept art 3D','cyber neon 3D','storybook 3D scene','Thai cultural 3D','nature realistic 3D','medical/science clean 3D','infographic 3D','poster key visual 3D','miniature model 3D','architectural visualization 3D'
+  ],
+  quality:[
+    'high quality 3D render','ultra detailed','sharp focus','high resolution','professional composition','physically based material','realistic ray-traced lighting','clean render','award-winning composition','highly detailed texture','premium cinematic render','print-ready detail','balanced color grading','no clutter, clear focal point'
+  ],
+  mood:[
+    'อบอุ่น','ลึกลับ','ยิ่งใหญ่','สดใส','สงบ','น่าเชื่อถือ','มีพลัง','น่าค้นหา','สำรวมและสง่างาม','สนุกและเป็นมิตร','ทันสมัย','แฟนตาซี','สร้างแรงบันดาลใจ','ภูมิใจในโรงเรียน','ผ่อนคลาย','ตื่นเต้น','วิชาการสะอาดตา','เป็นทางการ','ธรรมชาติสดชื่น','เทคโนโลยีล้ำสมัย'
+  ],
+  negative:[
+    'ภาพเบลอ, ตัวอักษรผิด, ภาษาไทยเพี้ยน, มือผิดรูป, หน้าบิดเบี้ยว, สัดส่วนผิด, องค์ประกอบรก, โลโก้มั่ว, watermark',
+    'ห้ามมีตัวหนังสือสุ่ม, ห้ามมีลายน้ำ, ห้ามภาพแตก, ห้ามวัตถุลอยผิดธรรมชาติ',
+    'ห้ามมีแสงไม่สมจริง, เงาผิดทิศ, texture แบน, วัสดุดูปลอม',
+    'ห้ามมีอาคารสมัยใหม่, รถยนต์, สายไฟ หรือคนเยอะเกินไป หากไม่เกี่ยวกับหัวข้อ',
+    'ห้ามสีฉูดฉาดเกินไป, ห้ามองค์ประกอบแน่น, ห้ามข้อความทับใบหน้า',
+    'ห้ามภาพน่ากลัวเกินวัย, ห้ามความรุนแรง, ห้ามสัญลักษณ์ไม่เหมาะสม',
+    'ห้ามบรรยากาศไม่สำรวม, ห้ามสีสดเกินไป สำหรับภาพไว้อาลัย'
+  ]
+};
+const PARIS3D_DEFAULTS={
+  audience:'นักเรียน ม.1-3 และครู',
+  feeling:'ประทับใจ',
+  understand:'เห็นแล้วเข้าใจหัวข้อทันทีภายใน 3-5 วินาที',
+  suitability:'เหมาะกับนักเรียน ม.1-3',
+  purpose:'ภาพประกวดสร้างสื่อด้วย AI',
+  concept:'AI ช่วยนักเรียนเรียนรู้อย่างสร้างสรรค์',
+  keysubject:'นักเรียนกับหุ่นยนต์ AI',
+  usage:'ส่งประกวด',
+  role:'3D Artist มืออาชีพ',
+  expertise:'จัดแสงแบบภาพยนตร์',
+  count:'นักเรียน 2-3 คน + วัตถุหลัก 1 ชิ้น',
+  time:'ช่วงเช้าแสงอ่อน',
+  weather:'อากาศสดใส มีแสงละมุน',
+  color:'ฟ้านีออน',
+  foreground:'ขอบโต๊ะเบลอเล็กน้อย',
+  midground:'ตัวละครหลักคมชัด',
+  background:'ห้องเรียนอนาคตพร้อมจอฮอโลแกรม',
+  texture:'ไม้มีลายเสี้ยน',
+  material:'physically based material',
+  lighting:'cinematic lighting',
+  lightdir:'แสงมาจากมุมขวาบน',
+  shadow:'เงานุ่ม',
+  cameraangle:'eye level',
+  shotdistance:'wide shot',
+  lens:'24mm wide-angle lens',
+  depth:'foreground-middle-background ชัดเจน',
+  textpos:'เว้นพื้นที่ว่างด้านบนสำหรับหัวข้อ',
+  visualstyle:'high quality realistic 3D render',
+  quality:'ultra detailed',
+  mood:'ทันสมัย',
+  negative:'ภาพเบลอ, ตัวอักษรผิด, ภาษาไทยเพี้ยน, มือผิดรูป, หน้าบิดเบี้ยว, สัดส่วนผิด, องค์ประกอบรก, โลโก้มั่ว, watermark'
+};
 const SHEET9=[
  {t:'ยิ้มสดใส โบกมือทักทาย',e:'smiling and waving'},
  {t:'หัวเราะดีใจมาก',e:'laughing happily'},
@@ -4358,6 +4815,71 @@ function pickCreative(arr,id){
   if(!val) return {t:'',e:''};
   const found=arr.find(x=>x.t===val);
   return found || {t:val, e:val};
+}
+
+function render3DParisOptions(){
+  document.querySelectorAll('[data-paris3d]').forEach(sel=>{
+    const key=sel.getAttribute('data-paris3d');
+    const opts=PARIS3D_OPTIONS[key]||[];
+    sel.innerHTML='';
+    const blank=document.createElement('option');
+    blank.value='';
+    blank.textContent='— เลือกจากรายการ —';
+    sel.appendChild(blank);
+    opts.forEach(item=>{
+      const op=document.createElement('option');
+      op.value=item;
+      op.textContent=item;
+      sel.appendChild(op);
+    });
+    if(PARIS3D_DEFAULTS[key]) sel.value=PARIS3D_DEFAULTS[key];
+  });
+}
+
+function paris3dVal(id){
+  const el=document.getElementById(id);
+  return el ? (el.value||'').trim() : '';
+}
+
+function collect3DParisDetails(){
+  return {
+    audience:paris3dVal('g_3d_audience'),
+    feeling:paris3dVal('g_3d_feeling'),
+    understand:paris3dVal('g_3d_understand'),
+    suitability:paris3dVal('g_3d_suitability'),
+    purpose:paris3dVal('g_3d_purpose'),
+    concept:paris3dVal('g_3d_concept'),
+    keysubject:paris3dVal('g_3d_keysubject'),
+    usage:paris3dVal('g_3d_usage'),
+    role:paris3dVal('g_3d_role'),
+    expertise:paris3dVal('g_3d_expertise'),
+    count:paris3dVal('g_3d_count'),
+    time:paris3dVal('g_3d_time'),
+    weather:paris3dVal('g_3d_weather'),
+    color:paris3dVal('g_3d_color'),
+    foreground:paris3dVal('g_3d_foreground'),
+    midground:paris3dVal('g_3d_midground'),
+    background:paris3dVal('g_3d_background'),
+    texture:paris3dVal('g_3d_texture'),
+    material:paris3dVal('g_3d_material'),
+    lighting:paris3dVal('g_3d_lighting'),
+    lightdir:paris3dVal('g_3d_lightdir'),
+    shadow:paris3dVal('g_3d_shadow'),
+    cameraangle:paris3dVal('g_3d_cameraangle'),
+    shotdistance:paris3dVal('g_3d_shotdistance'),
+    lens:paris3dVal('g_3d_lens'),
+    depth:paris3dVal('g_3d_depth'),
+    textpos:paris3dVal('g_3d_textpos'),
+    visualstyle:paris3dVal('g_3d_visualstyle'),
+    quality:paris3dVal('g_3d_quality'),
+    mood:paris3dVal('g_3d_mood'),
+    negative:paris3dVal('g_3d_negative'),
+    avoid:v('g_3d_avoid')
+  };
+}
+
+function formatParis3DRows(rows){
+  return rows.filter(r=>r[1]).map(r=>'- '+r[0]+': '+r[1]).join('\n');
 }
 
 const GRAPHIC_JOB_TYPES={
@@ -4547,14 +5069,15 @@ function onCreativeType(){
   const t=document.getElementById('g_type').value;
   const sb=(t==='storyboard'||t==='storybook'||t==='beforeafter');
   const isGraphicJob=!!GRAPHIC_JOB_TYPES[t];
-  const tp=isGraphicJob||['infographic','cover','vocab','idplan','classroom','storybook','iconset','mascotpack','boardgame','flashcardset','signage','thumbnail','beforeafter'].includes(t);
+  const tp=isGraphicJob||['paris3dtemplate','infographic','cover','vocab','idplan','classroom','storybook','iconset','mascotpack','boardgame','flashcardset','signage','thumbnail','beforeafter'].includes(t);
   document.getElementById('g_storyWrap').style.display=sb?'block':'none';
   document.getElementById('g_framesWrap').style.display=(t==='storyboard'||t==='storybook')?'block':'none';
   document.getElementById('g_topicWrap').style.display=tp?'block':'none';
   document.getElementById('g_themeWrap').style.display=(t==='idplan')?'block':'none';
   /* แนะนำขนาดภาพ/สไตล์อัตโนมัติตามประเภทงาน */
   const sizeSel=document.getElementById('g_size');
-  if(t==='infographic') sizeSel.value=0;        /* A4 ตั้ง */
+  if(t==='paris3dtemplate'){ sizeSel.value=4; activeArt='real'; renderArtStyles(); }
+  else if(t==='infographic') sizeSel.value=0;        /* A4 ตั้ง */
   else if(t==='cover') sizeSel.value=0;          /* A4 ตั้ง */
   else if(t==='idplan'){ sizeSel.value=0; activeArt='real'; renderArtStyles(); }
   else if(t==='vocab') sizeSel.value=4;          /* 16:9 */
@@ -4604,9 +5127,45 @@ function buildCreative(){
   if (g_camera) refStr += ', ' + g_camera;
   if (g_effects) refStr += ', ' + g_effects;
   const refThaiParts=[selectedThaiLabel('g_refiner_lighting'),selectedThaiLabel('g_refiner_camera'),selectedThaiLabel('g_refiner_effects')].filter(Boolean);
+  const d=collect3DParisDetails();
+  const paris3dStyleParts=[
+    d.visualstyle,d.quality,d.mood,d.lighting,d.lightdir,d.shadow,d.texture,d.material,
+    d.cameraangle,d.shotdistance,d.lens,d.depth,d.foreground,d.midground,d.background,d.color
+  ].filter(Boolean);
 
   let out='';
-  if(type==='sheet'){
+  if(type==='paris3dtemplate'){
+    out+='สร้างภาพ 3D สมจริงระดับงานประกวด โดยใช้ข้อมูลจากเทมเพลต A-P-R-I-S ที่เลือกจาก dropdown\n\n';
+    out+='โจทย์/หัวข้อหลัก:\n'+(topicInput||'[ระบุหัวข้อภาพ เช่น ห้องเรียน AI อนาคต / โรงเรียนรักษ์โลก / เมืองโบราณกลางป่า / ภาพไว้อาลัยสุภาพ]')+'\n\n';
+    out+='ตัวละครหรือวัตถุหลัก: '+charLine+'\n';
+    if(d.count) out+='จำนวนตัวละคร/วัตถุหลัก: '+d.count+'\n';
+    if(emo.t) out+='อารมณ์หรือสีหน้า: '+emo.t+'\n';
+    if(pose.t) out+='ท่าทาง: '+pose.t+'\n';
+    if(action) out+='เหตุการณ์หรือการกระทำ: '+action+'\n';
+    out+='\nองค์ประกอบภาพสามชั้นเพื่อสร้างมิติลึกตื้น:\n';
+    out+='- ฉากหน้า / Foreground: '+(d.foreground||'[เลือก foreground จาก dropdown]')+'\n';
+    out+='- ฉากกลาง / Midground: '+(d.midground||charLine)+'\n';
+    out+='- ฉากหลัง / Background: '+(d.background||bg.t||'[เลือก background จาก dropdown]')+'\n\n';
+    out+='คำสั่ง 3D Realism:\n';
+    out+='- เวลาในภาพ: '+(d.time||'[เลือกเวลา]')+'\n';
+    out+='- สภาพอากาศ/บรรยากาศ: '+(d.weather||'[เลือกบรรยากาศ]')+'\n';
+    out+='- สีหลักของภาพ: '+(d.color||'[เลือกโทนสี]')+'\n';
+    out+='- Texture: '+(d.texture||'[เลือกพื้นผิว]')+'\n';
+    out+='- Material: '+(d.material||'[เลือกวัสดุ]')+'\n';
+    out+='- Lighting: '+(d.lighting||'[เลือกแสง]')+'\n';
+    out+='- ทิศทางแสง: '+(d.lightdir||'[เลือกทิศทางแสง]')+'\n';
+    out+='- Shadow: '+(d.shadow||'[เลือกเงา]')+'\n';
+    out+='- Camera angle: '+(d.cameraangle||shot.t||'[เลือกมุมกล้อง]')+'\n';
+    out+='- ระยะภาพ: '+(d.shotdistance||'[เลือกระยะภาพ]')+'\n';
+    out+='- Lens: '+(d.lens||'[เลือกเลนส์]')+'\n';
+    out+='- Depth of field: '+(d.depth||'[เลือก depth of field]')+'\n\n';
+    if(text) out+='ข้อความในภาพ: "'+text+'" วางตำแหน่ง '+(d.textpos||'ให้ไม่ทับตัวละครหรือวัตถุสำคัญ')+' สะกดถูกต้อง คมชัด อ่านง่าย\n';
+    else out+='ข้อความในภาพ: '+(d.textpos==='ไม่ใส่ข้อความในภาพ'?'ไม่ใส่ข้อความในภาพ':'เว้นพื้นที่สำหรับใส่ข้อความภายหลัง')+'\n';
+    out+='\nข้อกำหนดคุณภาพ:\n- ภาพต้องมีจุดโฟกัสชัดเจน ไม่รก ใช้แสงและเงาช่วยแยกชั้น foreground, midground, background\n- วัสดุและพื้นผิวต้องจับต้องได้ เห็นรายละเอียดระดับโมเดล 3D คุณภาพสูง\n- คุม safe margin สำหรับงานโปสเตอร์/สไลด์/โซเชียล ไม่ให้ข้อความหรือวัตถุสำคัญชิดขอบ\n\n';
+    out+=thaiStyleKeywords([a.thai,d.visualstyle,d.quality,d.mood,d.purpose,d.concept,d.keysubject,d.usage].concat(paris3dStyleParts,refThaiParts));
+    out+='ขนาดภาพ: '+size.spec+'\n';
+    out+='Negative prompt: '+(d.negative||'[เลือก negative prompt]')+(d.avoid?'\nสิ่งที่ห้ามมีเฉพาะ: '+d.avoid:'');
+  }else if(type==='sheet'){
     out+='สร้าง Character Sheet (ตารางอารมณ์และท่าทาง) ของตัวละคร 1 ตัว สไตล์'+a.thai+'\n\n';
     out+='ตัวละคร: '+charLine+'\n\n';
     out+='จัดวางเป็นตาราง 3×3 รวม 9 ช่องในภาพเดียว ทุกช่องต้องเป็นตัวละครตัวเดิม หน้าตา ทรงผม สีผิว และเสื้อผ้าเหมือนกันทุกประการ เปลี่ยนเฉพาะอารมณ์และท่าทางดังนี้:\n';
@@ -4779,6 +5338,7 @@ function buildCreative(){
     out+='ขนาดภาพ: '+size.spec;
   }
   const creativeTypeNames={
+    paris3dtemplate:'เทมเพลต 3D PARIS เต็มรูปแบบ',
     char:'ตัวละคร / มาสคอต',
     sheet:'Character Sheet 3x3',
     illus:'ภาพประกอบสื่อการสอน / ใบงาน',
@@ -4799,11 +5359,62 @@ function buildCreative(){
     beforeafter:'ภาพข่าว Before-During-After'
   };
   const graphicTypeName=GRAPHIC_JOB_TYPES[type]?GRAPHIC_JOB_TYPES[type].label:'';
-  const creativeParis='P - Purpose (จุดประสงค์): สร้างภาพประเภท "'+(graphicTypeName||creativeTypeNames[type]||'ภาพสร้างสรรค์')+'" สำหรับใช้เป็นสื่อการเรียนรู้ ประชาสัมพันธ์ หรือเอกสารของโรงเรียน\n'+
-    'A - Audience (กลุ่มเป้าหมาย): ครู นักเรียน ผู้ปกครอง และผู้ชมสื่อการศึกษาของโรงเรียน\n'+
-    'R - Role (บทบาท): คุณคือนักออกแบบกราฟิกมืออาชีพ ผู้เชี่ยวชาญด้านกราฟิกดีไซน์และอาร์ตไดเรกเตอร์ AI ที่เข้าใจบริบทโรงเรียนไทย เชี่ยวชาญการจัดองค์ประกอบ ตัวอักษร อัตลักษณ์แบรนด์ และลำดับชั้นภาพ\n'+
-    'I - Input (ข้อมูลที่ใช้): ตัวละคร='+charLine+' | อารมณ์='+(emo.t||'[ไม่ระบุ]')+' | ท่าทาง='+(pose.t||'[ไม่ระบุ]')+' | ฉาก='+(bg.t||'[ไม่ระบุ]')+' | มุมกล้อง='+(shot.t||'[ไม่ระบุ]')+' | หัวข้อ/เนื้อหา='+(topicInput||'[ไม่ระบุ]')+' | เรื่องราว='+(storyInput||'[ไม่ระบุ]')+' | ข้อความในภาพ='+(text||'[ไม่ระบุ]')+'\n'+
-    'S - Style (สไตล์): '+a.name+' — '+a.thai+(refThaiParts.length?'\nตัวปรับแต่งภาพ: '+refThaiParts.join(', '):'')+'\n\n'+
+  const purposeRows=formatParis3DRows([
+    ['ประเภทภาพ',type==='paris3dtemplate'?(creativeTypeNames[type]+' — '+(d.purpose||'ภาพ 3D สมจริง')):(d.purpose||graphicTypeName||creativeTypeNames[type]||'ภาพสร้างสรรค์')],
+    ['หัวข้อหลัก',topicInput||'[ให้เด็กกรอกหัวข้อภาพ]'],
+    ['แนวคิดสำคัญ',d.concept],
+    ['จุดเด่นที่สุด',d.keysubject],
+    ['การนำไปใช้',d.usage]
+  ]);
+  const audienceRows=formatParis3DRows([
+    ['ผู้ชมหลัก',d.audience||'ครู นักเรียน ผู้ปกครอง และผู้ชมสื่อการศึกษาของโรงเรียน'],
+    ['ความรู้สึกที่อยากให้เกิด',d.feeling],
+    ['ความเร็วในการเข้าใจภาพ',d.understand],
+    ['ระดับความเหมาะสม',d.suitability]
+  ]);
+  const roleRows=formatParis3DRows([
+    ['บทบาท AI',d.role||'นักออกแบบกราฟิกมืออาชีพ'],
+    ['ความเชี่ยวชาญ',d.expertise||'จัดองค์ประกอบ แสง เงา พื้นผิว มุมกล้อง และความลึกของภาพ']
+  ]);
+  const inputRows=formatParis3DRows([
+    ['ตัวละคร/วัตถุหลัก',charLine],
+    ['จำนวน',d.count],
+    ['ลักษณะเพิ่มเติม',look],
+    ['อารมณ์/สีหน้า',emo.t],
+    ['ท่าทาง',pose.t],
+    ['เหตุการณ์/การกระทำ',action],
+    ['ฉากหน้า',d.foreground],
+    ['ฉากกลาง',d.midground],
+    ['ฉากหลัง',d.background||bg.t],
+    ['เวลา',d.time],
+    ['อากาศ/บรรยากาศ',d.weather],
+    ['สีหลัก',d.color],
+    ['ข้อความในภาพ',text],
+    ['ตำแหน่งข้อความ',d.textpos],
+    ['เรื่องราวเพิ่มเติม',storyInput]
+  ]);
+  const styleRows=formatParis3DRows([
+    ['แนวภาพ',d.visualstyle||a.name],
+    ['สไตล์ศิลปะ',a.thai],
+    ['คุณภาพภาพ',d.quality],
+    ['อารมณ์ภาพรวม',d.mood],
+    ['Texture',d.texture],
+    ['Material',d.material],
+    ['Lighting',d.lighting],
+    ['ทิศทางแสง',d.lightdir],
+    ['Shadow',d.shadow],
+    ['Camera angle',d.cameraangle||shot.t],
+    ['ระยะภาพ',d.shotdistance],
+    ['Lens',d.lens],
+    ['Depth of field',d.depth],
+    ['ตัวปรับแต่งภาพ',refThaiParts.join(', ')]
+  ]);
+  const creativeParis='P - Purpose (จุดประสงค์):\n'+purposeRows+'\n\n'+
+    'A - Audience (กลุ่มเป้าหมาย):\n'+audienceRows+'\n\n'+
+    'R - Role (บทบาท):\n'+roleRows+'\n\n'+
+    'I - Input (ข้อมูลที่ใช้):\n'+inputRows+'\n\n'+
+    'S - Style (สไตล์):\n'+styleRows+'\n\n'+
+    'Negative Prompt:\n'+(d.negative||'ภาพเบลอ, ตัวอักษรผิด, ภาษาไทยเพี้ยน, มือผิดรูป, หน้าบิดเบี้ยว, สัดส่วนผิด, องค์ประกอบรก, watermark')+(d.avoid?'\nสิ่งที่ห้ามมีเฉพาะ: '+d.avoid:'')+'\n\n'+
     '--- คำสั่งสร้างภาพแบบละเอียด ---\n\n';
   document.getElementById('creativeOut').value=creativeParis+out;
   updatePreviews();
@@ -6061,7 +6672,7 @@ renderChips();renderLibrary();
 renderStyles();renderSizes();renderPresets();renderDatalists();
 document.getElementById('p_preset').value=PRESETS[1].name;applyPreset();
 buildCaption();
-renderArtStyles();
+renderArtStyles();render3DParisOptions();
 fillDatalist('dl_roles',ROLES);fillDatalist('dl_emotions',EMOTIONS);fillDatalist('dl_poses',POSES);fillDatalist('dl_bgs',BGS);fillDatalist('dl_shots',SHOTS);
 fillSelect('g_theme',IDTHEMES);
 /* ค่าเริ่มต้น (แก้/ลบทิ้งได้) */
